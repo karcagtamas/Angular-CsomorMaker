@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { GeneratorComponent } from './generator/generator.component';
 import { AdminComponent } from './admin/admin.component';
 import { PortaComponent } from './porta/porta.component';
+import { NavigatorComponent } from './navigator/navigator.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { PortaComponent } from './porta/porta.component';
     LoginComponent,
     GeneratorComponent,
     AdminComponent,
-    PortaComponent
+    PortaComponent,
+    NavigatorComponent
   ],
   imports: [
     BrowserModule,
