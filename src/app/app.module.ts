@@ -21,9 +21,11 @@ import { GeneratorComponent } from './generator/generator.component';
 import { AdminComponent } from './admin/admin.component';
 import { PortaComponent } from './porta/porta.component';
 import { NavigatorComponent } from './navigator/navigator.component';
+import { HomeComponent } from './home/home.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, GeneratorComponent, AdminComponent, PortaComponent, NavigatorComponent],
+  declarations: [AppComponent, LoginComponent, GeneratorComponent, AdminComponent, PortaComponent, NavigatorComponent, HomeComponent, PageNotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

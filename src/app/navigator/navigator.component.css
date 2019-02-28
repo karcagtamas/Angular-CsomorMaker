@@ -1,39 +1,48 @@
-.example-container {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  
-  .example-is-mobile .example-toolbar {
-    position: fixed;
-    z-index: 2;
-  }
-  
-  h1.example-app-name {
-    margin-left: 8px;
-  }
-  
-  .example-sidenav-container {
-    flex: 1;
-  }
-  
-  .example-is-mobile .example-sidenav-container {
-    flex: 1 0 auto;
-  }
+.navigator-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
-  .element{
-    margin: 1rem;
-    padding: 0.75rem;
-  }
-  .element:hover{
-      background-color: lightcoral;
-      transition-duration: 1s;
-      cursor: pointer;
-  }
-  .active{
-      background-color: lightskyblue;
-  }
+.example-is-mobile .nav-toolbar {
+  position: fixed;
+  z-index: 2;
+}
+
+h1.example-app-name {
+  margin-left: 8px;
+}
+
+.sidenav-container {
+  flex: 1;
+}
+
+.example-is-mobile .sidenav-container {
+  flex: 1 0 auto;
+}
+
+.element {
+  margin: 0.75rem;
+  margin-bottom: 0.4rem;
+  margin-top: 0.4rem;
+  padding: 0.75rem;
+  padding-right: 2rem;
+  padding-left: 2rem;
+}
+.element:hover {
+  background-color: lightcoral;
+  transition-duration: 1s;
+  cursor: pointer;
+}
+.active {
+  background-color: lightskyblue;
+}
+.app-name {
+  font-size: 150%;
+  margin-left: 1rem;
+  margin-right: 0.5rem;
+}
