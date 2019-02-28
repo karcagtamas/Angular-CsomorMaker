@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatSidenavModule,
   MatButtonModule,
@@ -11,7 +11,9 @@ import {
   MatDividerModule,
   MatListModule,
   MatMenuModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatFormFieldModule,
+  MatInputModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,7 +27,16 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, GeneratorComponent, AdminComponent, PortaComponent, NavigatorComponent, HomeComponent, PageNotFoundComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    GeneratorComponent,
+    AdminComponent,
+    PortaComponent,
+    NavigatorComponent,
+    HomeComponent,
+    PageNotFoundComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -38,7 +49,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatListModule,
     MatMenuModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,11 @@
-<p>
-  login works!
-</p>
+<div class="container border rounded">
+  <img class="img" src="../../assets/images/profile.png" alt="Profile Image" />
+  <mat-form-field>
+    <input matInput placeholder="Felhasználónév" [type]="'text'" [formControl]="username" required />
+    <mat-error *ngIf="username.invalid">{{ getErrorMessage() }}</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Jelszó" [type]="'password'" required />
+  </mat-form-field>
+  <button mat-raised-button color="primary" class="login-button">Bejelentkezés</button>
+</div>
