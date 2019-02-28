@@ -8,12 +8,19 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   username = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required]);
 
   constructor() {}
 
   ngOnInit() {}
 
-  getErrorMessage() {
-    return this.username.hasError('required') ? 'Kötelező megadni a felhasználó nevet' : '';
+  getErrorMessage(content: FormControl, str: string) {
+    if (str === 'pass') {
+      return content.hasError('required') ? 'Kötelező megadni a jelszót' : '';
+    } else if (str === 'username') {
+      return content.hasError('required') ? 'Kötelező megadni a felhasználónevet' : '';
+    } else {
+      return '';
+    }
   }
 }
