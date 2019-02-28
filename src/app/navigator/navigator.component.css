@@ -32,6 +32,7 @@
   .element:hover{
       background-color: lightcoral;
       transition-duration: 1s;
+      cursor: pointer;
   }
   .active{
       background-color: lightskyblue;
