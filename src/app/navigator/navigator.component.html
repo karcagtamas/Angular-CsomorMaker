@@ -1,3 +1,24 @@
-<p>
-  navigator works!
-</p>
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="example-toolbar">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>M</mat-icon></button>
+    <h1 class="example-app-name">Csömör Maker</h1>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container"
+                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list>
+        <div class="border rounded element" [routerLink]="['/login']" routerLinkActive="active" >Bejelentkezés</div>
+        <div class="border rounded element" [routerLink]="['/generator']" routerLinkActive="active" >Generátor</div>
+        <div class="border rounded element" [routerLink]="['/porta']" routerLinkActive="active" >Porta</div> 
+        <div class="border rounded element" [routerLink]="['/admin']" routerLinkActive="active" >Admin</div>
+        <div class="border rounded element" [routerLink]="['/logout']" routerLinkActive="active" >Kijelentkezés</div>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
