@@ -18,6 +18,12 @@ mat-error {
   font-size: 0.7rem;
 }
 
-.alert{
+.alert {
   font-size: 0.7rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    width: 50%;
+  }
 }
