@@ -15,6 +15,9 @@ import {
   MatFormFieldModule,
   MatInputModule
 } from '@angular/material';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +28,7 @@ import { PortaComponent } from './porta/porta.component';
 import { NavigatorComponent } from './navigator/navigator.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -52,7 +56,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFirestoreModule.enablePersistence()
   ],
   providers: [],
   bootstrap: [AppComponent]
