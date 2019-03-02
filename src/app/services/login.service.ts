@@ -13,7 +13,7 @@ interface Login {
   providedIn: 'root'
 })
 export class LoginService {
-  possibleCharacters = '';
+  possibleCharacters = 'ABCDEFJGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   constructor(private firestore: AngularFirestore) {}
 
   login(username: string, password: string): Observable<any> {
@@ -22,6 +22,9 @@ export class LoginService {
 
   makeToken(): string {
     let text = '';
+    for (let i = 0; i < 6; i++) {
+      text += this.possibleCharacters.charAt(Math.floor(Math.random() * this.possibleCharacters.length));
+    }
     return text;
   }
 }
