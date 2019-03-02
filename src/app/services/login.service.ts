@@ -13,8 +13,15 @@ interface Login {
   providedIn: 'root'
 })
 export class LoginService {
+  possibleCharacters = '';
   constructor(private firestore: AngularFirestore) {}
+
   login(username: string, password: string): Observable<any> {
     return this.firestore.collection('users').valueChanges();
+  }
+
+  makeToken(): string {
+    let text = '';
+    return text;
   }
 }
