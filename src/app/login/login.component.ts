@@ -35,8 +35,8 @@ export class LoginComponent implements OnInit {
         res.forEach(e => {
           const E = e as User;
           if (username.value === E.username && password.value === E.password) {
-            localStorage.setItem('token', E.token);
             localStorage.setItem('userId', E.userId);
+            this.loginservice.setToken();
             this.success = true;
             this.router.navigateByUrl('');
           }
