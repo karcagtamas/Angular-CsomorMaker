@@ -14,10 +14,20 @@ export class LoginComponent implements OnInit {
   password = new FormControl('', [Validators.required]);
   error = false;
   success = false;
+  users: User[] = null;
 
   constructor(private loginservice: LoginService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loginservice.getUsers().subscribe(data => {
+      this.users = data.map(e => {
+        return {
+          userId: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as User;
+      });
+    });
+  }
 
   getErrorMessage(content: FormControl, str: string): string {
     if (str === 'pass') {
@@ -31,7 +41,16 @@ export class LoginComponent implements OnInit {
 
   login(username: FormControl, password: FormControl): void {
     if (username.valid && password.valid) {
-      this.loginservice.login(username.value, password.value).subscribe(res => {
+      this.users.forEach(e => {
+        if (username.value === e.username && password.value === e.password) {
+          localStorage.setItem('userId', e.userId);
+          this.loginservice.setToken(e);
+          this.success = true;
+          this.router.navigateByUrl('');
+        }
+      });
+
+      /* this.loginservice.login(username.value, password.value).subscribe(res => {
         res.forEach(e => {
           const E = e as User;
           if (username.value === E.username && password.value === E.password) {
@@ -41,7 +60,7 @@ export class LoginComponent implements OnInit {
             this.router.navigateByUrl('');
           }
         });
-      });
+      }); */
 
       if (this.success === false) {
         this.error = true;
