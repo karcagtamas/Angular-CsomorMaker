@@ -1,3 +1,4 @@
-<p>
-  porta works!
-</p>
+<button class="btn btn-primary m-2">Új esemény létrehozás</button>
+<mat-tab-group>
+  <mat-tab label="{{ event.name }}" *ngFor="let event of Events"> {{ event.advertisments }} </mat-tab>
+</mat-tab-group>

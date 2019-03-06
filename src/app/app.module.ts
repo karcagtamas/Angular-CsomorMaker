@@ -13,7 +13,8 @@ import {
   MatMenuModule,
   MatCheckboxModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatTabsModule
 } from '@angular/material';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -64,7 +65,8 @@ import { environment } from 'src/environments/environment';
     AngularFireDatabaseModule,
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
-    RouterModule
+    RouterModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

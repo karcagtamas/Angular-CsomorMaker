@@ -9,7 +9,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class LoginService {
   usersCollection: AngularFirestoreCollection<User>;
-  possibleCharacters = 'ABCDEFJGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  // possibleCharacters = 'ABCDEFJGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
   constructor(private firestore: AngularFirestore, private auth: AngularFireAuth) {
     this.usersCollection = this.firestore.collection<User>('users');
