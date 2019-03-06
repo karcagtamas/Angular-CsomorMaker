@@ -8,6 +8,8 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Md5 } from 'ts-md5/dist/md5';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { defineBase } from '@angular/core/src/render3';
 
 @Injectable({
   providedIn: 'root'
