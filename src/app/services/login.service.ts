@@ -9,7 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { Md5 } from 'ts-md5/dist/md5';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { defineBase } from '@angular/core/src/render3';
+import { FirebaseAuth } from 'angularfire2';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class LoginService {
   usersCollection: AngularFirestoreCollection<User>;
   possibleCharacters = 'ABCDEFJGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(private firestore: AngularFirestore, private auth: FirebaseAuth) {
     this.usersCollection = this.firestore.collection<User>('users');
   }
 
@@ -43,5 +43,25 @@ export class LoginService {
     this.usersCollection.doc(user.userId).update(user);
   }
 
-  login(username: string, password: string) {}
+  login(email: string, password: string): void | boolean {
+    this.auth
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        return true;
+      })
+      .catch(() => {
+        return false;
+      });
+  }
+
+  logout(): void | boolean {
+    this.auth
+      .signOut()
+      .then(() => {
+        return true;
+      })
+      .catch(() => {
+        return false;
+      });
+  }
 }
