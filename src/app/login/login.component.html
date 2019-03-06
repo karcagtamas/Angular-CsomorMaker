@@ -1,14 +1,18 @@
 <div class="container border rounded">
   <div class="text-center title border rounded">Bejelentkezés</div>
   <img class="img" src="../../assets/images/profile.png" alt="Profile Image" />
-  <div *ngIf="error === true" class="alert alert-danger"><strong>HIBA!</strong> A belépés sikertelen! Kérjük próbálkozzon újra!</div>
+  <div *ngIf="error === true" class="alert alert-danger">
+    <strong>HIBA!</strong> A belépés sikertelen! Kérjük próbálkozzon újra!
+  </div>
   <mat-form-field>
-    <input matInput placeholder="Felhasználónév" [type]="'text'" [formControl]="username" required />
-    <mat-error *ngIf="username.invalid">{{ getErrorMessage(username, 'username') }}</mat-error>
+    <input matInput placeholder="E-mail cím" [type]="'email'" [formControl]="email" required />
+    <mat-error *ngIf="email.invalid">{{ getErrorMessage(email, 'email') }}</mat-error>
   </mat-form-field>
   <mat-form-field>
     <input matInput placeholder="Jelszó" [type]="'password'" [formControl]="password" required />
     <mat-error *ngIf="password.invalid">{{ getErrorMessage(password, 'pass') }}</mat-error>
   </mat-form-field>
-  <button mat-raised-button color="primary" class="login-button" (click)="login(username, password)" >Bejelentkezés</button>
+  <button mat-raised-button color="primary" class="login-button" (click)="login(email, password)">
+    Bejelentkezés
+  </button>
 </div>

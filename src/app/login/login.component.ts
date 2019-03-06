@@ -10,7 +10,7 @@ import { User } from '../models/users.model';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  username = new FormControl('', [Validators.required]);
+  email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
   error = false;
   success = false;
@@ -23,30 +23,31 @@ export class LoginComponent implements OnInit {
   getErrorMessage(content: FormControl, str: string): string {
     if (str === 'pass') {
       return content.hasError('required') ? 'Kötelező megadni a jelszót' : '';
-    } else if (str === 'username') {
-      return content.hasError('required') ? 'Kötelező megadni a felhasználónevet' : '';
+    } else if (str === 'email') {
+      return content.hasError('required')
+        ? 'Kötelező megadni az e-mail címet'
+        : content.hasError('email')
+        ? 'Az e-mail cím nem megfelelő'
+        : '';
     } else {
       return '';
     }
   }
 
-  login(username: FormControl, password: FormControl): void {
-    if (username.valid && password.valid) {
-      /* this.users.forEach(e => {
-        if (username.value === e.username && password.value === e.password) {
-          localStorage.setItem('userId', e.userId);
-          this.loginservice.setToken(e);
-          this.success = true;
-          this.router.navigateByUrl('');
-        } */
-      // });
-      /* if (this.loginservice.login(username.value, password.value)) {
-        this.success = true;
-        this.router.navigateByUrl('');
-      } */
-      if (this.success === false) {
-        this.error = true;
-      }
+  login(email: FormControl, password: FormControl): void {
+    this.error = false;
+    if (email.valid && password.valid) {
+      this.loginservice
+        .login(email.value, password.value)
+        .then(() => {
+          console.log('Belépés sikeres');
+          this.error = false;
+          this.router.navigateByUrl('/home');
+        })
+        .catch(() => {
+          console.log('Belépés sikertelen');
+          this.error = true;
+        });
     }
   }
 }
