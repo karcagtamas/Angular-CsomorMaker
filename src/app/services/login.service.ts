@@ -42,4 +42,6 @@ export class LoginService {
     user.token = token;
     this.usersCollection.doc(user.userId).update(user);
   }
+
+  login(username: string, password: string) {}
 }
