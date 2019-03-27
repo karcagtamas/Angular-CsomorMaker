@@ -22,4 +22,12 @@ export class PortaComponent implements OnInit {
       console.log(this.Events);
     });
   }
+
+  incrementVisitors(event: string, value: number) {
+    this.portaservice.setVisitor(event, value + 1);
+  }
+
+  decrementVisitors(event: string, value: number) {
+    this.portaservice.setVisitor(event, value - 1);
+  }
 }

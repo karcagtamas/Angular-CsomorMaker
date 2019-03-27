@@ -17,4 +17,8 @@ export class PortaService {
   getEvents() {
     return this.eventCollection.snapshotChanges();
   }
+
+  setVisitor(event: string, value: number) {
+    this.eventCollection.doc(event).update({ visitors: value });
+  }
 }

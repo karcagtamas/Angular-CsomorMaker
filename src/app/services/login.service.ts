@@ -45,7 +45,6 @@ export class LoginService {
   }
 
   isLoggedIn(): boolean {
-    console.log(this.auth.auth.currentUser);
     return this.auth.auth.currentUser === null ? false : true;
   }
 }
