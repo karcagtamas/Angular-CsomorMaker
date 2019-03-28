@@ -29,22 +29,22 @@ export class PortaComponent implements OnInit {
   }
 
   incrementVisitors(event: string, value: number) {
-    this.portaservice.setVisitor(event, value + 1);
+    this.portaservice.setVisitor(event, +value + 1);
   }
 
   decrementVisitors(event: string, value: number) {
     if (value !== 0) {
-      this.portaservice.setVisitor(event, value - 1);
+      this.portaservice.setVisitor(event, +value - 1);
     }
   }
 
   incrementInjured(event: string, value: number) {
-    this.portaservice.setInjured(event, value + 1);
+    this.portaservice.setInjured(event, +value + 1);
   }
 
   decrementInjured(event: string, value: number) {
     if (value !== 0) {
-      this.portaservice.setInjured(event, value - 1);
+      this.portaservice.setInjured(event, +value - 1);
     }
   }
 
