@@ -1,0 +1,81 @@
+<h1 mat-dialog-title>Esemény szerkesztése</h1>
+<div mat-dialog-content>
+  <mat-form-field class="w-100">
+    <input
+      matInput
+      [(ngModel)]="event.name"
+      name="name"
+      placeholder="Esemény neve"
+      [type]="'text'"
+      [formControl]="name"
+      required
+    />
+    <mat-error *ngIf="name.invalid">Kötelező a mező kitöltése</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100">
+    <input
+      matInput
+      [(ngModel)]="event.visitors"
+      name="visitors"
+      placeholder="Esemény nézői"
+      [type]="'number'"
+      [formControl]="visitors"
+      required
+    />
+    <mat-error *ngIf="visitors.invalid">Kötelező a mező kitöltése</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100">
+    <input
+      matInput
+      [(ngModel)]="event.injured"
+      name="injured"
+      placeholder="Esemény sérültjei"
+      [type]="'number'"
+      [formControl]="injured"
+      required
+    />
+    <mat-error *ngIf="injured.invalid">Kötelező a mező kitöltése</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100">
+    <input
+      matInput
+      [(ngModel)]="event.visitorLimit"
+      name="visitorLimit"
+      placeholder="Esemény nézői limit"
+      [type]="'number'"
+      [formControl]="visitorLimit"
+      required
+    />
+    <mat-error *ngIf="visitorLimit.invalid">Kötelező a mező kitöltése</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100">
+    <input
+      matInput
+      [(ngModel)]="event.playerLimit"
+      name="playerLimit"
+      placeholder="Esemény játékos limit"
+      [type]="'number'"
+      [formControl]="playerLimit"
+      required
+    />
+    <mat-error *ngIf="playerLimit.invalid">Kötelező a mező kitöltése</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100">
+    <input
+      matInput
+      [(ngModel)]="event.currentPlayers"
+      name="currentPlayers"
+      placeholder="Esemény játékosainak száma"
+      [type]="'number'"
+      [formControl]="currentPlayers"
+      required
+    />
+    <mat-error *ngIf="currentPlayers.invalid">Kötelező a mező kitöltése</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-secondary m-2" (click)="onNoClick()">Mégsem</button>
+  <button class="btn btn-primary m-2" [mat-dialog-close]="event" cdkFocusInitial [disabled]="invalidInput()">
+    Mentés
+  </button>
+</div>

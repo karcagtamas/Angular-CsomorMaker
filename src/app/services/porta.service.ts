@@ -39,4 +39,12 @@ export class PortaService {
   deleteEvent(event: string) {
     this.eventCollection.doc(event).delete();
   }
+
+  updateEvent(event: Event) {
+    this.eventCollection.doc(event.eventId).update(event);
+  }
+
+  setNewAd(event: string, value: string[]) {
+    this.eventCollection.doc(event).update({ advertisments: value });
+  }
 }

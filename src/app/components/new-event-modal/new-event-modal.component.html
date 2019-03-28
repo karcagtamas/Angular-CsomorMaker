@@ -1,7 +1,15 @@
 <h1 mat-dialog-title>Új esemény felvétele</h1>
 <div mat-dialog-content>
-  <mat-form-field>
-    <input matInput [(ngModel)]="Event.name" name="name" placeholder="Esemény neve" [type]="'text'" [formControl]="name" required />
+  <mat-form-field class="w-100">
+    <input
+      matInput
+      [(ngModel)]="Event.name"
+      name="name"
+      placeholder="Esemény neve"
+      [type]="'text'"
+      [formControl]="name"
+      required
+    />
     <mat-error *ngIf="name.invalid">Kötelező a mező kitöltése</mat-error>
   </mat-form-field>
 </div>

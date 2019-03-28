@@ -3,6 +3,9 @@ import { Event } from '../models/event.model';
 import { PortaService } from '../services/porta.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { NewEventModalComponent } from '../components/new-event-modal/new-event-modal.component';
+import { ModifyEventComponent } from '../components/modify-event/modify-event.component';
+import { isUndefined } from 'util';
+import { AddAdModalComponent } from '../components/add-ad-modal/add-ad-modal.component';
 
 @Component({
   selector: 'app-porta',
@@ -11,6 +14,7 @@ import { NewEventModalComponent } from '../components/new-event-modal/new-event-
 })
 export class PortaComponent implements OnInit {
   Events: Event[] = null;
+  nameOnModify = false;
   constructor(private portaservice: PortaService, public dialog: MatDialog) {}
 
   ngOnInit() {
@@ -21,7 +25,6 @@ export class PortaComponent implements OnInit {
           ...e.payload.doc.data()
         } as Event;
       });
-      console.log(this.Events);
     });
   }
 
@@ -55,7 +58,27 @@ export class PortaComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.portaservice.addEvent(result);
+      if (!isUndefined(result)) {
+        this.portaservice.addEvent(result);
+      }
+    });
+  }
+  openModify(event: Event) {
+    const dialogRef = this.dialog.open(ModifyEventComponent, { width: '300px', data: event });
+    dialogRef.afterClosed().subscribe(result => {
+      if (!isUndefined(result)) {
+        this.portaservice.updateEvent(result);
+      }
+    });
+  }
+
+  openAddAd(event: string, value: string[]) {
+    const dialogRef = this.dialog.open(AddAdModalComponent, { width: '300px' });
+    dialogRef.afterClosed().subscribe(result => {
+      if (!isUndefined(result)) {
+        value.push(result);
+        this.portaservice.setNewAd(event, value);
+      }
     });
   }
 }
