@@ -62,16 +62,18 @@ export class GeneratorComponent implements OnInit {
         if (!generator.workers) {
           generator.workers = [];
         }
-        worker.table = [];
-        for (let i = 0; i < generator.length; i++) {
-          const table = new WorkerTable();
-          table.id = Math.floor((i + generator.start) / 24) + '-' + ((i + generator.start) % 24);
-          table.avaiable = true;
-          table.work = '';
-          worker.table.push(table);
+        if (isUndefined(generator.workers.find(x => x.name === worker.name))) {
+          worker.table = [];
+          for (let i = 0; i < generator.length; i++) {
+            const table = new WorkerTable();
+            table.id = Math.floor((i + generator.start) / 24) + '-' + ((i + generator.start) % 24);
+            table.avaiable = true;
+            table.work = '';
+            worker.table.push(table);
+          }
+          generator.workers.push(worker);
+          this.generatorservice.newGenerator(generator.eventId, generator);
         }
-        generator.workers.push(worker);
-        this.generatorservice.newGenerator(generator.eventId, generator);
       }
     });
   }
@@ -88,15 +90,17 @@ export class GeneratorComponent implements OnInit {
         if (!generator.works) {
           generator.works = [];
         }
-        work.table = [];
-        for (let i = 0; i < generator.length; i++) {
-          const table = new WorkTable();
-          table.id = Math.floor((i + generator.start) / 24) + '-' + ((i + generator.start) % 24);
-          table.worker = '';
-          work.table.push(table);
+        if (isUndefined(generator.works.find(x => x.name === work.name))) {
+          work.table = [];
+          for (let i = 0; i < generator.length; i++) {
+            const table = new WorkTable();
+            table.id = Math.floor((i + generator.start) / 24) + '-' + ((i + generator.start) % 24);
+            table.worker = '';
+            work.table.push(table);
+          }
+          generator.works.push(work);
+          this.generatorservice.newGenerator(generator.eventId, generator);
         }
-        generator.works.push(work);
-        this.generatorservice.newGenerator(generator.eventId, generator);
       }
     });
   }
