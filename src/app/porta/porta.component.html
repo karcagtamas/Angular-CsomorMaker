@@ -1,9 +1,11 @@
-<button class="btn btn-primary m-2" type="button" data-toggle="modal" data-target="newEvent">
+<button class="btn btn-primary m-2" (click)="openDialog()">
   Új esemény létrehozás
 </button>
 <mat-tab-group>
   <mat-tab label="{{ event.name }}" *ngFor="let event of Events">
     <div class="border rounded m-2 p-2">
+      <button class="btn btn-danger float-right m-1" (click)="deleteEvent(event.eventId)">Esemény törlése</button>
+      <button class="btn btn-warning float-right m-1" (click)="openModify(event)">Módosítás</button>
       <h6>
         Esemény: <strong>{{ event.name }}</strong>
       </h6>
@@ -16,33 +18,66 @@
       <h6>
         Nézők: <strong>{{ event.visitors }}</strong>
       </h6>
+      <h6>
+        Sérültek: <strong>{{ event.injured }}</strong>
+      </h6>
+      <h6>
+        Néző limit: <strong>{{ event.visitorLimit }}</strong>
+      </h6>
+      <h6>
+        Játékos limit: <strong>{{ event.playerLimit }}</strong>
+      </h6>
+      <h6>
+        Jelenlegi játékos szám: <strong>{{ event.currentPlayers }}</strong>
+      </h6>
     </div>
-    <div class="border rounded m-2 p-2">
-      <h6>Nézők</h6>
-      <div class="row col-12">
-        <button
-          class="btn btn-outline-success visitor-button m-2"
-          (click)="incrementVisitors(event.eventId, event.visitors)"
-        >
-          +
+    <div class="p-2">
+      <div class="border rounded p-2 row col-12">
+        <div class="col-6">
+          <h6>Nézők</h6>
+          <div class="row col-12">
+            <button
+              class="btn btn-outline-success visitor-button m-2"
+              (click)="incrementVisitors(event.eventId, event.visitors)"
+            >
+              +
+            </button>
+            <button
+              class="btn btn-outline-danger visitor-button m-2"
+              (click)="decrementVisitors(event.eventId, event.visitors)"
+            >
+              -
+            </button>
+          </div>
+        </div>
+        <div class="col-6">
+          <h6>Sérültek</h6>
+          <div class="row col-12">
+            <button
+              class="btn btn-outline-success visitor-button m-2"
+              (click)="incrementInjured(event.eventId, event.injured)"
+            >
+              +
+            </button>
+            <button
+              class="btn btn-outline-danger visitor-button m-2"
+              (click)="decrementInjured(event.eventId, event.injured)"
+            >
+              -
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-2">
+      <div class="border rounded p-2 col-12">
+        <button class="btn btn-info float-right m-1" (click)="openAddAd(event.eventId, event.advertisments)">
+          Reklám hozzáadása
         </button>
-        <button
-          class="btn btn-outline-danger visitor-button m-2"
-          (click)="decrementVisitors(event.eventId, event.visitors)"
-        >
-          -
-        </button>
+
+        <h6>Reklámok</h6>
+        <h6 *ngFor="let ad of event.advertisments" class="border rounded p-2">{{ ad }}</h6>
       </div>
     </div>
   </mat-tab>
 </mat-tab-group>
-
-<div class="modal fade" id="newEvent" tabindex="-1" role="dialog" aria-labelledby="newEventLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5></h5>
-      </div>
-    </div>
-  </div>
-</div>

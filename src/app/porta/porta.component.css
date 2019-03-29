@@ -2,3 +2,11 @@
   width: 100px;
   height: 100px;
 }
+
+.col-12 {
+  margin: 0;
+}
+
+.modify {
+  font-size: 0.5rem;
+}

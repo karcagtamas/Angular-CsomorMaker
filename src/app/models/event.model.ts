@@ -6,4 +6,7 @@ export class Event {
   injured: number;
   visitors: number;
   advertisments: string[];
+  visitorLimit: number;
+  playerLimit: number;
+  currentPlayers: number;
 }

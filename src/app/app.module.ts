@@ -34,6 +34,9 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 import { environment } from 'src/environments/environment';
+import { NewEventModalComponent } from './components/new-event-modal/new-event-modal.component';
+import { ModifyEventComponent } from './components/modify-event/modify-event.component';
+import { AddAdModalComponent } from './components/add-ad-modal/add-ad-modal.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,10 @@ import { environment } from 'src/environments/environment';
     PortaComponent,
     NavigatorComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    NewEventModalComponent,
+    ModifyEventComponent,
+    AddAdModalComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +77,8 @@ import { environment } from 'src/environments/environment';
     MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [NewEventModalComponent, ModifyEventComponent, AddAdModalComponent],
+  exports: [NewEventModalComponent, ModifyEventComponent, AddAdModalComponent]
 })
 export class AppModule {}
