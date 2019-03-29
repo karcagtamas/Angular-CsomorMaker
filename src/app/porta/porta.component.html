@@ -71,11 +71,14 @@
     </div>
     <div class="p-2">
       <div class="border rounded p-2 col-12">
+        <button class="btn btn-danger float-right m-1" (click)="clearAds(event.eventId)">
+          Reklámok tisztítása
+        </button>
         <button class="btn btn-info float-right m-1" (click)="openAddAd(event.eventId, event.advertisments)">
           Reklám hozzáadása
         </button>
 
-        <h6>Reklámok</h6>
+        <h6 class="mb-4">Reklámok</h6>
         <h6 *ngFor="let ad of event.advertisments" class="border rounded p-2" [innerHtml]="ad | trustHTML"></h6>
       </div>
     </div>

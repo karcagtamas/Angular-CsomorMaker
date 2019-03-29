@@ -1,0 +1,59 @@
+<h1 mat-dialog-title>Új esemény felvétele</h1>
+<div mat-dialog-content>
+  <mat-form-field class="w-100">
+    <input
+      matInput
+      [(ngModel)]="Generator.start"
+      name="start"
+      placeholder="Esemény kezdete (óra)"
+      [type]="'number'"
+      [formControl]="start"
+      required
+    />
+    <mat-error *ngIf="start.invalid">Kötelező a mező kitöltése</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100">
+    <input
+      matInput
+      [(ngModel)]="Generator.end"
+      name="end"
+      placeholder="Esemény vége (óra)"
+      [type]="'number'"
+      [formControl]="end"
+      required
+    />
+    <mat-error *ngIf="end.invalid">Kötelező a mező kitöltése</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100">
+    <input
+      matInput
+      [(ngModel)]="Generator.days"
+      name="days"
+      placeholder="Esemény napok"
+      [type]="'number'"
+      [formControl]="days"
+      required
+    />
+    <mat-error *ngIf="days.invalid">Kötelező a mező kitöltése</mat-error>
+  </mat-form-field>
+</div>
+<mat-form-field>
+  <mat-label>Esemény</mat-label>
+  <mat-select [(ngModel)]="Generator.eventId" name="eventselect" [formControl]="eventselect">
+    <mat-option *ngFor="let event of Events" [value]="event.eventId">
+      {{ event.name }}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="eventselect.invalid">Kötelező a mező kitöltése</mat-error>
+</mat-form-field>
+<div mat-dialog-actions>
+  <button class="btn btn-secondary m-2" (click)="onNoClick()">Mégsem</button>
+  <button
+    class="btn btn-primary m-2"
+    [mat-dialog-close]="Generator"
+    cdkFocusInitial
+    [disabled]="start.invalid || end.invalid || days.invalid || eventselect.invalid"
+  >
+    Mentés
+  </button>
+</div>

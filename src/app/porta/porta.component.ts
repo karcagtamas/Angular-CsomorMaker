@@ -69,6 +69,11 @@ export class PortaComponent implements OnInit {
     const dialogRef = this.dialog.open(ModifyEventComponent, { width: '300px', data: event });
     dialogRef.afterClosed().subscribe(result => {
       if (!isUndefined(result)) {
+        result.currentPlayers = +result.currentPlayers;
+        result.playerLimit = +result.playerLimit;
+        result.visitorLimit = +result.visitorLimit;
+        result.visitors = +result.visitors;
+        result.injured = +result.injured;
         this.portaservice.updateEvent(result);
       }
     });
@@ -78,7 +83,7 @@ export class PortaComponent implements OnInit {
     const dialogRef = this.dialog.open(AddAdModalComponent, { width: '300px' });
     dialogRef.afterClosed().subscribe(result => {
       if (!isUndefined(result)) {
-        let str: string = result;
+        const str: string = result;
         if (!value) {
           value = [];
         }
@@ -86,5 +91,9 @@ export class PortaComponent implements OnInit {
         this.portaservice.setNewAd(event, value);
       }
     });
+  }
+
+  clearAds(event: string) {
+    this.portaservice.clearAds(event);
   }
 }

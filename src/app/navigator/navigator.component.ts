@@ -12,6 +12,7 @@ import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
 export class NavigatorComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
   isLoggedIn = false;
+  email = '';
 
   // tslint:disable-next-line: variable-name
   private _mobileQueryListener: () => void;
@@ -27,6 +28,7 @@ export class NavigatorComponent implements OnDestroy {
     // tslint:disable-next-line: deprecation
     this.mobileQuery.addListener(this._mobileQueryListener);
     this.getIsLoggedIn();
+    this.getEmail();
   }
 
   ngOnDestroy(): void {
@@ -48,6 +50,12 @@ export class NavigatorComponent implements OnDestroy {
   getIsLoggedIn() {
     this.loginservice.isLoggedIn().then(res => {
       this.isLoggedIn = res;
+    });
+  }
+
+  getEmail() {
+    this.loginservice.getEmail().then(res => {
+      this.email = res;
     });
   }
 }

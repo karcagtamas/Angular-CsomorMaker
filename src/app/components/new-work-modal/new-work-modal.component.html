@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Új poszt felvétele</h1>
+<div mat-dialog-content>
+  <mat-form-field class="w-100">
+    <input
+      matInput
+      [(ngModel)]="work.name"
+      name="name"
+      placeholder="Poszt neve"
+      [type]="'text'"
+      [formControl]="name"
+      required
+    />
+    <mat-error *ngIf="name.invalid">Kötelező a mező kitöltése</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-secondary m-2" (click)="onNoClick()">Mégsem</button>
+  <button class="btn btn-primary m-2" [mat-dialog-close]="work" cdkFocusInitial [disabled]="name.invalid">
+    Mentés
+  </button>
+</div>

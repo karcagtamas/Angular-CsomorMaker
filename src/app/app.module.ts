@@ -15,7 +15,8 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatTabsModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSelectModule
 } from '@angular/material';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -38,6 +39,9 @@ import { NewEventModalComponent } from './components/new-event-modal/new-event-m
 import { ModifyEventComponent } from './components/modify-event/modify-event.component';
 import { AddAdModalComponent } from './components/add-ad-modal/add-ad-modal.component';
 import { TrustHTMLPipe } from './pipes/trust-html.pipe';
+import { NewGeneratorModalComponent } from './components/new-generator-modal/new-generator-modal.component';
+import { NewWorkerModalComponent } from './components/new-worker-modal/new-worker-modal.component';
+import { NewWorkModalComponent } from './components/new-work-modal/new-work-modal.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +56,10 @@ import { TrustHTMLPipe } from './pipes/trust-html.pipe';
     NewEventModalComponent,
     ModifyEventComponent,
     AddAdModalComponent,
-    TrustHTMLPipe
+    TrustHTMLPipe,
+    NewGeneratorModalComponent,
+    NewWorkerModalComponent,
+    NewWorkModalComponent
   ],
   imports: [
     BrowserModule,
@@ -76,11 +83,26 @@ import { TrustHTMLPipe } from './pipes/trust-html.pipe';
     AngularFireAuthModule,
     RouterModule,
     MatTabsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [NewEventModalComponent, ModifyEventComponent, AddAdModalComponent],
-  exports: [NewEventModalComponent, ModifyEventComponent, AddAdModalComponent]
+  entryComponents: [
+    NewEventModalComponent,
+    ModifyEventComponent,
+    AddAdModalComponent,
+    NewGeneratorModalComponent,
+    NewWorkerModalComponent,
+    NewWorkModalComponent
+  ],
+  exports: [
+    NewEventModalComponent,
+    ModifyEventComponent,
+    AddAdModalComponent,
+    NewGeneratorModalComponent,
+    NewWorkerModalComponent,
+    NewWorkModalComponent
+  ]
 })
 export class AppModule {}

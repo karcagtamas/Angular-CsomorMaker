@@ -1,3 +1,4 @@
+import { Generator } from './generator.model';
 export class Event {
   eventId: string;
   name: string;
@@ -9,4 +10,5 @@ export class Event {
   visitorLimit: number;
   playerLimit: number;
   currentPlayers: number;
+  generator?: Generator;
 }

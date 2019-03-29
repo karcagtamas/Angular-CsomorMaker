@@ -47,4 +47,8 @@ export class PortaService {
   setNewAd(event: string, value: string[]) {
     this.eventCollection.doc(event).update({ advertisments: value });
   }
+
+  clearAds(event: string) {
+    this.eventCollection.doc(event).update({ advertisments: [] });
+  }
 }

@@ -18,6 +18,7 @@ export class ModifyEventComponent implements OnInit {
   injured = new FormControl('', [Validators.required]);
   playerLimit = new FormControl('', [Validators.required]);
   currentPlayers = new FormControl('', [Validators.required]);
+  bosses = new FormControl('', [Validators.required]);
   constructor(public dialogRef: MatDialogRef<ModifyEventComponent>, @Inject(MAT_DIALOG_DATA) public data: Event) {}
 
   ngOnInit() {
@@ -35,7 +36,8 @@ export class ModifyEventComponent implements OnInit {
       this.visitorLimit.invalid ||
       this.injured.invalid ||
       this.playerLimit.invalid ||
-      this.currentPlayers.invalid
+      this.currentPlayers.invalid ||
+      this.bosses.invalid
     ) {
       return true;
     } else {

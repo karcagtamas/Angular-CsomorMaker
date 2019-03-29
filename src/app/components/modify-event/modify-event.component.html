@@ -72,6 +72,18 @@
     />
     <mat-error *ngIf="currentPlayers.invalid">Kötelező a mező kitöltése</mat-error>
   </mat-form-field>
+  <mat-form-field class="w-100">
+    <input
+      matInput
+      [(ngModel)]="event.bosses"
+      name="bosses"
+      placeholder="Esemény főszervezői"
+      [type]="'text'"
+      [formControl]="bosses"
+      required
+    />
+    <mat-error *ngIf="bosses.invalid">Kötelező a mező kitöltése</mat-error>
+  </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button class="btn btn-secondary m-2" (click)="onNoClick()">Mégsem</button>

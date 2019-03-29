@@ -32,4 +32,13 @@ export class LoginService {
       return false;
     }
   }
+
+  async getEmail(): Promise<string> {
+    const user = await this.auth.authState.pipe(first()).toPromise();
+    if (user) {
+      return user.email;
+    } else {
+      return '';
+    }
+  }
 }
