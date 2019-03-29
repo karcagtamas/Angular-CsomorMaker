@@ -6,6 +6,10 @@ import { NewGeneratorModalComponent } from '../components/new-generator-modal/ne
 import { isUndefined } from 'util';
 import { NewWorkerModalComponent } from '../components/new-worker-modal/new-worker-modal.component';
 import { Generator } from './../models/generator.model';
+import { Work } from '../models/work.model';
+import { WorkTable } from '../models/work.table.model';
+import { Worker } from '../models/worker.model';
+import { WorkerTable } from '../models/worker.table.model';
 
 @Component({
   selector: 'app-generator',
@@ -54,10 +58,19 @@ export class GeneratorComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (!isUndefined(result)) {
+        const worker: Worker = result;
         if (!generator.workers) {
           generator.workers = [];
         }
-        generator.workers.push(result);
+        worker.table = [];
+        for (let i = 0; i < generator.length; i++) {
+          const table = new WorkerTable();
+          table.id = Math.floor((i + generator.start) / 24) + '-' + ((i + generator.start) % 24);
+          table.avaiable = true;
+          table.work = '';
+          worker.table.push(table);
+        }
+        generator.workers.push(worker);
         this.generatorservice.newGenerator(generator.eventId, generator);
       }
     });
@@ -71,12 +84,30 @@ export class GeneratorComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (!isUndefined(result)) {
+        const work: Work = result;
         if (!generator.works) {
           generator.works = [];
         }
-        generator.works.push(result);
+        work.table = [];
+        for (let i = 0; i < generator.length; i++) {
+          const table = new WorkTable();
+          table.id = Math.floor((i + generator.start) / 24) + '-' + ((i + generator.start) % 24);
+          table.worker = '';
+          work.table.push(table);
+        }
+        generator.works.push(work);
         this.generatorservice.newGenerator(generator.eventId, generator);
       }
     });
+  }
+
+  deleteWork(generator: Generator, work: string) {
+    generator.works = generator.works.filter(x => x.name !== work);
+    this.generatorservice.newGenerator(generator.eventId, generator);
+  }
+
+  deleteWorker(generator: Generator, worker: string) {
+    generator.workers = generator.workers.filter(x => x.name !== worker);
+    this.generatorservice.newGenerator(generator.eventId, generator);
   }
 }

@@ -42,6 +42,7 @@ import { TrustHTMLPipe } from './pipes/trust-html.pipe';
 import { NewGeneratorModalComponent } from './components/new-generator-modal/new-generator-modal.component';
 import { NewWorkerModalComponent } from './components/new-worker-modal/new-worker-modal.component';
 import { NewWorkModalComponent } from './components/new-work-modal/new-work-modal.component';
+import { HoursPipe } from './pipes/hours.pipe';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { NewWorkModalComponent } from './components/new-work-modal/new-work-moda
     TrustHTMLPipe,
     NewGeneratorModalComponent,
     NewWorkerModalComponent,
-    NewWorkModalComponent
+    NewWorkModalComponent,
+    HoursPipe
   ],
   imports: [
     BrowserModule,

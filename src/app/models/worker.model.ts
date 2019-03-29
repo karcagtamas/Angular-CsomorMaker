@@ -1,8 +1,6 @@
+import { WorkerTable } from './worker.table.model';
+
 export class Worker {
   name: string;
-  table: {
-    id: string;
-    work: string;
-    avaiable: boolean;
-  };
+  table: WorkerTable[];
 }

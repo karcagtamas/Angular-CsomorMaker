@@ -5,13 +5,19 @@
   <mat-tab label="{{ event.name }}" *ngFor="let event of EventsWithGenerator">
     <div class="p-2">
       <button class="btn btn-outline-warning float-right m-1">Generálás</button>
+      <h6>Esemény kezdete: {{ event.generator.start | hours }}</h6>
+      <h6>Esemény vége: {{ event.generator.end | hours }}</h6>
+      <h6>Esemény nap száma: {{ event.generator.days }}</h6>
+      <h6>Esemény hossza: {{ event.generator.length | hours }}</h6>
       <div class="row col-12 border rounded">
         <div class="col-6 p-2">
           <div class="border rounded p-2">
             <button class="btn btn-outline-primary float-right" (click)="newWork(event.generator)">+ Új poszt</button>
             <h6 class="mb-3"><strong class="mb-4">Posztok</strong></h6>
             <div *ngFor="let work of event.generator.works">
-              <button class="btn btn-outline-danger float-right">Törlés</button>
+              <button class="btn btn-outline-danger float-right" (click)="deleteWork(event.generator, work.name)">
+                Törlés
+              </button>
               <h6 class="my-4">{{ work.name }}</h6>
             </div>
           </div>
@@ -21,7 +27,9 @@
             <button class="btn btn-outline-primary float-right" (click)="newWorker(event.generator)">+ Új humán</button>
             <h6 class="mb-3"><strong class="mb-4">Humánok</strong></h6>
             <div *ngFor="let worker of event.generator.workers">
-              <button class="btn btn-outline-danger float-right">Törlés</button>
+              <button class="btn btn-outline-danger float-right" (click)="deleteWorker(event.generator, worker.name)">
+                Törlés
+              </button>
               <h6 class="my-4">{{ worker.name }}</h6>
             </div>
           </div>
