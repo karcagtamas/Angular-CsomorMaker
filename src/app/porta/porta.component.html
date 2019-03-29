@@ -38,7 +38,7 @@
           <div class="row col-12">
             <button
               class="btn btn-outline-success visitor-button m-2"
-              (click)="incrementVisitors(event.eventId, event.visitors)"
+              (click)="incrementVisitors(event.eventId, +event.visitors, +event.visitorLimit)"
             >
               +
             </button>

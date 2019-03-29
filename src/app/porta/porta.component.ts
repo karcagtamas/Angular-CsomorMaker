@@ -28,8 +28,10 @@ export class PortaComponent implements OnInit {
     });
   }
 
-  incrementVisitors(event: string, value: number) {
-    this.portaservice.setVisitor(event, +value + 1);
+  incrementVisitors(event: string, value: number, max: number) {
+    if (max !== value) {
+      this.portaservice.setVisitor(event, +value + 1);
+    }
   }
 
   decrementVisitors(event: string, value: number) {
