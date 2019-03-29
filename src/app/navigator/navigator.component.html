@@ -14,21 +14,16 @@
     >
       <mat-nav-list>
         <div class="text-center">Karcag Tamás</div>
-        <div
-          class="border rounded element"
-          [routerLink]="['/generator']"
-          routerLinkActive="active"
-          *ngIf="isLoggedIn()"
-        >
+        <div class="border rounded element" [routerLink]="['/generator']" routerLinkActive="active" *ngIf="isLoggedIn">
           Generátor
         </div>
-        <div class="border rounded element" [routerLink]="['/porta']" routerLinkActive="active" *ngIf="isLoggedIn()">
+        <div class="border rounded element" [routerLink]="['/porta']" routerLinkActive="active" *ngIf="isLoggedIn">
           Porta
         </div>
-        <div class="border rounded element" [routerLink]="['/admin']" routerLinkActive="active" *ngIf="isLoggedIn()">
+        <div class="border rounded element" [routerLink]="['/admin']" routerLinkActive="active" *ngIf="isLoggedIn">
           Admin
         </div>
-        <div class="border rounded element" (click)="logout()" *ngIf="isLoggedIn()">Kijelentkezés</div>
+        <div class="border rounded element" (click)="logout()" *ngIf="isLoggedIn">Kijelentkezés</div>
       </mat-nav-list>
     </mat-sidenav>
 

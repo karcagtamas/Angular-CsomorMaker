@@ -76,7 +76,8 @@ export class PortaComponent implements OnInit {
     const dialogRef = this.dialog.open(AddAdModalComponent, { width: '300px' });
     dialogRef.afterClosed().subscribe(result => {
       if (!isUndefined(result)) {
-        value.push(result);
+        let str: string = result;
+        value.push(str.replace('<br>', '&#13;'));
         this.portaservice.setNewAd(event, value);
       }
     });

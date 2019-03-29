@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
+import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
 
 @Component({
   selector: 'app-navigator',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class NavigatorComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
+  isLoggedIn = false;
 
   // tslint:disable-next-line: variable-name
   private _mobileQueryListener: () => void;
@@ -24,6 +26,7 @@ export class NavigatorComponent implements OnDestroy {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     // tslint:disable-next-line: deprecation
     this.mobileQuery.addListener(this._mobileQueryListener);
+    this.getIsLoggedIn();
   }
 
   ngOnDestroy(): void {
@@ -42,8 +45,9 @@ export class NavigatorComponent implements OnDestroy {
         window.alert('Sikeretelen kijelentkezés!');
       });
   }
-  isLoggedIn() {
-    console.log(this.loginservice.isLoggedIn());
-    return this.loginservice.isLoggedIn();
+  getIsLoggedIn() {
+    this.loginservice.isLoggedIn().then(res => {
+      this.isLoggedIn = res;
+    });
   }
 }
