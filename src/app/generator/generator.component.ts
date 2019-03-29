@@ -110,4 +110,7 @@ export class GeneratorComponent implements OnInit {
     generator.workers = generator.workers.filter(x => x.name !== worker);
     this.generatorservice.newGenerator(generator.eventId, generator);
   }
+  generate(event: Event) {
+    this.generatorservice.newGenerator(event.generator.eventId, event.generator);
+  }
 }

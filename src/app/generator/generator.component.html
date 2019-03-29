@@ -4,7 +4,7 @@
 <mat-tab-group>
   <mat-tab label="{{ event.name }}" *ngFor="let event of EventsWithGenerator">
     <div class="p-2">
-      <button class="btn btn-outline-warning float-right m-1">Generálás</button>
+      <button class="btn btn-outline-warning float-right m-1" (click)="generate(event)">Generálás</button>
       <h6>Esemény kezdete: {{ event.generator.start | hours }}</h6>
       <h6>Esemény vége: {{ event.generator.end | hours }}</h6>
       <h6>Esemény nap száma: {{ event.generator.days }}</h6>
@@ -31,6 +31,9 @@
                 Törlés
               </button>
               <h6 class="my-4">{{ worker.name }}</h6>
+              <mat-checkbox *ngFor="let status of worker.table" [(ngModel)]="status.avaiable" class="mr-3">{{
+                status.id
+              }}</mat-checkbox>
             </div>
           </div>
         </div>
