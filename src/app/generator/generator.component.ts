@@ -33,7 +33,7 @@ export class GeneratorComponent implements OnInit {
     });
   }
 
-  newGenerator(event: string) {
+  newGenerator() {
     const dialogRef = this.dialog.open(NewGeneratorModalComponent, {
       width: '300px',
       data: this.Events
