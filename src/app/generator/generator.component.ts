@@ -112,5 +112,6 @@ export class GeneratorComponent implements OnInit {
   }
   generate(event: Event) {
     this.generatorservice.newGenerator(event.generator.eventId, event.generator);
+    window.alert('A generálás sikeres! :D Vagy nem?');
   }
 }
