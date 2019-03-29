@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 })
 export class NavigatorComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
-  isLoggedIn: boolean;
 
   // tslint:disable-next-line: variable-name
   private _mobileQueryListener: () => void;
@@ -42,5 +41,9 @@ export class NavigatorComponent implements OnDestroy {
       .catch(() => {
         window.alert('Sikeretelen kijelentkezés!');
       });
+  }
+  isLoggedIn() {
+    console.log(this.loginservice.isLoggedIn());
+    return this.loginservice.isLoggedIn();
   }
 }
