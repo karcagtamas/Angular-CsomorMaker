@@ -77,7 +77,10 @@ export class PortaComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (!isUndefined(result)) {
         let str: string = result;
-        value.push(str.replace('<br>', '&#13;'));
+        if (!value) {
+          value = [];
+        }
+        value.push(str.replace(/\n/g, '<br>'));
         this.portaservice.setNewAd(event, value);
       }
     });

@@ -37,6 +37,7 @@ import { environment } from 'src/environments/environment';
 import { NewEventModalComponent } from './components/new-event-modal/new-event-modal.component';
 import { ModifyEventComponent } from './components/modify-event/modify-event.component';
 import { AddAdModalComponent } from './components/add-ad-modal/add-ad-modal.component';
+import { TrustHTMLPipe } from './pipes/trust-html.pipe';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { AddAdModalComponent } from './components/add-ad-modal/add-ad-modal.comp
     PageNotFoundComponent,
     NewEventModalComponent,
     ModifyEventComponent,
-    AddAdModalComponent
+    AddAdModalComponent,
+    TrustHTMLPipe
   ],
   imports: [
     BrowserModule,

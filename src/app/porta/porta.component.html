@@ -76,7 +76,7 @@
         </button>
 
         <h6>Reklámok</h6>
-        <h6 *ngFor="let ad of event.advertisments" class="border rounded p-2">{{ ad }}</h6>
+        <h6 *ngFor="let ad of event.advertisments" class="border rounded p-2" [innerHtml]="ad | trustHTML"></h6>
       </div>
     </div>
   </mat-tab>
