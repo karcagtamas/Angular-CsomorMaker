@@ -13,6 +13,7 @@ export class NavigatorComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
   isLoggedIn = false;
   email = '';
+  interval;
 
   // tslint:disable-next-line: variable-name
   private _mobileQueryListener: () => void;
@@ -29,11 +30,14 @@ export class NavigatorComponent implements OnDestroy {
     this.mobileQuery.addListener(this._mobileQueryListener);
     this.getIsLoggedIn();
     this.getEmail();
+    this.stopInterval();
+    this.startInterval();
   }
 
   ngOnDestroy(): void {
     // tslint:disable-next-line: deprecation
     this.mobileQuery.removeListener(this._mobileQueryListener);
+    this.stopInterval();
   }
 
   logout(): void {
@@ -57,5 +61,16 @@ export class NavigatorComponent implements OnDestroy {
     this.loginservice.getEmail().then(res => {
       this.email = res;
     });
+  }
+
+  startInterval() {
+    this.interval = setInterval(() => {
+      this.getIsLoggedIn();
+      this.getEmail();
+    }, 30000);
+  }
+
+  stopInterval() {
+    clearInterval(this.interval);
   }
 }
