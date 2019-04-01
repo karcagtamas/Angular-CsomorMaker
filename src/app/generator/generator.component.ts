@@ -120,16 +120,7 @@ export class GeneratorComponent implements OnInit {
     const fullCount: number = event.generator.works.length * event.generator.length;
     this.setWorkers(event.generator);
     console.log(event.generator.workers);
-    const row: Worker[] = [];
     let index = 0;
-    for (let i = 0; i < fullCount; i++) {
-      row.push(event.generator.workers[index]);
-      index++;
-      if (index === event.generator.workers.length) {
-        index = 0;
-      }
-    }
-    index = 0;
 
     for (let i = 0; i < event.generator.length; i++) {
       const tableId = Math.floor((i + event.generator.start) / 24) + '-' + ((i + event.generator.start) % 24);
@@ -147,8 +138,10 @@ export class GeneratorComponent implements OnInit {
             const newworker = event.generator.workers[newindex];
             const newTableIdIndex = Math.floor(Math.random() * newworker.table.length);
             const newTableId = newworker.table[newTableIdIndex].id;
-            console.log('Régi', worker);
-            console.log('Új', newworker);
+            console.log('Régi', { ...worker });
+            console.log('Új', { ...newworker });
+            console.log('régiId', tableId);
+            console.log('újId', newTableId);
 
             if (
               newworker.table.find(x => x.id === tableId).avaiable &&
@@ -166,23 +159,31 @@ export class GeneratorComponent implements OnInit {
             }
           }
         } while (
-          worker.workerHours === 0 ||
-          !worker.table.find(x => x.id === tableId).avaiable ||
-          worker.table.find(x => x.id === tableId).work
+          (worker.workerHours === 0 ||
+            !worker.table.find(x => x.id === tableId).avaiable ||
+            worker.table.find(x => x.id === tableId).work) &&
+          count < 250
         );
-        event.generator.works[j].table.find(x => x.id === tableId).worker = worker.name;
-        worker.workerHours--;
-        worker.table.find(x => x.id === tableId).work = event.generator.works[j].name;
+        if (count < 250) {
+          event.generator.works[j].table.find(x => x.id === tableId).worker = worker.name;
+          worker.workerHours--;
+          worker.table.find(x => x.id === tableId).work = event.generator.works[j].name;
+        }
       }
     }
     console.log('Works', event.generator.works);
     console.log('Workers', event.generator.workers);
+    this.generatorservice.newGenerator(event.eventId, event.generator);
   }
 
   setWorkers(generator: Generator) {
     for (const i of generator.workers) {
       i.workerHours = 0;
+      for (const j of i.table) {
+        j.work = '';
+      }
     }
+    console.log(generator);
     let hours = generator.length * generator.works.length;
     let index = 0;
     do {
