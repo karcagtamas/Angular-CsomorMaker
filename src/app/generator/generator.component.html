@@ -38,6 +38,10 @@
           </div>
         </div>
       </div>
+      <div *ngFor="let work of event.generator.works">
+        {{ work.name }}
+        <div *ngFor="let item of work.table">{{ item.id }} - {{ item.worker }}</div>
+      </div>
     </div>
   </mat-tab>
 </mat-tab-group>

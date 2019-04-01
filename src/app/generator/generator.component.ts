@@ -117,5 +117,93 @@ export class GeneratorComponent implements OnInit {
   generate(event: Event) {
     this.generatorservice.newGenerator(event.generator.eventId, event.generator);
     window.alert('A generálás sikeres! :D Vagy nem?');
+    const fullCount: number = event.generator.works.length * event.generator.length;
+    this.setWorkers(event.generator);
+    console.log(event.generator.workers);
+    const row: Worker[] = [];
+    let index = 0;
+    for (let i = 0; i < fullCount; i++) {
+      row.push(event.generator.workers[index]);
+      index++;
+      if (index === event.generator.workers.length) {
+        index = 0;
+      }
+    }
+    index = 0;
+
+    for (let i = 0; i < event.generator.length; i++) {
+      const tableId = Math.floor((i + event.generator.start) / 24) + '-' + ((i + event.generator.start) % 24);
+      for (let j = 0; j < event.generator.works.length; j++) {
+        let worker: Worker;
+        let count = 0;
+        do {
+          index = Math.floor(Math.random() * event.generator.workers.length);
+          worker = event.generator.workers[index];
+          // console.log(worker);
+          count++;
+          console.log(count);
+          if (count >= 100) {
+            const newindex = Math.floor(Math.random() * event.generator.workers.length);
+            const newworker = event.generator.workers[newindex];
+            const newTableIdIndex = Math.floor(Math.random() * newworker.table.length);
+            const newTableId = newworker.table[newTableIdIndex].id;
+            console.log('Régi', worker);
+            console.log('Új', newworker);
+
+            if (
+              newworker.table.find(x => x.id === tableId).avaiable &&
+              !newworker.table.find(x => x.id === tableId).work &&
+              worker.workerHours !== 0 &&
+              worker.table.find(x => x.id === newTableId).avaiable &&
+              !worker.table.find(x => x.id === newTableId).work
+            ) {
+              console.log('asdasdasd');
+              worker.table.find(x => x.id === newTableId).work = newworker.table.find(x => x.id === newTableId).work;
+              worker.workerHours--;
+              newworker.table.find(x => x.id === newTableId).work = '';
+              newworker.workerHours++;
+              worker = newworker;
+            }
+          }
+        } while (
+          worker.workerHours === 0 ||
+          !worker.table.find(x => x.id === tableId).avaiable ||
+          worker.table.find(x => x.id === tableId).work
+        );
+        event.generator.works[j].table.find(x => x.id === tableId).worker = worker.name;
+        worker.workerHours--;
+        worker.table.find(x => x.id === tableId).work = event.generator.works[j].name;
+      }
+    }
+    console.log('Works', event.generator.works);
+    console.log('Workers', event.generator.workers);
+  }
+
+  setWorkers(generator: Generator) {
+    for (const i of generator.workers) {
+      i.workerHours = 0;
+    }
+    let hours = generator.length * generator.works.length;
+    let index = 0;
+    do {
+      if (generator.workers[index].workerHours < this.avaiableHours(generator.workers[index])) {
+        generator.workers[index].workerHours++;
+        hours--;
+      }
+      index++;
+      if (index === generator.workers.length) {
+        index = 0;
+      }
+    } while (hours > 0);
+  }
+
+  avaiableHours(worker: Worker) {
+    let count = 0;
+    worker.table.forEach(i => {
+      if (i.avaiable) {
+        count++;
+      }
+    });
+    return count;
   }
 }
