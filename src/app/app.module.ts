@@ -45,6 +45,8 @@ import { NewWorkerModalComponent } from './components/new-worker-modal/new-worke
 import { NewWorkModalComponent } from './components/new-work-modal/new-work-modal.component';
 import { HoursPipe } from './pipes/hours.pipe';
 import { ConvertToHourPipe } from './pipes/convert-to-hour.pipe';
+import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+
 
 @NgModule({
   declarations: [
@@ -90,7 +92,8 @@ import { ConvertToHourPipe } from './pipes/convert-to-hour.pipe';
     MatTabsModule,
     MatDialogModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    PDFExportModule
   ],
   providers: [],
   bootstrap: [AppComponent],
