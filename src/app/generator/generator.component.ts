@@ -114,60 +114,86 @@ export class GeneratorComponent implements OnInit {
     generator.workers = generator.workers.filter(x => x.name !== worker);
     this.generatorservice.newGenerator(generator.eventId, generator);
   }
+
+  generateTableId(start: number, param: number): string {
+    return Math.floor((param + start) / 24) + '-' + ((param + start) % 24);
+  }
+
   generate(event: Event) {
     if (this.checkInput(event)) {
-      const limit = 500;
-      this.generatorservice.newGenerator(event.generator.eventId, event.generator);
-      window.alert('A generálás sikeres! :D Vagy nem?');
-      const fullCount: number = event.generator.works.length * event.generator.length;
-      this.setWorkers(event.generator);
-      this.setWorks(event.generator);
-      let index = 0;
-      let stop = true;
+      let stop = true; // Leállító segéd változó
+      const limit = 500; // Meddig pörögjön a ciklus míg fel nem adja
+      this.setWorkers(event.generator); // Beállítja a Humánokat
+      this.setWorks(event.generator); // Beállíva a Posztokat
 
+      let index = 0;
+
+      // For ciklus az esemény órái alapján (sorok)
       for (let i = 0; i < event.generator.length && stop; i++) {
-        const tableId = Math.floor((i + event.generator.start) / 24) + '-' + ((i + event.generator.start) % 24);
+        const tableId = this.generateTableId(event.generator.start, i); // Az adott sor és oszlop meghatározó Id-ja
+
+        // Posztok az adott soron (oszlopok)
         for (let j = 0; j < event.generator.works.length && stop; j++) {
           let worker: Worker;
-          let count = 0;
+          let count = 0; // Segéd változó (stop)
           do {
+            // Random humán lementése
             index = Math.floor(Math.random() * event.generator.workers.length);
             worker = event.generator.workers[index];
             count++;
             console.log(count);
+
+            // Ha már több mint 100-stor lefutott, akkor próbája meg kicserélgetni régebbi emberrekkel, akik tudnának jönni
             if (count >= 100) {
-              const newindex = Math.floor(Math.random() * event.generator.workers.length);
-              const newworker = event.generator.workers[newindex];
-              const newTableIdIndex = Math.floor(Math.random() * newworker.table.length);
-              const newTableId = newworker.table[newTableIdIndex].id;
-              /*               console.log('régiId', tableId);
+              const newindex = Math.floor(Math.random() * event.generator.workers.length); // Új humány indexe
+              const newworker = event.generator.workers[newindex]; // Új humán
+              /*               const newTableIdIndex = Math.floor(Math.random() * newworker.table.length); // Új tábla azonosító indexe
+              const newTableId = newworker.table[newTableIdIndex].id; */
+
+              const param = Math.floor(Math.random() * event.generator.length); // Véletlen paraméter az azonosítóhoz
+              const newTableId = this.generateTableId(event.generator.start, param); // Új tábla azonosító
+
+              console.log('régiId', tableId);
               console.log('régiElérhető', worker.table.find(x => x.id === newTableId).avaiable);
               console.log('régiMunka', worker.table.find(x => x.id === newTableId).avaiable);
               console.log('újId', newTableId);
               console.log('újElérhető', newworker.table.find(x => x.id === tableId).avaiable);
-              console.log('újMunka', newworker.table.find(x => x.id === tableId).work); */
+              console.log('újMunka', newworker.table.find(x => x.id === tableId).work);
 
+              const newWorkerTableElement = newworker.table.find(x => x.id === tableId); // Új humán a régi helyen
+              const workerTableNewElement = worker.table.find(x => x.id === newTableId); // Régi humán az új helyen
+
+              // Ha az új humán megfelelő a régi helyen és a régi humán megfelelő
               if (
-                newworker.table.find(x => x.id === tableId).avaiable &&
+                newWorkerTableElement.avaiable &&
+                !newWorkerTableElement.work &&
                 worker.workerHours !== 0 &&
-                worker.table.find(x => x.id === newTableId).avaiable &&
-                !worker.table.find(x => x.id === newTableId).work &&
+                workerTableNewElement.avaiable &&
+                !workerTableNewElement.work &&
                 newTableId !== tableId
               ) {
-                const addedWorkName = newworker.table.find(x => x.id === newTableId).work;
-                /* console.log('Hozzáadott név', addedWorkName); */
-                worker.table.find(x => x.id === newTableId).work = addedWorkName;
+                const addedWorkName = newworker.table.find(x => x.id === newTableId).work; // Hozzáadandő poszt neve
+
+                console.log('Hozzáadott név', addedWorkName);
+
+                workerTableNewElement.work = addedWorkName; // A régi humán új helyére mentjük a posztot
+                // Ha a poszt név nem üres, akkor csökkentjük az óra számot
                 if (addedWorkName) {
                   worker.workerHours--;
                 }
-                newworker.table.find(x => x.id === newTableId).work = '';
-                newworker.workerHours++;
+
+                newworker.table.find(x => x.id === newTableId).work = ''; // Az új humán új helyén lévő posztot üresre álllítjuk
+                newworker.workerHours++; // Az új humán óráit növeljük
+
+                // Ha a poszt név nem üres, akkor belerakjuk az új eredményt a poszt táblájába
                 if (addedWorkName) {
                   event.generator.works
                     .find(x => x.name === addedWorkName)
                     .table.find(x => x.id === newTableId).worker = worker.name;
-                  worker = newworker;
                 }
+
+                // A régi humánra rá állítja az új humánt
+                worker = newworker;
               }
             }
           } while (
@@ -191,6 +217,7 @@ export class GeneratorComponent implements OnInit {
       /*       console.log('Works', event.generator.works);
       console.log('Workers', event.generator.workers); */
       this.generatorservice.newGenerator(event.eventId, event.generator);
+      window.alert('A generálás sikeres! :D Vagy nem?');
     }
   }
 
