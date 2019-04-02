@@ -12,6 +12,8 @@
       <div class="alert alert-warning" *ngIf="!event.generator.ready">
         A generátor eredménye nem napra kész! Kérjük futassa újra a folyamatot!
       </div>
+      <div class="alert alert-danger" *ngIf="alert"><strong>HIBA!</strong> {{ alert }}</div>
+      <div class="alert alert-success" *ngIf="success">{{ success }}</div>
       <div class="row col-12 border rounded">
         <div class="col-6 p-2">
           <div class="border rounded p-2">
@@ -41,9 +43,25 @@
           </div>
         </div>
       </div>
-      <div *ngFor="let work of event.generator.works">
-        {{ work.name }}
-        <div *ngFor="let item of work.table">{{ item.id }} - {{ item.worker }}</div>
+      <div class="row col-12 border rounded">
+        <div class="border rounded m-2 p-2">
+          Időpont
+          <div *ngFor="let item of event.generator.works[0].table" class="border rounded p-1 m-1 text-center">
+            {{ item.id | convertToHour }}
+          </div>
+        </div>
+        <div *ngFor="let work of event.generator.works" class="border rounded m-2 p-2">
+          {{ work.name }}
+          <div
+            *ngFor="let item of work.table"
+            class="border rounded p-1 m-1 text-center"
+            [ngClass]="{ element: active === item.worker }"
+            (mouseenter)="mapItems(item.worker)"
+            (mouseleave)="disableItems()"
+          >
+            {{ item.worker }}
+          </div>
+        </div>
       </div>
     </div>
   </mat-tab>

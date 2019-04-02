@@ -43,6 +43,7 @@ import { NewGeneratorModalComponent } from './components/new-generator-modal/new
 import { NewWorkerModalComponent } from './components/new-worker-modal/new-worker-modal.component';
 import { NewWorkModalComponent } from './components/new-work-modal/new-work-modal.component';
 import { HoursPipe } from './pipes/hours.pipe';
+import { ConvertToHourPipe } from './pipes/convert-to-hour.pipe';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { HoursPipe } from './pipes/hours.pipe';
     NewGeneratorModalComponent,
     NewWorkerModalComponent,
     NewWorkModalComponent,
-    HoursPipe
+    HoursPipe,
+    ConvertToHourPipe
   ],
   imports: [
     BrowserModule,

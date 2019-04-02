@@ -19,6 +19,10 @@ import { WorkerTable } from '../models/worker.table.model';
 export class GeneratorComponent implements OnInit {
   Events: Event[] = null;
   EventsWithGenerator: Event[] = null;
+  alert = '';
+  success = '';
+  active = '';
+
   constructor(private generatorservice: GeneratorService, public dialog: MatDialog) {}
 
   ngOnInit() {
@@ -33,7 +37,7 @@ export class GeneratorComponent implements OnInit {
     });
   }
 
-  newGenerator() {
+  newGenerator(): void {
     const dialogRef = this.dialog.open(NewGeneratorModalComponent, {
       width: '300px',
       data: this.Events
@@ -51,7 +55,7 @@ export class GeneratorComponent implements OnInit {
     });
   }
 
-  newWorker(generator: Generator) {
+  newWorker(generator: Generator): void {
     const dialogRef = this.dialog.open(NewWorkerModalComponent, {
       width: '300px',
       data: this.Events
@@ -80,7 +84,7 @@ export class GeneratorComponent implements OnInit {
     });
   }
 
-  newWork(generator: Generator) {
+  newWork(generator: Generator): void {
     const dialogRef = this.dialog.open(NewWorkerModalComponent, {
       width: '300px',
       data: this.Events
@@ -108,13 +112,13 @@ export class GeneratorComponent implements OnInit {
     });
   }
 
-  deleteWork(generator: Generator, work: string) {
+  deleteWork(generator: Generator, work: string): void {
     generator.works = generator.works.filter(x => x.name !== work);
     generator.ready = false;
     this.generatorservice.newGenerator(generator.eventId, generator);
   }
 
-  deleteWorker(generator: Generator, worker: string) {
+  deleteWorker(generator: Generator, worker: string): void {
     generator.workers = generator.workers.filter(x => x.name !== worker);
     generator.ready = false;
     this.generatorservice.newGenerator(generator.eventId, generator);
@@ -124,7 +128,7 @@ export class GeneratorComponent implements OnInit {
     return Math.floor((param + start) / 24) + '-' + ((param + start) % 24);
   }
 
-  generate(event: Event) {
+  generate(event: Event): void {
     if (this.checkInput(event)) {
       let stop = true; // Leállító segéd változó
       const limit = 500; // Meddig pörögjön a ciklus míg fel nem adja
@@ -217,17 +221,17 @@ export class GeneratorComponent implements OnInit {
         }
       }
       if (!stop) {
-        window.alert('Nincs megoldás!');
+        this.setAlert('Nincs generálási eredmény! Próbálja újra!', false);
       }
       /* console.log('Works', event.generator.works);
       console.log('Workers', event.generator.workers); */
       event.generator.ready = true;
       this.generatorservice.newGenerator(event.eventId, event.generator);
-      window.alert('Sikeres generálás!');
+      this.setAlert('Sikeres generálás!', true);
     }
   }
 
-  setWorkers(generator: Generator) {
+  setWorkers(generator: Generator): void {
     for (const i of generator.workers) {
       i.workerHours = 0;
       for (const j of i.table) {
@@ -248,7 +252,7 @@ export class GeneratorComponent implements OnInit {
     } while (hours > 0);
   }
 
-  setWorks(generator: Generator) {
+  setWorks(generator: Generator): void {
     for (const i of generator.works) {
       for (const k of i.table) {
         k.worker = '';
@@ -256,7 +260,7 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
-  avaiableHours(worker: Worker) {
+  avaiableHours(worker: Worker): number {
     let count = 0;
     worker.table.forEach(i => {
       if (i.avaiable) {
@@ -268,20 +272,20 @@ export class GeneratorComponent implements OnInit {
 
   checkInput(event: Event): boolean {
     if (this.checkEmptyPersons(event.generator.workers)) {
-      window.alert('Nem maradhat üres ember! Akkor inkább töröld ki!');
+      this.setAlert('Nem maradhat üres ember! Akkor inkább töröld ki!', false);
       return false;
     }
     const hours = event.generator.length * event.generator.works.length;
     if (!this.checkSum(event.generator.workers, hours)) {
-      window.alert('Az megadott óraszám, sehogy sem osztható be a kivánt csömörre!');
+      this.setAlert('Az megadott óraszám, sehogy sem osztható be a kivánt csömörre!', false);
       return false;
     }
     if (!this.checkHours(event.generator)) {
-      window.alert('Van olyan óra amikor nem jut mindehová ember!');
+      this.setAlert('Van olyan óra amikor nem jut mindehová ember!', false);
       return false;
     }
     if (!this.checkWorks(event.generator)) {
-      window.alert('Több poszt van mint humán!');
+      this.setAlert('Több poszt van mint humán!', false);
       return false;
     }
     return true;
@@ -330,5 +334,22 @@ export class GeneratorComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  setAlert(alert: string, isSuccess: boolean): void {
+    if (isSuccess) {
+      this.success = alert;
+      setTimeout(() => (this.success = ''), 2000);
+    } else {
+      this.alert = alert;
+      setTimeout(() => (this.alert = ''), 2000);
+    }
+  }
+
+  mapItems(value: string) {
+    this.active = value;
+  }
+  disableItems() {
+    this.active = '';
   }
 }
