@@ -30,15 +30,22 @@
         <div class="col-6 p-2">
           <div class="border rounded p-2">
             <button class="btn btn-outline-primary float-right" (click)="newWorker(event.generator)">+ Új humán</button>
-            <h6 class="mb-3"><strong class="mb-4">Humánok</strong></h6>
+            <h6 class="mb-4"><strong class="mb-4">Humánok</strong></h6>
             <div *ngFor="let worker of event.generator.workers">
-              <button class="btn btn-outline-danger float-right" (click)="deleteWorker(event.generator, worker.name)">
-                Törlés
-              </button>
-              <h6 class="my-4">{{ worker.name }}</h6>
-              <mat-checkbox *ngFor="let status of worker.table" [(ngModel)]="status.avaiable" class="mr-3">{{
-                status.id
-              }}</mat-checkbox>
+              <mat-expansion-panel class="m-1">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ worker.name }}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <button class="btn btn-outline-danger float-right" (click)="deleteWorker(event.generator, worker.name)">
+                  Törlés
+                </button>
+                <mat-checkbox *ngFor="let status of worker.table" [(ngModel)]="status.avaiable" class="mr-3">{{
+                  status.id
+                }}</mat-checkbox>
+              </mat-expansion-panel>
+              <!-- <h6 class="my-4">{{ worker.name }}</h6> -->
             </div>
           </div>
         </div>

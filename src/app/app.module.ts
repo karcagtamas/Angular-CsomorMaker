@@ -16,7 +16,8 @@ import {
   MatInputModule,
   MatTabsModule,
   MatDialogModule,
-  MatSelectModule
+  MatSelectModule,
+  MatExpansionModule
 } from '@angular/material';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -88,7 +89,8 @@ import { ConvertToHourPipe } from './pipes/convert-to-hour.pipe';
     RouterModule,
     MatTabsModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent],
