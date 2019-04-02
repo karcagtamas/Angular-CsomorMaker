@@ -121,16 +121,16 @@ export class GeneratorComponent implements OnInit {
     this.setWorkers(event.generator);
     console.log(event.generator.workers);
     let index = 0;
+    let stop = true;
 
-    for (let i = 0; i < event.generator.length; i++) {
+    for (let i = 0; i < event.generator.length && stop; i++) {
       const tableId = Math.floor((i + event.generator.start) / 24) + '-' + ((i + event.generator.start) % 24);
-      for (let j = 0; j < event.generator.works.length; j++) {
+      for (let j = 0; j < event.generator.works.length && stop; j++) {
         let worker: Worker;
         let count = 0;
         do {
           index = Math.floor(Math.random() * event.generator.workers.length);
           worker = event.generator.workers[index];
-          // console.log(worker);
           count++;
           console.log(count);
           if (count >= 100) {
@@ -138,14 +138,15 @@ export class GeneratorComponent implements OnInit {
             const newworker = event.generator.workers[newindex];
             const newTableIdIndex = Math.floor(Math.random() * newworker.table.length);
             const newTableId = newworker.table[newTableIdIndex].id;
-            console.log('Régi', { ...worker });
-            console.log('Új', { ...newworker });
             console.log('régiId', tableId);
+            console.log('régiElérhető', worker.table.find(x => x.id === newTableId).avaiable);
+            console.log('régiMunka', worker.table.find(x => x.id === newTableId).avaiable);
             console.log('újId', newTableId);
+            console.log('újElérhető', newworker.table.find(x => x.id === tableId).avaiable);
+            console.log('újMunka', newworker.table.find(x => x.id === tableId).work);
 
             if (
               newworker.table.find(x => x.id === tableId).avaiable &&
-              !newworker.table.find(x => x.id === tableId).work &&
               worker.workerHours !== 0 &&
               worker.table.find(x => x.id === newTableId).avaiable &&
               !worker.table.find(x => x.id === newTableId).work
@@ -155,7 +156,11 @@ export class GeneratorComponent implements OnInit {
               worker.workerHours--;
               newworker.table.find(x => x.id === newTableId).work = '';
               newworker.workerHours++;
-              worker = newworker;
+
+              /*  event.generator.works
+                .find(x => x.name === worker.table.find(y => y.id === newTableId).work)
+                .table.find(x => x.id === newTableId).worker = worker.name;
+              worker = newworker; */
             }
           }
         } while (
@@ -168,8 +173,13 @@ export class GeneratorComponent implements OnInit {
           event.generator.works[j].table.find(x => x.id === tableId).worker = worker.name;
           worker.workerHours--;
           worker.table.find(x => x.id === tableId).work = event.generator.works[j].name;
+        } else {
+          stop = false;
         }
       }
+    }
+    if (stop) {
+      window.alert('Nincs megoldás!');
     }
     console.log('Works', event.generator.works);
     console.log('Workers', event.generator.workers);
@@ -183,7 +193,6 @@ export class GeneratorComponent implements OnInit {
         j.work = '';
       }
     }
-    console.log(generator);
     let hours = generator.length * generator.works.length;
     let index = 0;
     do {
