@@ -50,27 +50,18 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-outline-secondary" (click)="capture(export)">Export</button>
-      <div class="row col-12 border rounded" #export>
-        <div class="border rounded m-2 p-2">
-          Időpont
-          <div *ngFor="let item of event.generator.works[0].table" class="border rounded p-1 m-1 text-center">
-            {{ item.id | convertToHour }}
-          </div>
-        </div>
-        <div *ngFor="let work of event.generator.works" class="border rounded m-2 p-2">
-          {{ work.name }}
-          <div
-            *ngFor="let item of work.table"
-            class="border rounded p-1 m-1 text-center"
-            [ngClass]="{ element: active === item.worker }"
-            (mouseenter)="mapItems(item.worker)"
-            (mouseleave)="disableItems()"
-          >
-            {{ item.worker }}
-          </div>
-        </div>
+      <div class="control-panel d-flex justify-content-center row">
+        <button class="btn btn-outline-info mr-1 ml-1" (click)="selectedExport = 1">
+          Teljes Csömör (Posztok)
+        </button>
+        <button class="btn btn-outline-info mr-1 ml-1" (click)="selectedExport = 2">Teljes Csömör (Személyek)</button>
+        <button class="btn btn-outline-info mr-1 ml-1" (click)="selectedExport = 3">Poszt Csömörök</button>
+        <button class="btn btn-outline-info mr-1 ml-1" (click)="selectedExport = 4">Személyes Csömörök</button>
       </div>
+      <app-work-export [Works]="event.generator.works" *ngIf="selectedExport === 1"></app-work-export>
+      <app-worker-export *ngIf="selectedExport === 2"></app-worker-export>
+      <app-simple-work-export *ngIf="selectedExport === 3"></app-simple-work-export>
+      <app-simple-worker-export *ngIf="selectedExport === 4"></app-simple-worker-export>
     </div>
   </mat-tab>
 </mat-tab-group>

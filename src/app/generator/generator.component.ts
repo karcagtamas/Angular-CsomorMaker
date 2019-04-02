@@ -11,8 +11,6 @@ import { Work } from '../models/work.model';
 import { WorkTable } from '../models/work.table.model';
 import { Worker } from '../models/worker.model';
 import { WorkerTable } from '../models/worker.table.model';
-import * as jspdf from 'jspdf';
-import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-generator',
@@ -24,7 +22,7 @@ export class GeneratorComponent implements OnInit {
   EventsWithGenerator: Event[] = null;
   alert = '';
   success = '';
-  active = '';
+  selectedExport = 1;
 
   constructor(private generatorservice: GeneratorService, public dialog: MatDialog) {}
 
@@ -347,27 +345,5 @@ export class GeneratorComponent implements OnInit {
       this.alert = alert;
       setTimeout(() => (this.alert = ''), 2000);
     }
-  }
-
-  mapItems(value: string) {
-    this.active = value;
-  }
-  disableItems() {
-    this.active = '';
-  }
-
-  capture(exp: HTMLElement) {
-    html2canvas(exp).then(canvas => {
-      const imgWidth = 208;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const heightLeft = imgHeight;
-
-      const contentDataURL = canvas.toDataURL('image/png');
-      const pdf = new jspdf('p', 'mm', 'a4');
-      const position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-      pdf.save('teszt.pdf');
-    });
   }
 }
