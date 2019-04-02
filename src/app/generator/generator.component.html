@@ -50,7 +50,8 @@
           </div>
         </div>
       </div>
-      <div class="row col-12 border rounded">
+      <button class="btn btn-outline-secondary" (click)="capture(export)">Export</button>
+      <div class="row col-12 border rounded" #export>
         <div class="border rounded m-2 p-2">
           Időpont
           <div *ngFor="let item of event.generator.works[0].table" class="border rounded p-1 m-1 text-center">

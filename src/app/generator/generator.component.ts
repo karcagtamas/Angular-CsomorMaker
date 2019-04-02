@@ -1,3 +1,4 @@
+import { WorkExportComponent } from './../components/work-export/work-export.component';
 import { Event } from 'src/app/models/event.model';
 import { Component, OnInit } from '@angular/core';
 import { GeneratorService } from '../services/generator.service';
@@ -10,6 +11,8 @@ import { Work } from '../models/work.model';
 import { WorkTable } from '../models/work.table.model';
 import { Worker } from '../models/worker.model';
 import { WorkerTable } from '../models/worker.table.model';
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-generator',
@@ -351,5 +354,20 @@ export class GeneratorComponent implements OnInit {
   }
   disableItems() {
     this.active = '';
+  }
+
+  capture(exp: HTMLElement) {
+    html2canvas(exp).then(canvas => {
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      const pdf = new jspdf('p', 'mm', 'a4');
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      pdf.save('teszt.pdf');
+    });
   }
 }

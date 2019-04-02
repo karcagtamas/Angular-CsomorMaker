@@ -46,7 +46,7 @@ import { NewWorkModalComponent } from './components/new-work-modal/new-work-moda
 import { HoursPipe } from './pipes/hours.pipe';
 import { ConvertToHourPipe } from './pipes/convert-to-hour.pipe';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
-
+import { WorkExportComponent } from './components/work-export/work-export.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +66,8 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
     NewWorkerModalComponent,
     NewWorkModalComponent,
     HoursPipe,
-    ConvertToHourPipe
+    ConvertToHourPipe,
+    WorkExportComponent
   ],
   imports: [
     BrowserModule,
