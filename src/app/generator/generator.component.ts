@@ -140,12 +140,12 @@ export class GeneratorComponent implements OnInit {
               const newworker = event.generator.workers[newindex];
               const newTableIdIndex = Math.floor(Math.random() * newworker.table.length);
               const newTableId = newworker.table[newTableIdIndex].id;
-              console.log('régiId', tableId);
+              /*               console.log('régiId', tableId);
               console.log('régiElérhető', worker.table.find(x => x.id === newTableId).avaiable);
               console.log('régiMunka', worker.table.find(x => x.id === newTableId).avaiable);
               console.log('újId', newTableId);
               console.log('újElérhető', newworker.table.find(x => x.id === tableId).avaiable);
-              console.log('újMunka', newworker.table.find(x => x.id === tableId).work);
+              console.log('újMunka', newworker.table.find(x => x.id === tableId).work); */
 
               if (
                 newworker.table.find(x => x.id === tableId).avaiable &&
@@ -155,7 +155,7 @@ export class GeneratorComponent implements OnInit {
                 newTableId !== tableId
               ) {
                 const addedWorkName = newworker.table.find(x => x.id === newTableId).work;
-                console.log('Hozzáadott név', addedWorkName);
+                /* console.log('Hozzáadott név', addedWorkName); */
                 worker.table.find(x => x.id === newTableId).work = addedWorkName;
                 if (addedWorkName) {
                   worker.workerHours--;
@@ -188,8 +188,8 @@ export class GeneratorComponent implements OnInit {
       if (!stop) {
         window.alert('Nincs megoldás!');
       }
-      console.log('Works', event.generator.works);
-      console.log('Workers', event.generator.workers);
+      /*       console.log('Works', event.generator.works);
+      console.log('Workers', event.generator.workers); */
       this.generatorservice.newGenerator(event.eventId, event.generator);
     }
   }
@@ -238,7 +238,7 @@ export class GeneratorComponent implements OnInit {
       window.alert('Nem maradhat üres ember! Akkor inkább töröld ki!');
       return false;
     }
-    let hours = event.generator.length * event.generator.works.length;
+    const hours = event.generator.length * event.generator.works.length;
     if (!this.checkSum(event.generator.workers, hours)) {
       window.alert('Az megadott óraszám, sehogy sem osztható be a kivánt csömörre!');
       return false;
@@ -276,8 +276,8 @@ export class GeneratorComponent implements OnInit {
       const tableId = Math.floor((i + generator.start) / 24) + '-' + ((i + generator.start) % 24);
       let count = 0;
       const min = generator.works.length;
-      for (const i of generator.workers) {
-        if (i.table.find(x => x.id === tableId).avaiable) {
+      for (const k of generator.workers) {
+        if (k.table.find(x => x.id === tableId).avaiable) {
           count++;
         }
       }

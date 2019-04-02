@@ -24,8 +24,6 @@ export class NewGeneratorModalComponent implements OnInit {
 
   ngOnInit() {
     this.Events = [...this.data];
-    console.log(this.data);
-    console.log(this.Events);
   }
 
   onNoClick() {
