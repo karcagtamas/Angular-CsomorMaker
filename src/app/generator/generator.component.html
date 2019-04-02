@@ -9,6 +9,9 @@
       <h6>Esemény vége: {{ event.generator.end | hours }}</h6>
       <h6>Esemény nap száma: {{ event.generator.days }}</h6>
       <h6>Esemény hossza: {{ event.generator.length | hours }}</h6>
+      <div class="alert alert-warning" *ngIf="!event.generator.ready">
+        A generátor eredménye nem napra kész! Kérjük futassa újra a folyamatot!
+      </div>
       <div class="row col-12 border rounded">
         <div class="col-6 p-2">
           <div class="border rounded p-2">

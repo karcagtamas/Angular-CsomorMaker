@@ -8,4 +8,5 @@ export class Generator {
   days: number;
   length: number;
   eventId?: string;
+  ready: boolean;
 }

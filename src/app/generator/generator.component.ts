@@ -45,6 +45,7 @@ export class GeneratorComponent implements OnInit {
         result.start = +result.start;
         result.end = +result.end;
         result.days = +result.days;
+        result.ready = true;
         this.generatorservice.newGenerator(result.eventId, result);
       }
     });
@@ -72,6 +73,7 @@ export class GeneratorComponent implements OnInit {
             worker.table.push(table);
           }
           generator.workers.push(worker);
+          generator.ready = false;
           this.generatorservice.newGenerator(generator.eventId, generator);
         }
       }
@@ -99,6 +101,7 @@ export class GeneratorComponent implements OnInit {
             work.table.push(table);
           }
           generator.works.push(work);
+          generator.ready = false;
           this.generatorservice.newGenerator(generator.eventId, generator);
         }
       }
@@ -107,11 +110,13 @@ export class GeneratorComponent implements OnInit {
 
   deleteWork(generator: Generator, work: string) {
     generator.works = generator.works.filter(x => x.name !== work);
+    generator.ready = false;
     this.generatorservice.newGenerator(generator.eventId, generator);
   }
 
   deleteWorker(generator: Generator, worker: string) {
     generator.workers = generator.workers.filter(x => x.name !== worker);
+    generator.ready = false;
     this.generatorservice.newGenerator(generator.eventId, generator);
   }
 
@@ -141,7 +146,7 @@ export class GeneratorComponent implements OnInit {
             index = Math.floor(Math.random() * event.generator.workers.length);
             worker = event.generator.workers[index];
             count++;
-            console.log(count);
+            /* console.log(count); */
 
             // Ha már több mint 100-stor lefutott, akkor próbája meg kicserélgetni régebbi emberrekkel, akik tudnának jönni
             if (count >= 100) {
@@ -153,12 +158,12 @@ export class GeneratorComponent implements OnInit {
               const param = Math.floor(Math.random() * event.generator.length); // Véletlen paraméter az azonosítóhoz
               const newTableId = this.generateTableId(event.generator.start, param); // Új tábla azonosító
 
-              console.log('régiId', tableId);
+              /* console.log('régiId', tableId);
               console.log('régiElérhető', worker.table.find(x => x.id === newTableId).avaiable);
               console.log('régiMunka', worker.table.find(x => x.id === newTableId).avaiable);
               console.log('újId', newTableId);
               console.log('újElérhető', newworker.table.find(x => x.id === tableId).avaiable);
-              console.log('újMunka', newworker.table.find(x => x.id === tableId).work);
+              console.log('újMunka', newworker.table.find(x => x.id === tableId).work); */
 
               const newWorkerTableElement = newworker.table.find(x => x.id === tableId); // Új humán a régi helyen
               const workerTableNewElement = worker.table.find(x => x.id === newTableId); // Régi humán az új helyen
@@ -174,7 +179,7 @@ export class GeneratorComponent implements OnInit {
               ) {
                 const addedWorkName = newworker.table.find(x => x.id === newTableId).work; // Hozzáadandő poszt neve
 
-                console.log('Hozzáadott név', addedWorkName);
+                /*   console.log('Hozzáadott név', addedWorkName); */
 
                 workerTableNewElement.work = addedWorkName; // A régi humán új helyére mentjük a posztot
                 // Ha a poszt név nem üres, akkor csökkentjük az óra számot
@@ -214,10 +219,11 @@ export class GeneratorComponent implements OnInit {
       if (!stop) {
         window.alert('Nincs megoldás!');
       }
-      /*       console.log('Works', event.generator.works);
+      /* console.log('Works', event.generator.works);
       console.log('Workers', event.generator.workers); */
+      event.generator.ready = true;
       this.generatorservice.newGenerator(event.eventId, event.generator);
-      window.alert('A generálás sikeres! :D Vagy nem?');
+      window.alert('Sikeres generálás!');
     }
   }
 
@@ -274,6 +280,10 @@ export class GeneratorComponent implements OnInit {
       window.alert('Van olyan óra amikor nem jut mindehová ember!');
       return false;
     }
+    if (!this.checkWorks(event.generator)) {
+      window.alert('Több poszt van mint humán!');
+      return false;
+    }
     return true;
   }
 
@@ -311,6 +321,13 @@ export class GeneratorComponent implements OnInit {
       if (count < min) {
         return false;
       }
+    }
+    return true;
+  }
+
+  checkWorks(generator: Generator): boolean {
+    if (generator.workers.length < generator.works.length) {
+      return false;
     }
     return true;
   }
