@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Worker } from 'src/app/models/worker.model';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -10,25 +10,15 @@ import html2canvas from 'html2canvas';
 })
 export class WorkerExportComponent implements OnInit {
   @Input() Workers: Worker[];
-  active = '';
+  @Output() Capture = new EventEmitter();
+  active = '-';
 
   constructor() {}
 
   ngOnInit() {}
 
   capture(exp: HTMLElement, name: string) {
-    html2canvas(exp).then(canvas => {
-      const imgWidth = 208;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const heightLeft = imgHeight;
-
-      const contentDataURL = canvas.toDataURL('image/png');
-      const pdf = new jspdf('p', 'mm', 'a4');
-      const position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-      pdf.save(name + '.pdf');
-    });
+    this.Capture.emit({ exp, name });
   }
 
   mapItems(value: string) {

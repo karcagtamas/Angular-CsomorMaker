@@ -51,6 +51,7 @@ import { WorkerExportComponent } from './components/worker-export/worker-export.
 import { SimpleWorkExportComponent } from './components/simple-work-export/simple-work-export.component';
 import { SimpleWorkerExportComponent } from './components/simple-worker-export/simple-worker-export.component';
 import { ExistsPipe } from './pipes/exists.pipe';
+import { ExportCsomorComponent } from './components/export-csomor/export-csomor.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { ExistsPipe } from './pipes/exists.pipe';
     WorkerExportComponent,
     SimpleWorkExportComponent,
     SimpleWorkerExportComponent,
-    ExistsPipe
+    ExistsPipe,
+    ExportCsomorComponent
   ],
   imports: [
     BrowserModule,

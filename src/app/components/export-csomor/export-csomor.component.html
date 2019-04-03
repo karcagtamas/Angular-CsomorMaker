@@ -1,0 +1,44 @@
+<div *ngIf="Works">
+  <div class="control-panel d-flex justify-content-center row">
+    <button
+      class="btn btn-outline-info mr-1 ml-1"
+      [ngClass]="{ element: selectedExport === 1 }"
+      (click)="selectedExport = 1"
+    >
+      Teljes Csömör (Posztok)
+    </button>
+    <button
+      class="btn btn-outline-info mr-1 ml-1"
+      [ngClass]="{ element: selectedExport === 2 }"
+      (click)="selectedExport = 2"
+    >
+      Teljes Csömör (Személyek)
+    </button>
+    <button
+      class="btn btn-outline-info mr-1 ml-1"
+      [ngClass]="{ element: selectedExport === 3 }"
+      (click)="selectedExport = 3"
+    >
+      Poszt Csömörök
+    </button>
+    <button
+      class="btn btn-outline-info mr-1 ml-1"
+      [ngClass]="{ element: selectedExport === 4 }"
+      (click)="selectedExport = 4"
+    >
+      Személyes Csömörök
+    </button>
+  </div>
+  <app-work-export [Works]="Works" *ngIf="selectedExport === 1" (Capture)="capture($event)"></app-work-export>
+  <app-worker-export [Workers]="Workers" *ngIf="selectedExport === 2" (Capture)="capture($event)"></app-worker-export>
+  <app-simple-work-export
+    [Works]="Works"
+    *ngIf="selectedExport === 3"
+    (Capture)="capture($event)"
+  ></app-simple-work-export>
+  <app-simple-worker-export
+    [Workers]="Workers"
+    *ngIf="selectedExport === 4"
+    (Capture)="capture($event)"
+  ></app-simple-worker-export>
+</div>
