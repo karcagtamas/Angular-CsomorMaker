@@ -11,6 +11,7 @@ import { Work } from '../models/work.model';
 import { WorkTable } from '../models/work.table.model';
 import { Worker } from '../models/worker.model';
 import { WorkerTable } from '../models/worker.table.model';
+import { NewWorkModalComponent } from '../components/new-work-modal/new-work-modal.component';
 
 @Component({
   selector: 'app-generator',
@@ -86,7 +87,7 @@ export class GeneratorComponent implements OnInit {
   }
 
   newWork(generator: Generator): void {
-    const dialogRef = this.dialog.open(NewWorkerModalComponent, {
+    const dialogRef = this.dialog.open(NewWorkModalComponent, {
       width: '300px',
       data: this.Events
     });
