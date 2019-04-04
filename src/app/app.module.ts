@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FirestoreSettingsToken } from '@angular/fire/firestore';
 import {
   MatSidenavModule,
   MatButtonModule,
@@ -106,7 +107,7 @@ import { ExportCsomorComponent } from './components/export-csomor/export-csomor.
     MatExpansionModule,
     PDFExportModule
   ],
-  providers: [],
+  providers: [{ provide: FirestoreSettingsToken, useValue: {} }],
   bootstrap: [AppComponent],
   entryComponents: [
     NewEventModalComponent,
