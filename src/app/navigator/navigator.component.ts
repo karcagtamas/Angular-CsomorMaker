@@ -65,12 +65,16 @@ export class NavigatorComponent implements OnDestroy {
   }
 
   getIsAdmin() {
-    const isAdmin = localStorage.getItem('isAdmin');
-    if (isAdmin === 'true') {
-      this.isAdmin = true;
-    } else {
-      this.isAdmin = false;
-    }
+    this.loginservice
+      .isAdmin()
+      .then(res => {
+        if (res) {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+        }
+      })
+      .catch(() => (this.isAdmin = false));
   }
 
   startInterval() {

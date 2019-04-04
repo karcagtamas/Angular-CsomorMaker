@@ -6,6 +6,7 @@ import { NewEventModalComponent } from '../components/new-event-modal/new-event-
 import { ModifyEventComponent } from '../components/modify-event/modify-event.component';
 import { isUndefined } from 'util';
 import { AddAdModalComponent } from '../components/add-ad-modal/add-ad-modal.component';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-porta',
@@ -15,7 +16,9 @@ import { AddAdModalComponent } from '../components/add-ad-modal/add-ad-modal.com
 export class PortaComponent implements OnInit {
   Events: Event[] = null;
   nameOnModify = false;
-  constructor(private portaservice: PortaService, public dialog: MatDialog) {}
+  isAdmin = false;
+
+  constructor(private portaservice: PortaService, public dialog: MatDialog, private loginservice: LoginService) {}
 
   ngOnInit() {
     this.portaservice.getEvents().subscribe(data => {
@@ -26,6 +29,20 @@ export class PortaComponent implements OnInit {
         } as Event;
       });
     });
+    this.getIsAdmin();
+  }
+
+  getIsAdmin() {
+    this.loginservice
+      .isAdmin()
+      .then(res => {
+        if (res) {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+        }
+      })
+      .catch(() => (this.isAdmin = false));
   }
 
   incrementVisitors(event: string, value: number, max: number) {

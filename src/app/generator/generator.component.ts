@@ -12,6 +12,7 @@ import { WorkTable } from '../models/work.table.model';
 import { Worker } from '../models/worker.model';
 import { WorkerTable } from '../models/worker.table.model';
 import { NewWorkModalComponent } from '../components/new-work-modal/new-work-modal.component';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-generator',
@@ -24,8 +25,13 @@ export class GeneratorComponent implements OnInit {
   alert = '';
   success = '';
   selectedExport = 1;
+  isAdmin = false;
 
-  constructor(private generatorservice: GeneratorService, public dialog: MatDialog) {}
+  constructor(
+    private generatorservice: GeneratorService,
+    public dialog: MatDialog,
+    private loginservice: LoginService
+  ) {}
 
   ngOnInit() {
     this.generatorservice.getEvents().subscribe(data => {
@@ -37,6 +43,20 @@ export class GeneratorComponent implements OnInit {
       });
       this.EventsWithGenerator = this.Events.filter(x => x.generator);
     });
+    this.getIsAdmin();
+  }
+
+  getIsAdmin() {
+    this.loginservice
+      .isAdmin()
+      .then(res => {
+        if (res) {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+        }
+      })
+      .catch(() => (this.isAdmin = false));
   }
 
   newGenerator(): void {

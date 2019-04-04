@@ -1,10 +1,12 @@
-<button class="btn btn-primary m-2" (click)="newGenerator()">
+<button class="btn btn-primary m-2" (click)="newGenerator()" *ngIf="isAdmin">
   Új generálás
 </button>
 <mat-tab-group>
   <mat-tab label="{{ event.name }}" *ngFor="let event of EventsWithGenerator">
     <div class="p-2">
-      <button class="btn btn-outline-warning float-right m-1" (click)="generate(event)">Generálás</button>
+      <button class="btn btn-outline-warning float-right m-1" (click)="generate(event)" *ngIf="isAdmin">
+        Generálás
+      </button>
       <h6>Esemény kezdete: {{ event.generator.start | hours }}</h6>
       <h6>Esemény vége: {{ event.generator.end | hours }}</h6>
       <h6>Esemény nap száma: {{ event.generator.days }}</h6>
@@ -17,10 +19,16 @@
       <div class="row col-12 border rounded">
         <div class="col-6 p-2">
           <div class="border rounded p-2">
-            <button class="btn btn-outline-primary float-right" (click)="newWork(event.generator)">+ Új poszt</button>
+            <button class="btn btn-outline-primary float-right" (click)="newWork(event.generator)" *ngIf="isAdmin">
+              + Új poszt
+            </button>
             <h6 class="mb-3"><strong class="mb-4">Posztok</strong></h6>
             <div *ngFor="let work of event.generator.works">
-              <button class="btn btn-outline-danger float-right" (click)="deleteWork(event.generator, work.name)">
+              <button
+                class="btn btn-outline-danger float-right"
+                (click)="deleteWork(event.generator, work.name)"
+                *ngIf="isAdmin"
+              >
                 Törlés
               </button>
               <h6 class="my-4">{{ work.name }}</h6>
@@ -29,7 +37,9 @@
         </div>
         <div class="col-6 p-2">
           <div class="border rounded p-2">
-            <button class="btn btn-outline-primary float-right" (click)="newWorker(event.generator)">+ Új humán</button>
+            <button class="btn btn-outline-primary float-right" (click)="newWorker(event.generator)" *ngIf="isAdmin">
+              + Új humán
+            </button>
             <h6 class="mb-4"><strong class="mb-4">Humánok</strong></h6>
             <div *ngFor="let worker of event.generator.workers">
               <mat-expansion-panel class="m-1">
@@ -38,7 +48,11 @@
                     {{ worker.name }}
                   </mat-panel-title>
                 </mat-expansion-panel-header>
-                <button class="btn btn-outline-danger float-right" (click)="deleteWorker(event.generator, worker.name)">
+                <button
+                  class="btn btn-outline-danger float-right"
+                  (click)="deleteWorker(event.generator, worker.name)"
+                  *ngIf="isAdmin"
+                >
                   Törlés
                 </button>
                 <mat-checkbox *ngFor="let status of worker.table" [(ngModel)]="status.avaiable" class="mr-3">{{

@@ -1,11 +1,13 @@
-<button class="btn btn-primary m-2" (click)="openDialog()">
+<button class="btn btn-primary m-2" (click)="openDialog()" *ngIf="isAdmin">
   Új esemény létrehozás
 </button>
 <mat-tab-group>
   <mat-tab label="{{ event.name }}" *ngFor="let event of Events">
     <div class="border rounded m-2 p-2">
-      <button class="btn btn-danger float-right m-1" (click)="deleteEvent(event.eventId)">Esemény törlése</button>
-      <button class="btn btn-warning float-right m-1" (click)="openModify(event)">Módosítás</button>
+      <button class="btn btn-danger float-right m-1" (click)="deleteEvent(event.eventId)" *ngIf="isAdmin">
+        Esemény törlése
+      </button>
+      <button class="btn btn-warning float-right m-1" (click)="openModify(event)" *ngIf="isAdmin">Módosítás</button>
       <h6>
         Esemény: <strong>{{ event.name }}</strong>
       </h6>
@@ -31,7 +33,7 @@
         Jelenlegi játékos szám: <strong>{{ event.currentPlayers }}</strong>
       </h6>
     </div>
-    <div class="p-2">
+    <div class="p-2" *ngIf="isAdmin">
       <div class="border rounded p-2 row col-12">
         <div class="col-6">
           <h6>Nézők</h6>
@@ -71,10 +73,14 @@
     </div>
     <div class="p-2">
       <div class="border rounded p-2 col-12">
-        <button class="btn btn-danger float-right m-1" (click)="clearAds(event.eventId)">
+        <button class="btn btn-danger float-right m-1" (click)="clearAds(event.eventId)" *ngIf="isAdmin">
           Reklámok tisztítása
         </button>
-        <button class="btn btn-info float-right m-1" (click)="openAddAd(event.eventId, event.advertisments)">
+        <button
+          class="btn btn-info float-right m-1"
+          (click)="openAddAd(event.eventId, event.advertisments)"
+          *ngIf="isAdmin"
+        >
           Reklám hozzáadása
         </button>
 
