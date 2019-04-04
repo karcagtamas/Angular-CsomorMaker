@@ -31,6 +31,7 @@ export class NewUserComponent implements OnInit {
       this.loginservice
         .registration(email.value)
         .then(() => {
+          this.loginservice.saveUser(email.value);
           this.success = true;
           input.value = '';
           setTimeout(() => (this.success = false), 3000);

@@ -13,9 +13,17 @@
   >
     Új Felhasználó felvétele
   </button>
+  <button
+    class="btn btn-outline-info mr-1 ml-1"
+    [ngClass]="{ element: selectedPanel === 2 }"
+    (click)="selectedPanel = 3"
+  >
+    Felhasználók
+  </button>
 </div>
 
 <div [ngSwitch]="selectedPanel">
   <app-set-admin *ngSwitchCase="1"> </app-set-admin>
   <app-new-user *ngSwitchCase="2"> </app-new-user>
+  <app-users *ngSwitchCase="3"></app-users>
 </div>

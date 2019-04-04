@@ -5,10 +5,6 @@ import { Md5 } from 'ts-md5/dist/md5';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { first } from 'rxjs/operators';
 
-interface Admin {
-  email: string;
-}
-
 const PASSWORD = 'Abc123456';
 
 @Injectable({
@@ -16,13 +12,11 @@ const PASSWORD = 'Abc123456';
 })
 export class LoginService {
   usersCollection: AngularFirestoreCollection<User>;
-  adminCollection: AngularFirestoreCollection<Admin>;
-  Admins: Admin[] = [];
+  Users: User[] = [];
   // possibleCharacters = 'ABCDEFJGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
   constructor(private firestore: AngularFirestore, private auth: AngularFireAuth) {
     this.usersCollection = this.firestore.collection<User>('users');
-    this.adminCollection = this.firestore.collection<any>('admin');
   }
 
   login(email: string, password: string): Promise<firebase.auth.UserCredential> {
@@ -35,6 +29,11 @@ export class LoginService {
 
   registration(email: string) {
     return this.auth.auth.createUserWithEmailAndPassword(email, PASSWORD);
+  }
+
+  saveUser(email: string) {
+    const user = { email, isAdmin: false };
+    this.usersCollection.add(user);
   }
 
   async isLoggedIn(): Promise<boolean> {
@@ -56,22 +55,23 @@ export class LoginService {
     }
   }
 
-  getAdmins() {
-    return this.adminCollection.snapshotChanges();
+  getUsers() {
+    return this.usersCollection.snapshotChanges();
   }
 
   async isAdmin() {
     const currentEmail = localStorage.getItem('user');
 
     return new Promise(resolve => {
-      this.getAdmins().subscribe(data => {
-        this.Admins = data.map(e => {
+      this.getUsers().subscribe(data => {
+        this.Users = data.map(e => {
           return {
+            id: e.payload.doc.id,
             ...e.payload.doc.data()
-          } as Admin;
+          } as User;
         });
-        for (const i of this.Admins) {
-          if (i.email === currentEmail) {
+        for (const i of this.Users) {
+          if (i.email === currentEmail && i.isAdmin) {
             resolve(true);
           }
         }
