@@ -1,4 +1,21 @@
-<div>
-  <button class="btn btn-outline-info">Új Admin felvétele</button>
-  <button class="btn btn-outline-info">Új Felhasználó felvétele</button>
+<div class="control-panel d-flex justify-content-center row">
+  <button
+    class="btn btn-outline-info mr-1 ml-1"
+    [ngClass]="{ element: selectedPanel === 1 }"
+    (click)="selectedPanel = 1"
+  >
+    Új Admin felvétele
+  </button>
+  <button
+    class="btn btn-outline-info mr-1 ml-1"
+    [ngClass]="{ element: selectedPanel === 2 }"
+    (click)="selectedPanel = 2"
+  >
+    Új Felhasználó felvétele
+  </button>
+</div>
+
+<div [ngSwitch]="selectedPanel">
+  <app-new-user *ngSwitchCase="1"> </app-new-user>
+  <app-set-admin *ngSwitchCase="2"> </app-set-admin>
 </div>

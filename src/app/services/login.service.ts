@@ -9,6 +9,8 @@ interface Admin {
   email: string;
 }
 
+const PASSWORD = 'Abc123456';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,6 +31,10 @@ export class LoginService {
 
   logout(): Promise<void> {
     return this.auth.auth.signOut();
+  }
+
+  registration(email: string) {
+    return this.auth.auth.createUserWithEmailAndPassword(email, PASSWORD);
   }
 
   async isLoggedIn(): Promise<boolean> {

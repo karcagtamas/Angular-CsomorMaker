@@ -1,0 +1,16 @@
+<div class="container border rounded">
+  <div class="text-center title border rounded mb-1">Új felhasználó felvétele</div>
+  <div *ngIf="error === true" class="alert alert-danger">
+    <strong>HIBA!</strong> A felhasználó létrehozása sikertelen! Kérjük próbálja újra késöbb!
+  </div>
+  <div *ngIf="success === true" class="alert alert-success">
+    A felhasználó létrehozása sikeres!
+  </div>
+  <mat-form-field>
+    <input matInput placeholder="E-mail cím" [type]="'email'" [formControl]="email" required #emailInput />
+    <mat-error *ngIf="email.invalid">{{ getErrorMessage(email) }}</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" class="login-button" (click)="saveUser(email, emailInput)">
+    Felvétel
+  </button>
+</div>

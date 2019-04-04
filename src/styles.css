@@ -15,3 +15,7 @@
   background-color: rgba(40, 119, 184, 0.3);
   transition-duration: 0.5s;
 }
+
+mat-error {
+  font-size: 0.7rem;
+}
