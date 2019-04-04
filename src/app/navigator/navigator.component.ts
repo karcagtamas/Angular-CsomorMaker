@@ -12,6 +12,7 @@ import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
 export class NavigatorComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
   isLoggedIn = false;
+  isAdmin = false;
   email = '';
   interval;
 
@@ -30,6 +31,7 @@ export class NavigatorComponent implements OnDestroy {
     this.mobileQuery.addListener(this._mobileQueryListener);
     this.getIsLoggedIn();
     this.getEmail();
+    this.getIsAdmin();
     this.stopInterval();
     this.startInterval();
   }
@@ -45,6 +47,7 @@ export class NavigatorComponent implements OnDestroy {
       .logout()
       .then(() => {
         window.alert('Sikeres kijelenkezés!');
+        localStorage.setItem('user', '');
         this.router.navigateByUrl('/login');
       })
       .catch(() => {
@@ -58,9 +61,16 @@ export class NavigatorComponent implements OnDestroy {
   }
 
   getEmail() {
-    this.loginservice.getEmail().then(res => {
-      this.email = res;
-    });
+    this.email = localStorage.getItem('user');
+  }
+
+  getIsAdmin() {
+    const isAdmin = localStorage.getItem('isAdmin');
+    if (isAdmin === 'true') {
+      this.isAdmin = true;
+    } else {
+      this.isAdmin = false;
+    }
   }
 
   startInterval() {

@@ -5,12 +5,17 @@ import { Md5 } from 'ts-md5/dist/md5';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { first } from 'rxjs/operators';
 
+interface Admin {
+  email: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
   usersCollection: AngularFirestoreCollection<User>;
-  adminCollection: AngularFirestoreCollection<any>;
+  adminCollection: AngularFirestoreCollection<Admin>;
+  Admins: Admin[] = [];
   // possibleCharacters = 'ABCDEFJGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
   constructor(private firestore: AngularFirestore, private auth: AngularFireAuth) {
@@ -38,7 +43,7 @@ export class LoginService {
   async getEmail(): Promise<string> {
     const user = await this.auth.authState.pipe(first()).toPromise();
     if (user) {
-      user.updateProfile({ displayName: user.email, photoURL: '' });
+      // user.updateProfile({ displayName: user.email, photoURL: '' });
       return user.email;
     } else {
       return '';
@@ -50,20 +55,23 @@ export class LoginService {
   }
 
   async isAdmin() {
-    // const admins;
-    await this.getAdmins().then(res => {
-      res.subscribe(data => {
-        let currentEmail;
-        this.getEmail().then(res => (currentEmail = res));
-        for (const i of data) {
-          console.log('check', i.payload.doc.data());
-          console.log('current', currentEmail);
-          if (i.payload.doc.data().email === currentEmail) {
-            return true;
+    const currentEmail = localStorage.getItem('user');
+    const a = await this.getAdmins();
+
+    return new Promise(resolve => {
+      a.subscribe(data => {
+        this.Admins = data.map(e => {
+          return {
+            ...e.payload.doc.data()
+          } as Admin;
+        });
+        for (const i of this.Admins) {
+          if (i.email === currentEmail) {
+            resolve(true);
           }
         }
+        resolve(false);
       });
     });
-    return false;
   }
 }

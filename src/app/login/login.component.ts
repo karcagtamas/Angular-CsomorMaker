@@ -41,6 +41,8 @@ export class LoginComponent implements OnInit {
         .login(email.value, password.value)
         .then(() => {
           console.log('Belépés sikeres');
+          localStorage.setItem('user', email.value);
+          this.loginservice.isAdmin();
           this.error = false;
           this.router.navigateByUrl('/home');
         })

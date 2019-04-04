@@ -12,20 +12,30 @@ export class AdminGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log(this.loginservice.isAdmin());
-    // return true;
+    /* const isAdmin = localStorage.getItem('isAdmin');
+    if (isAdmin === 'true') {
+      return true;
+    } else {
+      this.router.navigateByUrl('/home');
+      return false;
+    } */
+
     return new Promise(resolve => {
       this.loginservice
         .isAdmin()
         .then(res => {
+          console.log(res);
           if (res) {
-            resolve(true);
+            return true;
           } else {
             this.router.navigateByUrl('/home');
-            resolve(false);
+            return false;
           }
         })
-        .catch(() => resolve(false));
+        .catch(() => {
+          this.router.navigateByUrl('/home');
+          return false;
+        });
     });
   }
 }
