@@ -1,4 +1,4 @@
-<div class="control-panel d-flex justify-content-center row">
+<div class="control-panel d-flex justify-content-center row mt-1">
   <button
     class="btn btn-outline-info mr-1 ml-1"
     [ngClass]="{ element: selectedPanel === 1 }"
@@ -16,6 +16,6 @@
 </div>
 
 <div [ngSwitch]="selectedPanel">
-  <app-new-user *ngSwitchCase="1"> </app-new-user>
-  <app-set-admin *ngSwitchCase="2"> </app-set-admin>
+  <app-set-admin *ngSwitchCase="1"> </app-set-admin>
+  <app-new-user *ngSwitchCase="2"> </app-new-user>
 </div>

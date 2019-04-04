@@ -24,7 +24,6 @@ export class AdminGuard implements CanActivate {
       this.loginservice
         .isAdmin()
         .then(res => {
-          console.log(res);
           if (res) {
             resolve(true);
           } else {

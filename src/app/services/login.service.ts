@@ -72,8 +72,6 @@ export class LoginService {
         });
         for (const i of this.Admins) {
           if (i.email === currentEmail) {
-            console.log(i.email);
-            console.log(currentEmail);
             resolve(true);
           }
         }

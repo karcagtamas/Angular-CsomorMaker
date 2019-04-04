@@ -55,6 +55,7 @@ import { ExistsPipe } from './pipes/exists.pipe';
 import { ExportCsomorComponent } from './components/export-csomor/export-csomor.component';
 import { NewUserComponent } from './components/new-user/new-user.component';
 import { SetAdminComponent } from './components/set-admin/set-admin.component';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { SetAdminComponent } from './components/set-admin/set-admin.component';
     ExistsPipe,
     ExportCsomorComponent,
     NewUserComponent,
-    SetAdminComponent
+    SetAdminComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
