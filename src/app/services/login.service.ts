@@ -10,10 +10,12 @@ import { first } from 'rxjs/operators';
 })
 export class LoginService {
   usersCollection: AngularFirestoreCollection<User>;
+  adminCollection: AngularFirestoreCollection<any>;
   // possibleCharacters = 'ABCDEFJGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
   constructor(private firestore: AngularFirestore, private auth: AngularFireAuth) {
     this.usersCollection = this.firestore.collection<User>('users');
+    this.adminCollection = this.firestore.collection<any>('admin');
   }
 
   login(email: string, password: string): Promise<firebase.auth.UserCredential> {
@@ -36,9 +38,32 @@ export class LoginService {
   async getEmail(): Promise<string> {
     const user = await this.auth.authState.pipe(first()).toPromise();
     if (user) {
+      user.updateProfile({ displayName: user.email, photoURL: '' });
       return user.email;
     } else {
       return '';
     }
+  }
+
+  async getAdmins() {
+    return await this.adminCollection.snapshotChanges();
+  }
+
+  async isAdmin() {
+    // const admins;
+    await this.getAdmins().then(res => {
+      res.subscribe(data => {
+        let currentEmail;
+        this.getEmail().then(res => (currentEmail = res));
+        for (const i of data) {
+          console.log('check', i.payload.doc.data());
+          console.log('current', currentEmail);
+          if (i.payload.doc.data().email === currentEmail) {
+            return true;
+          }
+        }
+      });
+    });
+    return false;
   }
 }
