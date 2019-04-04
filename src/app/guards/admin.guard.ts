@@ -26,15 +26,15 @@ export class AdminGuard implements CanActivate {
         .then(res => {
           console.log(res);
           if (res) {
-            return true;
+            resolve(true);
           } else {
             this.router.navigateByUrl('/home');
-            return false;
+            resolve(false);
           }
         })
         .catch(() => {
           this.router.navigateByUrl('/home');
-          return false;
+          resolve(false);
         });
     });
   }

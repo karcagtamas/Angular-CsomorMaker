@@ -50,16 +50,15 @@ export class LoginService {
     }
   }
 
-  async getAdmins() {
-    return await this.adminCollection.snapshotChanges();
+  getAdmins() {
+    return this.adminCollection.snapshotChanges();
   }
 
   async isAdmin() {
     const currentEmail = localStorage.getItem('user');
-    const a = await this.getAdmins();
 
     return new Promise(resolve => {
-      a.subscribe(data => {
+      this.getAdmins().subscribe(data => {
         this.Admins = data.map(e => {
           return {
             ...e.payload.doc.data()
@@ -67,6 +66,8 @@ export class LoginService {
         });
         for (const i of this.Admins) {
           if (i.email === currentEmail) {
+            console.log(i.email);
+            console.log(currentEmail);
             resolve(true);
           }
         }
