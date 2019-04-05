@@ -1,0 +1,24 @@
+<button class="btn btn-outline-success float-right m-2" (click)="sendResetCode()">Reset kód kérése</button>
+<div class="container border rounded">
+  <div class="text-center title border rounded mb-1">Jelszó csere</div>
+  <div *ngIf="alert" class="alert alert-danger"><strong>HIBA!</strong> {{ alert }}</div>
+  <div *ngIf="success" class="alert alert-success">
+    {{ success }}
+  </div>
+  <mat-form-field>
+    <input matInput placeholder="Jelszó" [type]="'password'" [formControl]="password" required #passInput />
+    <mat-error *ngIf="password.invalid">{{ getErrorMessage(password) }}</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Kód" [type]="'text'" [formControl]="code" required #codeInput />
+    <mat-error *ngIf="code.invalid">{{ getErrorMessage(code) }}</mat-error>
+  </mat-form-field>
+  <button
+    mat-raised-button
+    color="primary"
+    class="login-button"
+    (click)="savePassword(email, code, passInput, codeInput)"
+  >
+    Mentés
+  </button>
+</div>

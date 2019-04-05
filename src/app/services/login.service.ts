@@ -87,4 +87,16 @@ export class LoginService {
   setAdmin(id: string, newstate: boolean) {
     return this.usersCollection.doc(id).update({ isAdmin: newstate });
   }
+
+  changePassword(password: string, code: string) {
+    return this.auth.auth.confirmPasswordReset(code, password);
+  }
+
+  sendResetEmail() {
+    return this.auth.auth.sendPasswordResetEmail('Az ön kódja!');
+  }
+
+  codeIsValid(code: string) {
+    return this.auth.auth.verifyPasswordResetCode(code);
+  }
 }
