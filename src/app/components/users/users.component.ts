@@ -9,6 +9,9 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class UsersComponent implements OnInit {
   Users: User[] = [];
+  thisUser = localStorage.getItem('user');
+  success = '';
+  alert = '';
 
   constructor(private loginservice: LoginService) {}
 
@@ -21,5 +24,42 @@ export class UsersComponent implements OnInit {
         } as User;
       });
     });
+  }
+
+  setSuccess(value: string) {
+    this.success = value;
+    setTimeout(() => {
+      this.success = '';
+    }, 3000);
+  }
+
+  setAlert(value: string) {
+    this.alert = value;
+    setTimeout(() => {
+      this.alert = '';
+    }, 3000);
+  }
+
+  deleteUser(id: string) {
+    this.loginservice
+      .deleteUser(id)
+      .then(() => {
+        this.setSuccess('A felhasználó törlése sikeres!');
+      })
+      .catch(() => {
+        this.setAlert('A felhasználó törlése sikertelen! Kérjük próbálja újra késöbb!');
+      });
+  }
+
+  setAdmin(id: string, state: boolean) {
+    const newstate = state ? false : true;
+    this.loginservice
+      .setAdmin(id, newstate)
+      .then(() => {
+        this.setSuccess('A felhasználó admin rangja sikeresen megváltozott!');
+      })
+      .catch(() => {
+        this.setAlert('A felhasználó admin állapotának megváltoztatása sikertelen! Kérjük próbálja újra késöbb!');
+      });
   }
 }

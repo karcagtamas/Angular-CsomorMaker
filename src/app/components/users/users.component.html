@@ -1,3 +1,26 @@
-<div>
-  <div *ngFor="let user of Users">{{ user.email }}</div>
+<div class="mt-1">
+  <div class="alert alert-danger" *ngIf="alert"><strong>HIBA!</strong> {{ alert }}</div>
+  <div class="alert alert-success" *ngIf="success">{{ success }}</div>
+  <div class="alert alert-info">
+    A kitörölt felhasználók a FireBase Authentication tárában <strong>bent maradnak</strong>! (Be tudnak lépni az
+    <strong>oldalra</strong>, de csak normál módban)
+  </div>
+  <div *ngFor="let user of Users" class="col-12 row text-center mb-2 border rounded p-1 user">
+    <div class="col-12 col-md-3">{{ user.email }}</div>
+    <div class="col-12 col-md-3">{{ user.isAdmin | isAdmin }}</div>
+    <div class="col-12 col-md-3">
+      <button class="btn btn-outline-danger" (click)="deleteUser(user.id)" [disabled]="thisUser === user.email">
+        Törlés
+      </button>
+    </div>
+    <div class="col-12 col-md-3">
+      <button
+        class="btn btn-outline-primary"
+        (click)="setAdmin(user.id, user.isAdmin)"
+        [disabled]="thisUser === user.email"
+      >
+        Módosít
+      </button>
+    </div>
+  </div>
 </div>

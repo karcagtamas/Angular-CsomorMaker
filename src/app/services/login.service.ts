@@ -79,4 +79,12 @@ export class LoginService {
       });
     });
   }
+
+  deleteUser(id: string) {
+    return this.usersCollection.doc(id).delete();
+  }
+
+  setAdmin(id: string, newstate: boolean) {
+    return this.usersCollection.doc(id).update({ isAdmin: newstate });
+  }
 }

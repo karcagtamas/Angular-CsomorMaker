@@ -81,6 +81,7 @@ export class NavigatorComponent implements OnDestroy {
     this.interval = setInterval(() => {
       this.getIsLoggedIn();
       this.getEmail();
+      this.getIsAdmin();
     }, 30000);
   }
 

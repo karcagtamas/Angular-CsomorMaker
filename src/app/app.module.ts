@@ -54,8 +54,8 @@ import { SimpleWorkerExportComponent } from './components/simple-worker-export/s
 import { ExistsPipe } from './pipes/exists.pipe';
 import { ExportCsomorComponent } from './components/export-csomor/export-csomor.component';
 import { NewUserComponent } from './components/new-user/new-user.component';
-import { SetAdminComponent } from './components/set-admin/set-admin.component';
 import { UsersComponent } from './components/users/users.component';
+import { IsAdminPipe } from './pipes/is-admin.pipe';
 
 @NgModule({
   declarations: [
@@ -83,8 +83,8 @@ import { UsersComponent } from './components/users/users.component';
     ExistsPipe,
     ExportCsomorComponent,
     NewUserComponent,
-    SetAdminComponent,
-    UsersComponent
+    UsersComponent,
+    IsAdminPipe
   ],
   imports: [
     BrowserModule,

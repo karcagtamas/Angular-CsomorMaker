@@ -1,0 +1,7 @@
+.user:hover {
+  background-color: rgba(32, 146, 199, 0.198);
+  transition-duration: 0.5s;
+}
+.col-12 {
+  margin: 0;
+}

@@ -4,26 +4,18 @@
     [ngClass]="{ element: selectedPanel === 1 }"
     (click)="selectedPanel = 1"
   >
-    Új Admin felvétele
+    Új Felhasználó felvétele
   </button>
   <button
     class="btn btn-outline-info mr-1 ml-1"
     [ngClass]="{ element: selectedPanel === 2 }"
     (click)="selectedPanel = 2"
   >
-    Új Felhasználó felvétele
-  </button>
-  <button
-    class="btn btn-outline-info mr-1 ml-1"
-    [ngClass]="{ element: selectedPanel === 2 }"
-    (click)="selectedPanel = 3"
-  >
     Felhasználók
   </button>
 </div>
 
 <div [ngSwitch]="selectedPanel">
-  <app-set-admin *ngSwitchCase="1"> </app-set-admin>
-  <app-new-user *ngSwitchCase="2"> </app-new-user>
-  <app-users *ngSwitchCase="3"></app-users>
+  <app-new-user *ngSwitchCase="1"> </app-new-user>
+  <app-users *ngSwitchCase="2"></app-users>
 </div>
