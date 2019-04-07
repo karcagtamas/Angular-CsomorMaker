@@ -88,15 +88,8 @@ export class LoginService {
     return this.usersCollection.doc(id).update({ isAdmin: newstate });
   }
 
-  changePassword(password: string, code: string) {
-    return this.auth.auth.confirmPasswordReset(code, password);
-  }
-
   sendResetEmail() {
-    return this.auth.auth.sendPasswordResetEmail('Az ön kódja!');
-  }
-
-  codeIsValid(code: string) {
-    return this.auth.auth.verifyPasswordResetCode(code);
+    const email = localStorage.getItem('user');
+    return this.auth.auth.sendPasswordResetEmail(email);
   }
 }

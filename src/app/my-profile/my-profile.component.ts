@@ -12,6 +12,7 @@ export class MyProfileComponent implements OnInit {
   code = new FormControl('', [Validators.required]);
   success = '';
   alert = '';
+  email = localStorage.getItem('user');
   constructor(private loginserivce: LoginService) {}
 
   ngOnInit() {}
@@ -23,27 +24,11 @@ export class MyProfileComponent implements OnInit {
       ? 'Az jelszó hossza min 8-nak kell lennie'
       : '';
   }
-
-  savePassword(password: FormControl, code: FormControl, passInput: HTMLInputElement, codeInput: HTMLInputElement) {
-    if (!password.invalid && !code.invalid && this.codeIsValid(code.value)) {
-      this.loginserivce
-        .changePassword(password.value, code.value)
-        .then(() => {
-          passInput.value = '';
-          codeInput.value = '';
-          this.setAlert('A jelszó csere sikeres!', true);
-        })
-        .catch(() => {
-          this.setAlert('A jelszó csere sikertelen!', false);
-        });
-    }
-  }
-
   sendResetCode() {
     this.loginserivce
       .sendResetEmail()
       .then(() => {
-        this.setAlert('Az kód sikeresen elküldve!', true);
+        this.setAlert('Az kód sikeresen elküldve! Ellenőrizze e-mail fiókját!', true);
       })
       .catch(err => {
         console.log(err);
@@ -51,20 +36,13 @@ export class MyProfileComponent implements OnInit {
       });
   }
 
-  codeIsValid(code: string) {
-    this.loginserivce.codeIsValid(code).then(res => {
-      console.log(res);
-    });
-    return false;
-  }
-
   setAlert(value: string, isSuccess: boolean) {
     if (isSuccess) {
       this.success = value;
-      setTimeout(() => (this.success = ''), 3000);
+      setTimeout(() => (this.success = ''), 5000);
     } else {
       this.alert = value;
-      setTimeout(() => (this.alert = ''), 3000);
+      setTimeout(() => (this.alert = ''), 5000);
     }
   }
 }

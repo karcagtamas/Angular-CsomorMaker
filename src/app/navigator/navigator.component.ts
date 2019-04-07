@@ -49,6 +49,9 @@ export class NavigatorComponent implements OnDestroy {
         window.alert('Sikeres kijelenkezés!');
         localStorage.setItem('user', '');
         this.router.navigateByUrl('/login');
+        this.getIsLoggedIn();
+        this.getEmail();
+        this.getIsAdmin();
       })
       .catch(() => {
         window.alert('Sikeretelen kijelentkezés!');
