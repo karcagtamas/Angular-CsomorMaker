@@ -1,7 +1,10 @@
 <div class="border rounded m-2 p-2">
   <button class="btn btn-outline-success float-right m-2" (click)="sendResetCode()">Új jelszó kérése</button>
   <h1 class="text-center">Saját profil</h1>
-  E-mail cím: {{ email }}
+  <div>E-mail cím: {{ email }}</div>
   <div class="alert alert-danger" *ngIf="alert"><strong>HIBA!</strong> {{ alert }}</div>
   <div class="alert alert-success" *ngIf="success">{{ success }}</div>
+  <div class="image-container">
+    <img src="../../assets/images/profile.png" alt="Profil kép" class="profile-image" />
+  </div>
 </div>

@@ -11,7 +11,7 @@ import html2canvas from 'html2canvas';
 export class WorkExportComponent implements OnInit {
   @Input() Works: Work[];
   @Output() Capture = new EventEmitter();
-  active = '';
+  active = '-';
 
   constructor() {}
 
@@ -25,6 +25,6 @@ export class WorkExportComponent implements OnInit {
     this.active = value;
   }
   disableItems() {
-    this.active = '';
+    this.active = '-';
   }
 }

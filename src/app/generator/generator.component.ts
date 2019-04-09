@@ -1,4 +1,4 @@
-import { WorkExportComponent } from './../components/work-export/work-export.component';
+import { ActiveWork } from './../models/ignore.model';
 import { Event } from 'src/app/models/event.model';
 import { Component, OnInit } from '@angular/core';
 import { GeneratorService } from '../services/generator.service';
@@ -98,6 +98,13 @@ export class GeneratorComponent implements OnInit {
             table.work = '';
             worker.table.push(table);
           }
+          worker.activeWorks = [];
+          for (const i of generator.works) {
+            const act = new ActiveWork();
+            act.work = i.name;
+            act.active = true;
+            worker.activeWorks.push(act);
+          }
           generator.workers.push(worker);
           generator.ready = false;
           this.generatorservice.newGenerator(generator.eventId, generator);
@@ -123,10 +130,17 @@ export class GeneratorComponent implements OnInit {
           for (let i = 0; i < generator.length; i++) {
             const table = new WorkTable();
             table.id = Math.floor((i + generator.start) / 24) + '-' + ((i + generator.start) % 24);
+            table.isActive = true;
             table.worker = '';
             work.table.push(table);
           }
           generator.works.push(work);
+          for (const i of generator.workers) {
+            const act = new ActiveWork();
+            act.work = work.name;
+            act.active = true;
+            i.activeWorks.push(act);
+          }
           generator.ready = false;
           this.generatorservice.newGenerator(generator.eventId, generator);
         }
@@ -136,6 +150,9 @@ export class GeneratorComponent implements OnInit {
 
   deleteWork(generator: Generator, work: string): void {
     generator.works = generator.works.filter(x => x.name !== work);
+    for (const i of generator.workers) {
+      i.activeWorks = i.activeWorks.filter(x => x.work !== work);
+    }
     generator.ready = false;
     this.generatorservice.newGenerator(generator.eventId, generator);
   }
@@ -155,6 +172,7 @@ export class GeneratorComponent implements OnInit {
       let stop = true; // Leállító segéd változó
       const limit = 500; // Meddig pörögjön a ciklus míg fel nem adja
       this.setWorkers(event.generator); // Beállítja a Humánokat
+
       this.setWorks(event.generator); // Beállíva a Posztokat
 
       let index = 0;
@@ -165,75 +183,80 @@ export class GeneratorComponent implements OnInit {
 
         // Posztok az adott soron (oszlopok)
         for (let j = 0; j < event.generator.works.length && stop; j++) {
-          let worker: Worker;
-          let count = 0; // Segéd változó (stop)
-          do {
-            // Random humán lementése
-            index = Math.floor(Math.random() * event.generator.workers.length);
-            worker = event.generator.workers[index];
-            count++;
-            /* console.log(count); */
+          if (event.generator.works[j].table.find(x => x.id === tableId).isActive) {
+            let worker: Worker;
+            let count = 0; // Segéd változó (stop)
+            do {
+              // Random humán lementése
+              index = Math.floor(Math.random() * event.generator.workers.length);
+              worker = event.generator.workers[index];
+              count++;
+              /* console.log(count); */
 
-            // Ha már több mint 100-stor lefutott, akkor próbája meg kicserélgetni régebbi emberrekkel, akik tudnának jönni
-            if (count >= 100) {
-              const newindex = Math.floor(Math.random() * event.generator.workers.length); // Új humány indexe
-              const newworker = event.generator.workers[newindex]; // Új humán
-              /*               const newTableIdIndex = Math.floor(Math.random() * newworker.table.length); // Új tábla azonosító indexe
+              // Ha már több mint 100-stor lefutott, akkor próbája meg kicserélgetni régebbi emberrekkel, akik tudnának jönni
+              if (count >= 100) {
+                const newindex = Math.floor(Math.random() * event.generator.workers.length); // Új humány indexe
+                const newworker = event.generator.workers[newindex]; // Új humán
+                /*               const newTableIdIndex = Math.floor(Math.random() * newworker.table.length); // Új tábla azonosító indexe
               const newTableId = newworker.table[newTableIdIndex].id; */
 
-              const param = Math.floor(Math.random() * event.generator.length); // Véletlen paraméter az azonosítóhoz
-              const newTableId = this.generateTableId(event.generator.start, param); // Új tábla azonosító
+                const param = Math.floor(Math.random() * event.generator.length); // Véletlen paraméter az azonosítóhoz
+                const newTableId = this.generateTableId(event.generator.start, param); // Új tábla azonosító
 
-              /* console.log('régiId', tableId);
-              console.log('régiElérhető', worker.table.find(x => x.id === newTableId).avaiable);
-              console.log('régiMunka', worker.table.find(x => x.id === newTableId).avaiable);
-              console.log('újId', newTableId);
-              console.log('újElérhető', newworker.table.find(x => x.id === tableId).avaiable);
-              console.log('újMunka', newworker.table.find(x => x.id === tableId).work); */
+                /* console.log('régiId', tableId);
+                console.log('régiElérhető', worker.table.find(x => x.id === newTableId).avaiable);
+                console.log('régiMunka', worker.table.find(x => x.id === newTableId).avaiable);
+                console.log('újId', newTableId);
+                console.log('újElérhető', newworker.table.find(x => x.id === tableId).avaiable);
+                console.log('újMunka', newworker.table.find(x => x.id === tableId).work); */
 
-              const newWorkerTableElement = newworker.table.find(x => x.id === tableId); // Új humán a régi helyen
-              const workerTableNewElement = worker.table.find(x => x.id === newTableId); // Régi humán az új helyen
+                const newWorkerTableElement = newworker.table.find(x => x.id === tableId); // Új humán a régi helyen
+                const workerTableNewElement = worker.table.find(x => x.id === newTableId); // Régi humán az új helyen
 
-              // Ha az új humán megfelelő a régi helyen és a régi humán megfelelő
-              if (
-                newWorkerTableElement.avaiable &&
-                !newWorkerTableElement.work &&
-                worker.workerHours !== 0 &&
-                workerTableNewElement.avaiable &&
-                !workerTableNewElement.work &&
-                newTableId !== tableId
-              ) {
-                const addedWorkName = newworker.table.find(x => x.id === newTableId).work; // Hozzáadandő poszt neve
+                // Ha az új humán megfelelő a régi helyen és a régi humán megfelelő
+                if (
+                  newWorkerTableElement.avaiable &&
+                  !newWorkerTableElement.work &&
+                  worker.workerHours !== 0 &&
+                  workerTableNewElement.avaiable &&
+                  !workerTableNewElement.work &&
+                  newTableId !== tableId
+                ) {
+                  const addedWorkName = newworker.table.find(x => x.id === newTableId).work; // Hozzáadandő poszt neve
 
-                /*   console.log('Hozzáadott név', addedWorkName); */
+                  /*   console.log('Hozzáadott név', addedWorkName); */
 
-                workerTableNewElement.work = addedWorkName; // A régi humán új helyére mentjük a posztot
-                // Ha a poszt név nem üres, akkor csökkentjük az óra számot
-                if (addedWorkName) {
-                  worker.workerHours--;
+                  workerTableNewElement.work = addedWorkName; // A régi humán új helyére mentjük a posztot
+                  // Ha a poszt név nem üres, akkor csökkentjük az óra számot
+                  if (addedWorkName) {
+                    worker.workerHours--;
+                  }
+
+                  newworker.table.find(x => x.id === newTableId).work = ''; // Az új humán új helyén lévő posztot üresre álllítjuk
+                  newworker.workerHours++; // Az új humán óráit növeljük
+
+                  // Ha a poszt név nem üres, akkor belerakjuk az új eredményt a poszt táblájába
+                  if (addedWorkName) {
+                    event.generator.works
+                      .find(x => x.name === addedWorkName)
+                      .table.find(x => x.id === newTableId).worker = worker.name;
+                  }
+
+                  // A régi humánra rá állítja az új humánt
+                  worker = newworker;
+                  if (worker.name === 'Zsuzsi') {
+                    console.log('csere');
+                  }
                 }
-
-                newworker.table.find(x => x.id === newTableId).work = ''; // Az új humán új helyén lévő posztot üresre álllítjuk
-                newworker.workerHours++; // Az új humán óráit növeljük
-
-                // Ha a poszt név nem üres, akkor belerakjuk az új eredményt a poszt táblájába
-                if (addedWorkName) {
-                  event.generator.works
-                    .find(x => x.name === addedWorkName)
-                    .table.find(x => x.id === newTableId).worker = worker.name;
-                }
-
-                // A régi humánra rá állítja az új humánt
-                worker = newworker;
               }
+            } while (!this.workerIsValid(worker, tableId, event.generator.works[j]) && count < limit);
+            if (count < limit) {
+              event.generator.works[j].table.find(x => x.id === tableId).worker = worker.name;
+              worker.workerHours--;
+              worker.table.find(x => x.id === tableId).work = event.generator.works[j].name;
+            } else {
+              stop = false;
             }
-          } while (!this.workerIsValid(worker, tableId) && count < limit);
-          if (count < limit) {
-            event.generator.works[j].table.find(x => x.id === tableId).worker = worker.name;
-            worker.workerHours--;
-            worker.table.find(x => x.id === tableId).work = event.generator.works[j].name;
-          } else {
-            stop = false;
           }
         }
       }
@@ -248,7 +271,7 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
-  workerIsValid(worker: Worker, tableId: string) {
+  workerIsValid(worker: Worker, tableId: string, work: Work) {
     if (worker.workerHours === 0) {
       return false;
     }
@@ -257,6 +280,12 @@ export class GeneratorComponent implements OnInit {
       return false;
     }
     if (workerElement.work) {
+      return false;
+    }
+    if (worker.name === 'Zsuzsi') {
+      console.log(worker.activeWorks.find(x => x.work === work.name).active);
+    }
+    if (!worker.activeWorks.find(x => x.work === work.name).active) {
       return false;
     }
     if (this.checkPast(worker, tableId)) {
@@ -283,7 +312,7 @@ export class GeneratorComponent implements OnInit {
         j.work = '';
       }
     }
-    let hours = generator.length * generator.works.length;
+    let hours = this.getAllActiveHour(generator.works);
     let index = 0;
     do {
       if (generator.workers[index].workerHours < this.avaiableHours(generator.workers[index])) {
@@ -315,12 +344,35 @@ export class GeneratorComponent implements OnInit {
     return count;
   }
 
+  activeHours(work: Work): number {
+    let count = 0;
+    for (const i of work.table) {
+      if (i.isActive) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  getAllActiveHour(works: Work[]): number {
+    let sum = 0;
+    for (const i of works) {
+      sum += this.activeHours(i);
+    }
+    return sum;
+  }
+
   checkInput(event: Event): boolean {
     if (this.checkEmptyPersons(event.generator.workers)) {
       this.setAlert('Nem maradhat üres ember! Akkor inkább töröld ki!', false);
       return false;
     }
-    const hours = event.generator.length * event.generator.works.length;
+    if (this.checkEmptyWorks(event.generator.works)) {
+      this.setAlert('Nem maradhat üres poszt! Akkor inkább töröld ki!', false);
+      return false;
+    }
+    // const hours = event.generator.length * event.generator.works.length;
+    const hours = this.getAllActiveHour(event.generator.works);
     if (!this.checkSum(event.generator.workers, hours)) {
       this.setAlert('Az megadott óraszám, sehogy sem osztható be a kivánt csömörre!', false);
       return false;
@@ -329,16 +381,22 @@ export class GeneratorComponent implements OnInit {
       this.setAlert('Van olyan óra amikor nem jut mindehová ember!', false);
       return false;
     }
-    if (!this.checkWorks(event.generator)) {
-      this.setAlert('Több poszt van mint humán!', false);
-      return false;
-    }
     return true;
   }
 
   checkEmptyPersons(workers: Worker[]): boolean {
     for (const i of workers) {
       const count = this.avaiableHours(i);
+      if (count === 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  checkEmptyWorks(works: Work[]): boolean {
+    for (const i of works) {
+      const count = this.activeHours(i);
       if (count === 0) {
         return true;
       }
@@ -361,7 +419,12 @@ export class GeneratorComponent implements OnInit {
     for (let i = 0; i < generator.length; i++) {
       const tableId = Math.floor((i + generator.start) / 24) + '-' + ((i + generator.start) % 24);
       let count = 0;
-      const min = generator.works.length;
+      let min = 0;
+      for (const k of generator.works) {
+        if (k.table.find(x => x.id === tableId).isActive) {
+          min++;
+        }
+      }
       for (const k of generator.workers) {
         if (k.table.find(x => x.id === tableId).avaiable) {
           count++;
@@ -370,13 +433,6 @@ export class GeneratorComponent implements OnInit {
       if (count < min) {
         return false;
       }
-    }
-    return true;
-  }
-
-  checkWorks(generator: Generator): boolean {
-    if (generator.workers.length < generator.works.length) {
-      return false;
     }
     return true;
   }

@@ -30,7 +30,7 @@
           (mouseenter)="mapItems(item.worker)"
           (mouseleave)="disableItems()"
         >
-          {{ item.worker }}
+          {{ item.worker | exists }}
         </div>
       </div>
     </div>
