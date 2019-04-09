@@ -244,6 +244,9 @@ export class GeneratorComponent implements OnInit {
 
                   // A régi humánra rá állítja az új humánt
                   worker = newworker;
+                  if (worker.name === 'Zsuzsi') {
+                    console.log('csere');
+                  }
                 }
               }
             } while (!this.workerIsValid(worker, tableId, event.generator.works[j]) && count < limit);
@@ -279,7 +282,9 @@ export class GeneratorComponent implements OnInit {
     if (workerElement.work) {
       return false;
     }
-    console.log(worker.activeWorks.find(x => x.work === work.name).active);
+    if (worker.name === 'Zsuzsi') {
+      console.log(worker.activeWorks.find(x => x.work === work.name).active);
+    }
     if (!worker.activeWorks.find(x => x.work === work.name).active) {
       return false;
     }
