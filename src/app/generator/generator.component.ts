@@ -227,12 +227,7 @@ export class GeneratorComponent implements OnInit {
                 worker = newworker;
               }
             }
-          } while (
-            (worker.workerHours === 0 ||
-              !worker.table.find(x => x.id === tableId).avaiable ||
-              worker.table.find(x => x.id === tableId).work) &&
-            count < limit
-          );
+          } while (!this.workerIsValid(worker, tableId) && count < limit);
           if (count < limit) {
             event.generator.works[j].table.find(x => x.id === tableId).worker = worker.name;
             worker.workerHours--;
@@ -251,6 +246,34 @@ export class GeneratorComponent implements OnInit {
       this.generatorservice.newGenerator(event.eventId, event.generator);
       this.setAlert('Sikeres generálás!', true);
     }
+  }
+
+  workerIsValid(worker: Worker, tableId: string) {
+    if (worker.workerHours === 0) {
+      return false;
+    }
+    const workerElement: WorkerTable = worker.table.find(x => x.id === tableId);
+    if (!workerElement.avaiable) {
+      return false;
+    }
+    if (workerElement.work) {
+      return false;
+    }
+    if (this.checkPast(worker, tableId)) {
+      return false;
+    }
+    return true;
+  }
+
+  checkPast(worker: Worker, tableid: string) {
+    const index = worker.table.findIndex(x => x.id === tableid);
+    if (index < 3) {
+      return false;
+    }
+    if (worker.table[index - 1].work && worker.table[index - 2].work && worker.table[index - 3].work) {
+      return true;
+    }
+    return false;
   }
 
   setWorkers(generator: Generator): void {
@@ -326,7 +349,7 @@ export class GeneratorComponent implements OnInit {
   checkSum(workers: Worker[], hours: number): boolean {
     let sum = 0;
     for (const i of workers) {
-      sum += this.avaiableHours(i);
+      sum += (this.avaiableHours(i) * 3) / 4;
     }
     if (sum < hours) {
       return false;
