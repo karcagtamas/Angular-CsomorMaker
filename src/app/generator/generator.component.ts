@@ -246,7 +246,7 @@ export class GeneratorComponent implements OnInit {
                   worker = newworker;
                 }
               }
-            } while (!this.workerIsValid(worker, tableId) && count < limit);
+            } while (!this.workerIsValid(worker, tableId, event.generator.works[j]) && count < limit);
             if (count < limit) {
               event.generator.works[j].table.find(x => x.id === tableId).worker = worker.name;
               worker.workerHours--;
@@ -268,7 +268,7 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
-  workerIsValid(worker: Worker, tableId: string) {
+  workerIsValid(worker: Worker, tableId: string, work: Work) {
     if (worker.workerHours === 0) {
       return false;
     }
@@ -277,6 +277,10 @@ export class GeneratorComponent implements OnInit {
       return false;
     }
     if (workerElement.work) {
+      return false;
+    }
+    console.log(worker.activeWorks.find(x => x.work === work.name).active);
+    if (!worker.activeWorks.find(x => x.work === work.name).active) {
       return false;
     }
     if (this.checkPast(worker, tableId)) {
