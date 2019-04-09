@@ -1,4 +1,4 @@
-import { WorkExportComponent } from './../components/work-export/work-export.component';
+import { ActiveWork } from './../models/ignore.model';
 import { Event } from 'src/app/models/event.model';
 import { Component, OnInit } from '@angular/core';
 import { GeneratorService } from '../services/generator.service';
@@ -98,6 +98,13 @@ export class GeneratorComponent implements OnInit {
             table.work = '';
             worker.table.push(table);
           }
+          worker.activeWorks = [];
+          for (const i of generator.works) {
+            const act = new ActiveWork();
+            act.work = i.name;
+            act.active = true;
+            worker.activeWorks.push(act);
+          }
           generator.workers.push(worker);
           generator.ready = false;
           this.generatorservice.newGenerator(generator.eventId, generator);
@@ -128,6 +135,12 @@ export class GeneratorComponent implements OnInit {
             work.table.push(table);
           }
           generator.works.push(work);
+          for (const i of generator.workers) {
+            const act = new ActiveWork();
+            act.work = work.name;
+            act.active = true;
+            i.activeWorks.push(act);
+          }
           generator.ready = false;
           this.generatorservice.newGenerator(generator.eventId, generator);
         }
@@ -137,6 +150,9 @@ export class GeneratorComponent implements OnInit {
 
   deleteWork(generator: Generator, work: string): void {
     generator.works = generator.works.filter(x => x.name !== work);
+    for (const i of generator.workers) {
+      i.activeWorks = i.activeWorks.filter(x => x.work !== work);
+    }
     generator.ready = false;
     this.generatorservice.newGenerator(generator.eventId, generator);
   }
