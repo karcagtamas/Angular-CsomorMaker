@@ -47,13 +47,17 @@
   <mat-error *ngIf="eventselect.invalid">Kötelező a mező kitöltése</mat-error>
 </mat-form-field>
 <div mat-dialog-actions>
-  <button class="btn btn-secondary m-2" (click)="onNoClick()">Mégsem</button>
-  <button
-    class="btn btn-primary m-2"
-    [mat-dialog-close]="Generator"
-    cdkFocusInitial
-    [disabled]="start.invalid || end.invalid || days.invalid || eventselect.invalid"
-  >
-    Mentés
-  </button>
+  <div class="col-6">
+    <button class="btn btn-secondary col-12" (click)="onNoClick()">Mégsem</button>
+  </div>
+  <div class="col-6">
+    <button
+      class="btn btn-primary col-12"
+      [mat-dialog-close]="Generator"
+      cdkFocusInitial
+      [disabled]="start.invalid || end.invalid || days.invalid || eventselect.invalid"
+    >
+      Mentés
+    </button>
+  </div>
 </div>

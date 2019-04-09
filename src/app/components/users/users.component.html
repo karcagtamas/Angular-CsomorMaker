@@ -1,4 +1,4 @@
-<div class="mt-1">
+<div class="mt-1 p-1">
   <div class="alert alert-danger" *ngIf="alert"><strong>HIBA!</strong> {{ alert }}</div>
   <div class="alert alert-success" *ngIf="success">{{ success }}</div>
   <div class="alert alert-info">
@@ -9,13 +9,13 @@
     <div class="col-12 col-md-3">{{ user.email }}</div>
     <div class="col-12 col-md-3">{{ user.isAdmin | isAdmin }}</div>
     <div class="col-12 col-md-3">
-      <button class="btn btn-outline-danger" (click)="deleteUser(user.id)" [disabled]="thisUser === user.email">
+      <button class="btn btn-outline-danger m-1" (click)="deleteUser(user.id)" [disabled]="thisUser === user.email">
         Törlés
       </button>
     </div>
     <div class="col-12 col-md-3">
       <button
-        class="btn btn-outline-primary"
+        class="btn btn-outline-primary m-1"
         (click)="setAdmin(user.id, user.isAdmin)"
         [disabled]="thisUser === user.email"
       >

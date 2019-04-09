@@ -1,16 +1,8 @@
 <div class="control-panel d-flex justify-content-center row mt-1">
-  <button
-    class="btn btn-outline-info mr-1 ml-1"
-    [ngClass]="{ element: selectedPanel === 1 }"
-    (click)="selectedPanel = 1"
-  >
+  <button class="btn btn-outline-info m-1" [ngClass]="{ element: selectedPanel === 1 }" (click)="selectedPanel = 1">
     Új Felhasználó felvétele
   </button>
-  <button
-    class="btn btn-outline-info mr-1 ml-1"
-    [ngClass]="{ element: selectedPanel === 2 }"
-    (click)="selectedPanel = 2"
-  >
+  <button class="btn btn-outline-info m-1" [ngClass]="{ element: selectedPanel === 2 }" (click)="selectedPanel = 2">
     Felhasználók
   </button>
 </div>
