@@ -13,9 +13,17 @@ export class ExportCsomorComponent implements OnInit {
   @Input() Workers: Worker[];
   @Input() Works: Work[];
   selectedExport = 1;
+  showFull = window.innerWidth > 600;
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.showFull) {
+      this.selectedExport = 1;
+    } else {
+      this.selectedExport = 3;
+    }
+  }
 
   capture(event) {
     html2canvas(event.exp).then(canvas => {

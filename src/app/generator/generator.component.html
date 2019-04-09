@@ -17,7 +17,7 @@
       <div class="alert alert-danger" *ngIf="alert"><strong>HIBA!</strong> {{ alert }}</div>
       <div class="alert alert-success" *ngIf="success">{{ success }}</div>
       <div class="row col-12 border rounded">
-        <div class="col-6 p-2">
+        <div class="col-12 col-sm-6 p-2">
           <div class="border rounded p-2">
             <button class="btn btn-outline-primary float-right" (click)="newWork(event.generator)" *ngIf="isAdmin">
               + Új poszt
@@ -35,7 +35,7 @@
             </div>
           </div>
         </div>
-        <div class="col-6 p-2">
+        <div class="col-12 col-sm-6 p-2">
           <div class="border rounded p-2">
             <button class="btn btn-outline-primary float-right" (click)="newWorker(event.generator)" *ngIf="isAdmin">
               + Új humán

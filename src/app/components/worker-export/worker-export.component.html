@@ -5,13 +5,13 @@
   <div class="border rounded" #export>
     <h2 class="text-center">Teljes Csömör</h2>
     <div class="row col-12">
-      <div class="border rounded m-2 p-2">
+      <div class="border rounded m-1 p-1 column">
         Időpont
         <div *ngFor="let item of Workers[0].table" class="border rounded p-1 m-1 text-center">
           {{ item.id | convertToHour }}
         </div>
       </div>
-      <div *ngFor="let worker of Workers" class="border rounded m-2 p-2">
+      <div *ngFor="let worker of Workers" class="border rounded m-1 p-1 column">
         {{ worker.name }}
         <div
           *ngFor="let item of worker.table"

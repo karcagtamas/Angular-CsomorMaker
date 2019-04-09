@@ -9,15 +9,17 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { GtComponent } from './gt/gt.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'generator', component: GeneratorComponent, canActivate: [AuthGuard] },
+  { path: 'generator', component: GeneratorComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] },
-  { path: 'porta', component: PortaComponent, canActivate: [AuthGuard] },
+  { path: 'porta', component: PortaComponent },
   { path: 'myprofile', component: MyProfileComponent, canActivate: [AuthGuard] },
+  { path: 'gt', component: GtComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 
