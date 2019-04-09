@@ -12,7 +12,7 @@ import { FormControl, Validators } from '@angular/forms';
 export class SimpleWorkExportComponent implements OnInit {
   @Input() Works: Work[];
   @Output() Capture = new EventEmitter();
-  active = '';
+  active = '-';
   selectedWork = 0;
   workselect = new FormControl('', [Validators.required]);
 
@@ -28,6 +28,6 @@ export class SimpleWorkExportComponent implements OnInit {
     this.active = value;
   }
   disableItems() {
-    this.active = '';
+    this.active = '-';
   }
 }

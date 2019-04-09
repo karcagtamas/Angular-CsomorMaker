@@ -22,16 +22,25 @@
             <button class="btn btn-outline-primary float-right" (click)="newWork(event.generator)" *ngIf="isAdmin">
               + Új poszt
             </button>
-            <h6 class="mb-3"><strong class="mb-4">Posztok</strong></h6>
+            <h6 class="mb-4"><strong class="mb-4">Posztok</strong></h6>
             <div *ngFor="let work of event.generator.works">
-              <button
-                class="btn btn-outline-danger float-right"
-                (click)="deleteWork(event.generator, work.name)"
-                *ngIf="isAdmin"
-              >
-                Törlés
-              </button>
-              <h6 class="my-4">{{ work.name }}</h6>
+              <mat-expansion-panel class="m-1">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ work.name }}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <button
+                  class="btn btn-outline-danger float-right"
+                  (click)="deleteWork(event.generator, work.name)"
+                  *ngIf="isAdmin"
+                >
+                  Törlés
+                </button>
+                <mat-checkbox *ngFor="let status of work.table" [(ngModel)]="status.isActive" class="mr-3">{{
+                  status.id
+                }}</mat-checkbox>
+              </mat-expansion-panel>
             </div>
           </div>
         </div>
