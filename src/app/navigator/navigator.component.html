@@ -1,6 +1,6 @@
 <div class="navigator-container" [class.example-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="nav-toolbar">
-    <button mat-icon-button (click)="snav.toggle()">KT</button>
+    <button mat-icon-button (click)="snav.toggle()">{{ email | createLetter }}</button>
     <h1 class="app-name" [routerLink]="['/home']">Csömör Maker -</h1>
     <h3 class="creater">Készítette: Karcag Tamás - 2019</h3>
   </mat-toolbar>
@@ -14,10 +14,13 @@
     >
       <mat-nav-list>
         <div class="text-center m-1" *ngIf="email">{{ email }}</div>
-        <div class="border rounded element" [routerLink]="['/generator']" routerLinkActive="active" *ngIf="isLoggedIn">
+        <div class="border rounded element" [routerLink]="['/login']" routerLinkActive="active" *ngIf="!isLoggedIn">
+          Bejelentkezés
+        </div>
+        <div class="border rounded element" [routerLink]="['/generator']" routerLinkActive="active">
           Generátor
         </div>
-        <div class="border rounded element" [routerLink]="['/porta']" routerLinkActive="active" *ngIf="isLoggedIn">
+        <div class="border rounded element" [routerLink]="['/porta']" routerLinkActive="active">
           Porta
         </div>
         <div class="border rounded element" [routerLink]="['/myprofile']" routerLinkActive="active" *ngIf="isLoggedIn">
@@ -30,6 +33,9 @@
           *ngIf="isLoggedIn && isAdmin"
         >
           Admin
+        </div>
+        <div class="border rounded element" [routerLink]="['/gt']" routerLinkActive="active" *ngIf="isLoggedIn">
+          Gólyatábor
         </div>
         <div class="border rounded element" (click)="logout()" *ngIf="isLoggedIn">Kijelentkezés</div>
       </mat-nav-list>

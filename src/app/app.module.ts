@@ -57,6 +57,7 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { UsersComponent } from './components/users/users.component';
 import { IsAdminPipe } from './pipes/is-admin.pipe';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { CreateLetterPipe } from './pipes/create-letter.pipe';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
     NewUserComponent,
     UsersComponent,
     IsAdminPipe,
-    MyProfileComponent
+    MyProfileComponent,
+    CreateLetterPipe
   ],
   imports: [
     BrowserModule,

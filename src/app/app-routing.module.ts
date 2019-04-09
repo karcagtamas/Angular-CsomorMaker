@@ -14,9 +14,9 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'generator', component: GeneratorComponent, canActivate: [AuthGuard] },
+  { path: 'generator', component: GeneratorComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] },
-  { path: 'porta', component: PortaComponent, canActivate: [AuthGuard] },
+  { path: 'porta', component: PortaComponent },
   { path: 'myprofile', component: MyProfileComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
