@@ -1,4 +1,4 @@
-<mat-form-field>
+<mat-form-field class="w-100">
   <mat-label>Poszt</mat-label>
   <mat-select [(ngModel)]="selectedWork" name="workselect" [formControl]="workselect">
     <mat-option *ngFor="let work of Works; let i = index" [value]="i">
@@ -15,13 +15,13 @@
   <div class="border rounded" #export>
     <h2 class="text-center">{{ Works[selectedWork].name }} Csömör</h2>
     <div class="row col-12">
-      <div class="border rounded m-2 p-2">
+      <div class="border rounded m-1 p-1 column">
         Időpont
         <div *ngFor="let item of Works[selectedWork].table" class="border rounded p-1 m-1 text-center">
           {{ item.id | convertToHour }}
         </div>
       </div>
-      <div class="border rounded m-2 p-2">
+      <div class="border rounded m-1 p-1 column">
         {{ Works[selectedWork].name }}
         <div
           *ngFor="let item of Works[selectedWork].table"
