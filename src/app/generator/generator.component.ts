@@ -191,7 +191,6 @@ export class GeneratorComponent implements OnInit {
               index = Math.floor(Math.random() * event.generator.workers.length);
               worker = event.generator.workers[index];
               count++;
-              /* console.log(count); */
 
               // Ha már több mint 100-stor lefutott, akkor próbája meg kicserélgetni régebbi emberrekkel, akik tudnának jönni
               if (count >= 100) {
@@ -203,29 +202,17 @@ export class GeneratorComponent implements OnInit {
                 const param = Math.floor(Math.random() * event.generator.length); // Véletlen paraméter az azonosítóhoz
                 const newTableId = this.generateTableId(event.generator.start, param); // Új tábla azonosító
 
-                /* console.log('régiId', tableId);
-                console.log('régiElérhető', worker.table.find(x => x.id === newTableId).avaiable);
-                console.log('régiMunka', worker.table.find(x => x.id === newTableId).avaiable);
-                console.log('újId', newTableId);
-                console.log('újElérhető', newworker.table.find(x => x.id === tableId).avaiable);
-                console.log('újMunka', newworker.table.find(x => x.id === tableId).work); */
-
                 const newWorkerTableElement = newworker.table.find(x => x.id === tableId); // Új humán a régi helyen
                 const workerTableNewElement = worker.table.find(x => x.id === newTableId); // Régi humán az új helyen
-
+                const addedWorkName = newworker.table.find(x => x.id === newTableId).work;
+                const addedWork = event.generator.works.find(x => x.name === addedWorkName);
                 // Ha az új humán megfelelő a régi helyen és a régi humán megfelelő
                 if (
                   newWorkerTableElement.avaiable &&
                   !newWorkerTableElement.work &&
-                  worker.workerHours !== 0 &&
-                  workerTableNewElement.avaiable &&
-                  !workerTableNewElement.work &&
+                  this.workerIsValid(worker, newTableId, addedWork) &&
                   newTableId !== tableId
                 ) {
-                  const addedWorkName = newworker.table.find(x => x.id === newTableId).work; // Hozzáadandő poszt neve
-
-                  /*   console.log('Hozzáadott név', addedWorkName); */
-
                   workerTableNewElement.work = addedWorkName; // A régi humán új helyére mentjük a posztot
                   // Ha a poszt név nem üres, akkor csökkentjük az óra számot
                   if (addedWorkName) {
@@ -244,9 +231,6 @@ export class GeneratorComponent implements OnInit {
 
                   // A régi humánra rá állítja az új humánt
                   worker = newworker;
-                  if (worker.name === 'Zsuzsi') {
-                    console.log('csere');
-                  }
                 }
               }
             } while (!this.workerIsValid(worker, tableId, event.generator.works[j]) && count < limit);
@@ -263,15 +247,13 @@ export class GeneratorComponent implements OnInit {
       if (!stop) {
         this.setAlert('Nincs generálási eredmény! Próbálja újra!', false);
       }
-      /* console.log('Works', event.generator.works);
-      console.log('Workers', event.generator.workers); */
       event.generator.ready = true;
       this.generatorservice.newGenerator(event.eventId, event.generator);
       this.setAlert('Sikeres generálás!', true);
     }
   }
 
-  workerIsValid(worker: Worker, tableId: string, work: Work) {
+  workerIsValid(worker: Worker, tableId: string, work?: Work) {
     if (worker.workerHours === 0) {
       return false;
     }
@@ -282,11 +264,10 @@ export class GeneratorComponent implements OnInit {
     if (workerElement.work) {
       return false;
     }
-    if (worker.name === 'Zsuzsi') {
-      console.log(worker.activeWorks.find(x => x.work === work.name).active);
-    }
-    if (!worker.activeWorks.find(x => x.work === work.name).active) {
-      return false;
+    if (work) {
+      if (!worker.activeWorks.find(x => x.work === work.name).active) {
+        return false;
+      }
     }
     if (this.checkPast(worker, tableId)) {
       return false;
