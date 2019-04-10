@@ -67,6 +67,8 @@
                 <mat-checkbox *ngFor="let status of worker.table" [(ngModel)]="status.avaiable" class="mr-3">{{
                   status.id
                 }}</mat-checkbox>
+                <br />
+                <br />
                 <mat-checkbox *ngFor="let status of worker.activeWorks" [(ngModel)]="status.active" class="mr-3">{{
                   status.work
                 }}</mat-checkbox>
