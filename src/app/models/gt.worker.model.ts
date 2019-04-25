@@ -4,4 +4,5 @@ export class GTWorker {
   name: string;
   works: GTWorkerTable[];
   activeWorks: ActiveWork[];
+  isWorker: boolean;
 }

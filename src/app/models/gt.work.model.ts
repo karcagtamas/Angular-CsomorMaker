@@ -5,4 +5,6 @@ export class GTWork {
   startHour: number;
   endHour: number;
   workers: GTWorkTable[];
+  bosses: string[];
+  workerCount: number;
 }
