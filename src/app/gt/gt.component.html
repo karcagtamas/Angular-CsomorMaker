@@ -6,8 +6,8 @@
     </select>
     <button class="btn btn-outline-danger float-right m-1">Reset</button>
     <button class="btn btn-outline-warning float-right m-1">Generálás</button>
-    <button class="btn btn-outline-primary float-right m-1" (click)="newGt()">Új generálás</button>
-    <div class="row col-12 p-1">
+    <button class="btn btn-outline-primary float-right m-1" (click)="newGt()">Új gólyatábor</button>
+    <div class="row col-12 p-1" *ngIf="gt">
       <div class="border rounded col-6 p-1">
         <h6>Posztok</h6>
         <div class="form-group border rounded m-1 p-1">
@@ -20,6 +20,9 @@
           />
           <button class="btn btn-outline-secondary" (click)="saveWork(newWork)">Poszt felvétele</button>
           <div class="alert alert-danger mt-1"></div>
+          <div>
+            <div *ngFor="let work of gt.works">{{ work.name }}</div>
+          </div>
         </div>
       </div>
       <div class="border rounded col-6 p-1">
