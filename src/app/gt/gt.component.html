@@ -6,18 +6,34 @@
     </select>
     <button class="btn btn-outline-danger float-right m-1">Reset</button>
     <button class="btn btn-outline-warning float-right m-1">Generálás</button>
+    <button class="btn btn-outline-info float-right m-1" (click)="modifyGt()">Módosítás</button>
     <button class="btn btn-outline-primary float-right m-1" (click)="newGt()">Új gólyatábor</button>
     <div class="col-12 p-1 border rounded mt-5" *ngIf="gt">
       <div class="form-group col-12">
         <label>Év: </label>
-        <span> {{ gt.year }}</span>
-        <input type="number" name="modifyYear" class="form-control" />
+        <span *ngIf="!gtIsOnModify"> {{ gt.year }}</span>
+        <input
+          type="number"
+          [(ngModel)]="modifiedGt.year"
+          name="modifyYear"
+          class="form-control"
+          *ngIf="gtIsOnModify"
+        />
       </div>
       <div class="form-group col-12">
         <label>Napok száma: </label>
-        <span> {{ gt.days }}</span>
-        <input type="number" name="modifyDays" class="form-control" />
+        <span *ngIf="!gtIsOnModify"> {{ gt.days }}</span>
+        <input
+          type="number"
+          [(ngModel)]="modifiedGt.days"
+          name="modifyDays"
+          class="form-control"
+          *ngIf="gtIsOnModify"
+        />
       </div>
+      <div class="alert alert-danger" *ngIf="modifyAlert"><strong>HIBA!</strong> {{ modifyAlert }}</div>
+      <button class="btn btn-outline-success m-1" (click)="saveModify()" *ngIf="gtIsOnModify">Mentés</button>
+      <button class="btn btn-outline-info m-1" (click)="gtIsOnModify = false" *ngIf="gtIsOnModify">Vissza</button>
     </div>
     <div class="row col-12 p-1" *ngIf="gt">
       <div class="border rounded col-6 p-1">

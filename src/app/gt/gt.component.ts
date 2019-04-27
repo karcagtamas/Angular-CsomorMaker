@@ -14,6 +14,9 @@ export class GtComponent implements OnInit {
   gts: GT[] = [];
   selectedGt = 0;
   gt: GT = null;
+  modifiedGt: GT = null;
+  gtIsOnModify = false;
+  modifyAlert = '';
 
   constructor(public gtservice: GtService) {}
 
@@ -41,6 +44,24 @@ export class GtComponent implements OnInit {
       const g = new GT();
       g.year = year;
       this.gtservice.newGt(g);
+    }
+  }
+
+  modifyGt() {
+    this.gtIsOnModify = true;
+    this.modifiedGt = this.gt;
+  }
+
+  saveModify() {
+    this.gtIsOnModify = false;
+    if (this.modifiedGt.year && this.modifiedGt.year < 2000) {
+      this.modifyAlert = 'Nem megfelelő évszám!';
+    } else if (this.modifiedGt.days && this.modifiedGt.days <= 0) {
+      this.modifyAlert = 'Nem megfelelő nap szám!';
+    } else {
+      this.gt = this.modifiedGt;
+      this.gtservice.saveGt(this.gt);
+      this.gtIsOnModify = false;
     }
   }
 
