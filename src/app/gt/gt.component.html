@@ -51,7 +51,7 @@
           <button class="btn btn-outline-secondary" (click)="saveWork(newWork)">Poszt felvétele</button>
           <div class="alert alert-danger mt-1" *ngIf="workAlert"><strong>HIBA!</strong> {{ workAlert }}</div>
           <div>
-            <div *ngFor="let work of gt.works">{{ work.name }}</div>
+            <div *ngFor="let work of gt.works"><app-gt-work></app-gt-work></div>
           </div>
         </div>
       </div>
