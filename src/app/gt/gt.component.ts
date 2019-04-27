@@ -74,6 +74,12 @@ export class GtComponent implements OnInit {
     } else {
       const w = new GTWork();
       w.name = work;
+      w.bosses = [];
+      w.day = 0;
+      w.startHour = 0;
+      w.endHour = 0;
+      w.workerCount = 0;
+      w.workers = [];
       if (!this.gt.works) {
         this.gt.works = [];
       }

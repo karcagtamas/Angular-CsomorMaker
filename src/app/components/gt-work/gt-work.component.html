@@ -1,7 +1,47 @@
 <div class="m-1">
   <mat-expansion-panel>
     <mat-expansion-panel-header>
-      <mat-panel-title></mat-panel-title>
+      <mat-panel-title>{{ work.name }}</mat-panel-title>
     </mat-expansion-panel-header>
+    <div class="form-group">
+      Nap: <span>{{ work.day }}</span>
+      <input type="number" name="modifyDay" class="form-control" [(ngModel)]="modifiedWork.day" *ngIf="onModify" />
+    </div>
+    <div class="form-group">
+      Kezdeti óra: <span>{{ work.startHour }}</span>
+      <input
+        type="number"
+        name="modifyStart"
+        class="form-control"
+        [(ngModel)]="modifiedWork.startHour"
+        *ngIf="onModify"
+      />
+    </div>
+    <div class="form-group">
+      Vége óra: <span>{{ work.endHour }}</span>
+      <input type="number" name="modifyEnd" class="form-control" [(ngModel)]="modifiedWork.endHour" *ngIf="onModify" />
+    </div>
+    <div class="form-group">
+      Főnökök: <span *ngFor="let boss of work.bosses">{{ boss }} <span (click)="deleteBoss()">X</span></span>
+      <select [(ngModel)]="selectedWorker" name="workers" class="form-control m-1" *ngIf="onModify">
+        <option value="{{ i }}" *ngFor="let worker of workers; let i = index">{{ worker.name }}</option>
+      </select>
+      <button class="btn btn-outline-secondary m-1" (click)="addBoss()" *ngIf="onModify">
+        Hozzáadás</button
+      ><br />
+    </div>
+    <div class="form-group">
+      Humánok száma: <span>{{ work.workerCount }}</span>
+      <input
+        type="number"
+        name="modifyWorkerCount"
+        class="form-control"
+        [(ngModel)]="modifiedWork.workerCount"
+        *ngIf="onModify"
+      />
+    </div>
+    <button class="btn btn-outline-success m-1" *ngIf="onModify" (click)="saveModify()">Mentés</button>
+    <button class="btn btn-outline-info m-1" *ngIf="onModify" (click)="onModify = false">Vissza</button>
+    <button class="btn btn-outline-success m-1" *ngIf="!onModify" (click)="modify()">Módosítás</button>
   </mat-expansion-panel>
 </div>
