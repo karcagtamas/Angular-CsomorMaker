@@ -17,6 +17,7 @@ export class GtComponent implements OnInit {
   modifiedGt: GT = null;
   gtIsOnModify = false;
   modifyAlert = '';
+  workAlert = '';
 
   constructor(public gtservice: GtService) {}
 
@@ -49,16 +50,16 @@ export class GtComponent implements OnInit {
 
   modifyGt() {
     this.gtIsOnModify = true;
-    this.modifiedGt = this.gt;
+    this.modifiedGt = { ...this.gt };
   }
 
   saveModify() {
-    this.gtIsOnModify = false;
     if (this.modifiedGt.year && this.modifiedGt.year < 2000) {
       this.modifyAlert = 'Nem megfelelő évszám!';
     } else if (this.modifiedGt.days && this.modifiedGt.days <= 0) {
       this.modifyAlert = 'Nem megfelelő nap szám!';
     } else {
+      this.modifyAlert = '';
       this.gt = this.modifiedGt;
       this.gtservice.saveGt(this.gt);
       this.gtIsOnModify = false;
@@ -66,10 +67,13 @@ export class GtComponent implements OnInit {
   }
 
   saveWork(work: string) {
-    if (!this.gt.works.find(x => x.name === work)) {
+    if (!work) {
+      this.workAlert = 'A mező kitöltése kötelező!';
+    } else if (this.gt.works && this.gt.works.find(x => x.name === work)) {
+      this.workAlert = 'A mező név már szerepel a halmazba!';
+    } else {
       const w = new GTWork();
       w.name = work;
-      console.log(this.gt);
       if (!this.gt.works) {
         this.gt.works = [];
       }
