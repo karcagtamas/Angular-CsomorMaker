@@ -5,6 +5,8 @@ export class GTWorker {
   works: GTWorkerTable[];
   activeWorks: ActiveWork[];
   isWorker: boolean;
+  countOfBigWorks: number;
+  countOfSmallWorks: number;
 
   constructor() {
     this.name = '';
