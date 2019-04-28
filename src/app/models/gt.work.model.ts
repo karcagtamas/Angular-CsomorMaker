@@ -1,12 +1,12 @@
-import { GTWorkTable } from './gt.work.table.model';
 export class GTWork {
   name: string;
   day: number;
   startHour: number;
   endHour: number;
-  workers: GTWorkTable[];
+  workers: string[];
   bosses: string[];
   workerCount: number;
+  isBig: boolean;
 
   constructor() {
     this.name = '';
@@ -16,5 +16,6 @@ export class GTWork {
     this.endHour = 0;
     this.workerCount = 0;
     this.workers = [];
+    this.isBig = false;
   }
 }

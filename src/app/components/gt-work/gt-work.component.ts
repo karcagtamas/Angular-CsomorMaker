@@ -49,7 +49,7 @@ export class GtWorkComponent implements OnInit {
       this.setAlert('A nap mező kitöltése kötelező!');
     } else if (this.modifiedWork.day > this.days) {
       this.setAlert('A nap számnak a tábor határain belül kell szerepelnie!');
-    } else if (this.modifiedWork.day > 0) {
+    } else if (this.modifiedWork.day <= 0) {
       this.setAlert('A nap számnak nagyobbnak kell lennie mint 0!');
     } else if (!isNumber(this.modifiedWork.startHour)) {
       this.setAlert('A kezdeti óra kitöltése kötelező!');
@@ -71,6 +71,7 @@ export class GtWorkComponent implements OnInit {
       this.work.startHour = this.modifiedWork.startHour;
       this.work.endHour = this.modifiedWork.endHour;
       this.work.workerCount = this.modifiedWork.workerCount;
+      this.work.isBig = this.work.endHour - this.work.startHour > 6;
       this.save.emit();
       this.onModify = false;
     }

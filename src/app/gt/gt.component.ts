@@ -4,6 +4,8 @@ import { GT } from './../models/gt.model';
 import { Component, OnInit } from '@angular/core';
 import { GtService } from '../services/gt.service';
 import { GTWorker } from '../models/gt.worker.model';
+import { WorkerTable } from '../models/worker.table.model';
+import { GTWorkerTable } from '../models/gt.worker.table.model';
 
 @Component({
   selector: 'app-gt',
@@ -78,7 +80,7 @@ export class GtComponent implements OnInit {
       this.modifyAlert = 'Nem megfelelő évszám!';
     } else if (this.modifiedGt.days && this.modifiedGt.days <= 0) {
       this.modifyAlert = 'Nem megfelelő nap szám!';
-    } else if (this.gts.find(x => x.year === this.modifiedGt.year)) {
+    } else if (this.modifiedGt.year !== this.gt.year && this.gts.find(x => x.year === this.modifiedGt.year)) {
       this.modifyAlert = 'Már létezik ez az év!';
     } else {
       this.modifyAlert = '';
@@ -107,9 +109,11 @@ export class GtComponent implements OnInit {
       if (!this.gt.works) {
         this.gt.works = [];
       }
+      this.workAlert = '';
       this.gt.works.push(w);
       this.newWork = '';
       this.saveGtModify();
+      setTimeout(() => this.changeGt(), 100);
     }
   }
 
@@ -149,9 +153,11 @@ export class GtComponent implements OnInit {
       if (!this.gt.workers) {
         this.gt.workers = [];
       }
+      this.workerAlert = '';
       this.gt.workers.push(w);
       this.newWorker = '';
       this.saveGtModify();
+      setTimeout(() => this.changeGt(), 100);
     }
   }
 
@@ -161,5 +167,121 @@ export class GtComponent implements OnInit {
       i.bosses = i.bosses.filter(x => x !== name);
     }
     this.saveGtModify();
+  }
+
+  gen() {
+    if (this.checkGen()) {
+      this.setWorks();
+      for (let i = 0; i < this.gt.works.length; i++) {
+        let work = this.gt.works[i];
+        let count = 0;
+        do {
+          let index;
+          do {
+            index = Math.floor(Math.random() * this.gt.workers.length);
+          } while (!this.gt.workers[index].isWorker);
+          const worker = this.gt.workers[index];
+          if (
+            !worker.works.find(x => x.day === work.day && x.hour === work.startHour) &&
+            worker.activeWorks.find(x => x.work === work.name && x.active)
+          ) {
+            work.workers.push(worker.name);
+            count++;
+            for (let hour = work.startHour; hour <= work.endHour; hour++) {
+              const workerTable = new GTWorkerTable();
+              workerTable.day = work.day;
+              workerTable.hour = hour;
+              workerTable.work = work.name;
+              worker.works.push(workerTable);
+            }
+          }
+        } while (count < work.workerCount);
+      }
+      console.log(this.gt.workers);
+    }
+  }
+
+  checkGen(): boolean {
+    if (!this.checkWorkNeeded()) {
+      return false;
+    }
+    return true;
+  }
+
+  checkWorkNeeded() {
+    for (const i of this.gt.works) {
+      const workers = this.workersCount(i.name);
+      if (i.workerCount > workers) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  setWorks() {
+    for (const i of this.gt.workers) {
+      i.countOfBigWorks = 0;
+      i.countOfSmallWorks = 0;
+      i.works = [];
+    }
+    for (const i of this.gt.works) {
+      i.workers = [];
+    }
+    const countOfBigs = this.countOfBigWorks();
+    let index = 0;
+    for (let i = 0; i < countOfBigs; i++) {
+      if (this.gt.workers[index].isWorker) {
+        this.gt.workers[index].countOfBigWorks++;
+      }
+      index++;
+      if (index === this.gt.workers.length) {
+        index = 0;
+      }
+    }
+    const countOfSmalls = this.countOfSmallWorks();
+    index = this.gt.workers.length - 1;
+    for (let i = 0; i < countOfSmalls; i++) {
+      if (this.gt.workers[index].isWorker) {
+        this.gt.workers[index].countOfSmallWorks++;
+      }
+      index--;
+      if (index === -1) {
+        index = this.gt.workers.length - 1;
+      }
+    }
+  }
+
+  countOfBigWorks(): number {
+    let count = 0;
+    for (const i of this.gt.works) {
+      if (i.isBig) {
+        count += i.workerCount;
+      }
+    }
+    return count;
+  }
+  countOfSmallWorks(): number {
+    let count = 0;
+    for (const i of this.gt.works) {
+      if (!i.isBig) {
+        count += i.workerCount;
+      }
+    }
+    return count;
+  }
+  workersCount(work?: string): number {
+    let count = 0;
+    for (const i of this.gt.workers) {
+      if (work) {
+        if (i.isWorker && i.activeWorks.find(x => x.work === work && x.active)) {
+          count++;
+        }
+      } else {
+        if (i.isWorker) {
+          count++;
+        }
+      }
+    }
+    return count;
   }
 }
