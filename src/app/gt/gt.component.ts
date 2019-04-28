@@ -4,7 +4,6 @@ import { GT } from './../models/gt.model';
 import { Component, OnInit } from '@angular/core';
 import { GtService } from '../services/gt.service';
 import { GTWorker } from '../models/gt.worker.model';
-import { WorkerTable } from '../models/worker.table.model';
 import { GTWorkerTable } from '../models/gt.worker.table.model';
 
 @Component({

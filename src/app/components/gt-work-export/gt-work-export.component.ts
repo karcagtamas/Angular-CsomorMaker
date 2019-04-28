@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { workers } from 'cluster';
 import { GTWork } from 'src/app/models/gt.work.model';
 
 @Component({
