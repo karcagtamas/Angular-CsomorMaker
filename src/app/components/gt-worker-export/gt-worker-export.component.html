@@ -1,4 +1,4 @@
-<div>
+<div class="p-1">
   <select name="worker" [(ngModel)]="selectedWorker" (change)="createTable()" class="form-control">
     <option value="{{ i }}" *ngFor="let worker of workers; let i = index">{{ worker.name }}</option>
   </select>

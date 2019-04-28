@@ -24,6 +24,7 @@ export class GtComponent implements OnInit {
   workAlert = '';
   workerAlert = '';
   modifyIsSuccess = false;
+  selectedExport = 1;
 
   constructor(public gtservice: GtService) {}
 
