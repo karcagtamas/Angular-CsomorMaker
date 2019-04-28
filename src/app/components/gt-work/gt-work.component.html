@@ -1,0 +1,69 @@
+<div class="m-1">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ work.name }}</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="alert alert-danger" *ngIf="modifyAlert"><strong>HIBA!</strong> {{ modifyAlert }}</div>
+    <div class="alert alert-success" *ngIf="modifySuccess">
+      Sikeres módosítás!
+    </div>
+    <div class="form-group">
+      Nap: <span>{{ work.day }}</span>
+      <input
+        type="number"
+        name="modifyDay"
+        class="form-control"
+        [(ngModel)]="modifiedWork.day"
+        *ngIf="onModify"
+        placeholder="Nap száma"
+      />
+    </div>
+    <div class="form-group">
+      Kezdeti óra: <span>{{ work.startHour }}</span>
+      <input
+        type="number"
+        name="modifyStart"
+        class="form-control"
+        [(ngModel)]="modifiedWork.startHour"
+        *ngIf="onModify"
+        placeholder="Kezdeti óra"
+      />
+    </div>
+    <div class="form-group">
+      Vége óra: <span>{{ work.endHour }}</span>
+      <input type="number" name="modifyEnd" class="form-control" [(ngModel)]="modifiedWork.endHour" *ngIf="onModify" placeholder="Vége óra" />
+    </div>
+    <div class="form-group">
+      Főnökök:
+      <span *ngIf="!onModify">
+        <span *ngFor="let boss of work.bosses">{{ boss }} </span>
+      </span>
+      <span *ngIf="onModify">
+        <span *ngFor="let boss of modifiedWork.bosses"
+          >{{ boss }} <span (click)="deleteBoss(boss)" *ngIf="onModify"> X </span>
+        </span>
+      </span>
+      <select [(ngModel)]="selectedWorker" name="workers" class="form-control m-1" *ngIf="onModify">
+        <option value="{{ i }}" *ngFor="let worker of workers; let i = index">{{ worker.name }}</option>
+      </select>
+      <button class="btn btn-outline-secondary m-1" (click)="addBoss()" *ngIf="onModify">
+        Hozzáadás</button
+      ><br />
+    </div>
+    <div class="form-group">
+      Humánok száma: <span>{{ work.workerCount }}</span>
+      <input
+        type="number"
+        name="modifyWorkerCount"
+        class="form-control"
+        [(ngModel)]="modifiedWork.workerCount"
+        *ngIf="onModify"
+        placeholer="Szükséges humánok száma"
+      />
+    </div>
+    <button class="btn btn-outline-success m-1" *ngIf="onModify" (click)="saveModify()">Mentés</button>
+    <button class="btn btn-outline-info m-1" *ngIf="onModify" (click)="onModify = false">Vissza</button>
+    <button class="btn btn-outline-warning m-1" *ngIf="!onModify" (click)="modify()">Módosítás</button>
+    <button class="btn btn-outline-danger m-1" (click)="deleteWork()">Törlés</button>
+  </mat-expansion-panel>
+</div>
