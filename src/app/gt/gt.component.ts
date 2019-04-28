@@ -162,4 +162,13 @@ export class GtComponent implements OnInit {
     }
     this.saveGtModify();
   }
+
+  gen() {
+    if (this.checkGen()) {
+    }
+  }
+
+  checkGen(): boolean {
+    return true;
+  }
 }

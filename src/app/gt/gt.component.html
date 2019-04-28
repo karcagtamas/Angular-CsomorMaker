@@ -5,7 +5,7 @@
       <option value="{{ i }}" *ngFor="let gt of gts; let i = index">{{ gt.year }}</option>
     </select>
     <button class="btn btn-outline-danger float-right m-1" (click)="resetGt()">Reset</button>
-    <button class="btn btn-outline-warning float-right m-1">Generálás</button>
+    <button class="btn btn-outline-warning float-right m-1" (click)="gen()">Generálás</button>
     <button class="btn btn-outline-info float-right m-1" (click)="modifyGt()">Módosítás</button>
     <button class="btn btn-outline-primary float-right m-1" (click)="newGt()">Új gólyatábor</button>
     <div class="col-12 p-1 border rounded mt-5" *ngIf="gt">
