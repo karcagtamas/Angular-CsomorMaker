@@ -61,6 +61,7 @@ import { CreateLetterPipe } from './pipes/create-letter.pipe';
 import { GtComponent } from './gt/gt.component';
 import { GtWorkComponent } from './components/gt-work/gt-work.component';
 import { GtWorkerComponent } from './components/gt-worker/gt-worker.component';
+import { GtWorkerExportComponent } from './components/gt-worker-export/gt-worker-export.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { GtWorkerComponent } from './components/gt-worker/gt-worker.component';
     CreateLetterPipe,
     GtComponent,
     GtWorkComponent,
-    GtWorkerComponent
+    GtWorkerComponent,
+    GtWorkerExportComponent
   ],
   imports: [
     BrowserModule,

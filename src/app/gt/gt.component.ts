@@ -173,7 +173,7 @@ export class GtComponent implements OnInit {
     if (this.checkGen()) {
       this.setWorks();
       for (let i = 0; i < this.gt.works.length; i++) {
-        let work = this.gt.works[i];
+        const work = this.gt.works[i];
         let count = 0;
         do {
           let index;
@@ -198,6 +198,7 @@ export class GtComponent implements OnInit {
         } while (count < work.workerCount);
       }
       console.log(this.gt.workers);
+      this.saveGtModify();
     }
   }
 
