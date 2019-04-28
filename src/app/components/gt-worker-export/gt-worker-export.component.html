@@ -1,0 +1,25 @@
+<div class="p-1">
+  <select name="worker" [(ngModel)]="selectedWorker" (change)="createTable()" class="form-control">
+    <option value="{{ i }}" *ngFor="let worker of workers; let i = index">{{ worker.name }}</option>
+  </select>
+  <div class="row m-1">
+    <div class="border rounded m-1 p-1">
+      <div>Órák</div>
+      <div *ngFor="let hour of export[0]; let i = index" class="border rounded m-1 p-1 text-center">
+        {{ i | hours }} - {{ i + 1 | hours }}
+      </div>
+    </div>
+    <div *ngFor="let day of export; let i = index" class="border rounded m-1 p-1">
+      <div>{{ i + 1 }}. nap</div>
+      <div
+        *ngFor="let hour of day"
+        (mouseenter)="mouseEnter(hour.work)"
+        (mouseleave)="mouseLeave()"
+        class="border rounded m-1 p-1 text-center"
+        [ngClass]="{ element: hour.work === selectedValue }"
+      >
+        {{ hour.work }}
+      </div>
+    </div>
+  </div>
+</div>

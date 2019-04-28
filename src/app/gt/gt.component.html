@@ -85,4 +85,15 @@
       </div>
     </div>
   </div>
+  <div class="border rounded m-1" *ngIf="gt">
+    <div>
+      <button class="btn btn-outline-info m-1" (click)="selectedExport = 1">Személyes Export</button>
+      <button class="btn btn-outline-info m-1" (click)="selectedExport = 2">Poszt Export</button>
+    </div>
+
+    <div [ngSwitch]="selectedExport">
+      <div *ngSwitchCase="1"><app-gt-worker-export [workers]="gt.workers" [days]="gt.days"></app-gt-worker-export></div>
+      <div *ngSwitchCase="2"><app-gt-work-export [works]="gt.works"></app-gt-work-export></div>
+    </div>
+  </div>
 </div>
