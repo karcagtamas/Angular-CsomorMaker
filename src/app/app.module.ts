@@ -60,6 +60,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { CreateLetterPipe } from './pipes/create-letter.pipe';
 import { GtComponent } from './gt/gt.component';
 import { GtWorkComponent } from './components/gt-work/gt-work.component';
+import { GtWorkerComponent } from './components/gt-worker/gt-worker.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { GtWorkComponent } from './components/gt-work/gt-work.component';
     MyProfileComponent,
     CreateLetterPipe,
     GtComponent,
-    GtWorkComponent
+    GtWorkComponent,
+    GtWorkerComponent
   ],
   imports: [
     BrowserModule,

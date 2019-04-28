@@ -1,0 +1,28 @@
+<div class="m-1">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ worker.name }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="alert alert-success" *ngIf="modifySuccess">Sikeres módosítás!</div>
+    <div class="form-group">
+      <div *ngIf="!onModify">Humán-e: {{ worker.isWorker ? 'Igen' : 'Nem' }}</div>
+      <mat-checkbox *ngIf="onModify" [(ngModel)]="modifiedWorker.isWorker">Humán-e</mat-checkbox>
+    </div>
+    <div class="form-group">
+      <div *ngIf="!onModify">
+        <div *ngFor="let work of worker.activeWorks">{{ work.work }}: {{ work.active ? 'Igen' : 'Nem' }}</div>
+      </div>
+      <div *ngIf="onModify">
+        <div *ngFor="let work of worker.activeWorks">
+          <mat-checkbox [(ngModel)]="work.active">{{ work.work }}</mat-checkbox>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-outline-success m-1" *ngIf="onModify" (click)="saveModify()">Mentés</button>
+    <button class="btn btn-outline-info m-1" *ngIf="onModify" (click)="onModify = false">Vissza</button>
+    <button class="btn btn-outline-warning m-1" *ngIf="!onModify" (click)="modify()">Módosítás</button>
+    <button class="btn btn-outline-danger m-1" (click)="deleteWorker()">Törlés</button>
+  </mat-expansion-panel>
+</div>

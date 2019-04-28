@@ -1,7 +1,9 @@
+import { GTWork } from './../models/gt.work.model';
+import { ActiveWork } from './../models/ignore.model';
 import { GT } from './../models/gt.model';
 import { Component, OnInit } from '@angular/core';
 import { GtService } from '../services/gt.service';
-import { GTWork } from '../models/gt.work.model';
+import { GTWorker } from '../models/gt.worker.model';
 
 @Component({
   selector: 'app-gt',
@@ -18,6 +20,7 @@ export class GtComponent implements OnInit {
   gtIsOnModify = false;
   modifyAlert = '';
   workAlert = '';
+  workerAlert = '';
 
   constructor(public gtservice: GtService) {}
 
@@ -37,6 +40,13 @@ export class GtComponent implements OnInit {
 
   changeGt() {
     this.gt = this.gts[this.selectedGt];
+  }
+
+  resetGt() {
+    const year = this.gt.year;
+    this.gt = new GT();
+    this.gt.year = year;
+    this.saveGtModify();
   }
 
   newGt() {
@@ -61,7 +71,7 @@ export class GtComponent implements OnInit {
     } else {
       this.modifyAlert = '';
       this.gt = this.modifiedGt;
-      this.gtservice.saveGt(this.gt);
+      this.saveGtModify();
       this.gtIsOnModify = false;
     }
   }
@@ -80,13 +90,71 @@ export class GtComponent implements OnInit {
       w.endHour = 0;
       w.workerCount = 0;
       w.workers = [];
+      for (const i of this.gt.workers) {
+        const active = new ActiveWork();
+        active.active = true;
+        active.work = work;
+        i.activeWorks.push(active);
+      }
       if (!this.gt.works) {
         this.gt.works = [];
       }
       this.gt.works.push(w);
-      this.gtservice.saveGt(this.gt);
+      this.newWork = '';
+      this.saveGtModify();
     }
   }
 
-  saveWorker(worker: string) {}
+  deleteWork(event) {
+    this.gt.works = this.gt.works.filter(x => x.name !== event);
+    for (const i of this.gt.workers) {
+      i.activeWorks = i.activeWorks.filter(x => x.work !== event);
+    }
+    this.saveGtModify();
+  }
+
+  /*   saveWorkModify(work: GTWork) {
+    const workIndex = this.gt.works.findIndex(x => x.name === work.name);
+    this.gt.works[workIndex] = work;
+    this.saveGtModify();
+  } */
+
+  saveGtModify() {
+    console.log(this.gt);
+    this.gtservice.saveGt(this.gt);
+  }
+
+  saveWorker(worker: string) {
+    if (!worker) {
+      this.workerAlert = 'A mező kitöltése kötelező!';
+    } else if (this.gt.workers && this.gt.workers.find(x => x.name === worker)) {
+      this.workAlert = 'A dolgozó név már szerepel a halmazban!';
+    } else {
+      const w = new GTWorker();
+      w.name = worker;
+      w.isWorker = true;
+      w.works = [];
+      w.activeWorks = [];
+      for (const i of this.gt.works) {
+        const active = new ActiveWork();
+        active.active = true;
+        active.work = i.name;
+        w.activeWorks.push(active);
+      }
+      if (!this.gt.workers) {
+        this.gt.workers = [];
+      }
+      this.gt.workers.push(w);
+      this.newWorker = '';
+      this.saveGtModify();
+    }
+  }
+
+  deleteWorker(name: string) {
+    this.gt.workers = this.gt.workers.filter(x => x.name !== name);
+    for (const i of this.gt.works) {
+      i.bosses = i.bosses.filter(x => x !== name);
+    }
+    this.saveGtModify();
+  }
 }

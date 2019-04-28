@@ -4,7 +4,7 @@
     <select name="gts" class="form-control" [(ngModel)]="selectedGt" (change)="changeGt()">
       <option value="{{ i }}" *ngFor="let gt of gts; let i = index">{{ gt.year }}</option>
     </select>
-    <button class="btn btn-outline-danger float-right m-1">Reset</button>
+    <button class="btn btn-outline-danger float-right m-1" (click)="resetGt()">Reset</button>
     <button class="btn btn-outline-warning float-right m-1">Generálás</button>
     <button class="btn btn-outline-info float-right m-1" (click)="modifyGt()">Módosítás</button>
     <button class="btn btn-outline-primary float-right m-1" (click)="newGt()">Új gólyatábor</button>
@@ -51,12 +51,35 @@
           <button class="btn btn-outline-secondary" (click)="saveWork(newWork)">Poszt felvétele</button>
           <div class="alert alert-danger mt-1" *ngIf="workAlert"><strong>HIBA!</strong> {{ workAlert }}</div>
           <div>
-            <div *ngFor="let work of gt.works"><app-gt-work [work]="work" [workers]="gt.workers"></app-gt-work></div>
+            <div *ngFor="let work of gt.works">
+              <app-gt-work
+                [work]="work"
+                [workers]="gt.workers"
+                (save)="saveGtModify()"
+                (delete)="deleteWork($event)"
+              ></app-gt-work>
+            </div>
           </div>
         </div>
       </div>
       <div class="border rounded col-6 p-1">
-        Humánok
+        <h6>Szervezők</h6>
+        <div class="form-group border rounded m-1 p-1">
+          <input
+            [(ngModel)]="newWorker"
+            type="text"
+            name="newWorker"
+            class="form-control mb-1"
+            placeholder="Új szervező felvétele"
+          />
+          <button class="btn btn-outline-secondary" (click)="saveWorker(newWorker)">Szervező felvétele</button>
+          <div class="alert alert-danger mt-1" *ngIf="workerAlert"><strong>HIBA!</strong> {{ workerAlert }}</div>
+          <div>
+            <div *ngFor="let worker of gt.workers">
+              <app-gt-worker [worker]="worker" (save)="saveGtModify()" (delete)="deleteWorker($event)"></app-gt-worker>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
