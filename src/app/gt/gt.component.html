@@ -32,6 +32,7 @@
         />
       </div>
       <div class="alert alert-danger m-1" *ngIf="modifyAlert"><strong>HIBA!</strong> {{ modifyAlert }}</div>
+      <div class="alert alert-success m-1" *ngIf="modifyIsSuccess">Sikeres módosítás!</div>
       <button class="btn btn-outline-success m-1" (click)="saveModify()" *ngIf="gtIsOnModify">Mentés</button>
       <button class="btn btn-outline-info m-1" (click)="gtIsOnModify = false; modifyAlert = ''" *ngIf="gtIsOnModify">
         Vissza
@@ -55,6 +56,7 @@
               <app-gt-work
                 [work]="work"
                 [workers]="gt.workers"
+                [days]="gt.days"
                 (save)="saveGtModify()"
                 (delete)="deleteWork($event)"
               ></app-gt-work>

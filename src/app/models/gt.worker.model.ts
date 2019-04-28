@@ -5,4 +5,11 @@ export class GTWorker {
   works: GTWorkerTable[];
   activeWorks: ActiveWork[];
   isWorker: boolean;
+
+  constructor() {
+    this.name = '';
+    this.works = [];
+    this.activeWorks = [];
+    this.isWorker = true;
+  }
 }

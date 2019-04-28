@@ -21,6 +21,7 @@ export class GtComponent implements OnInit {
   modifyAlert = '';
   workAlert = '';
   workerAlert = '';
+  modifyIsSuccess = false;
 
   constructor(public gtservice: GtService) {}
 
@@ -44,9 +45,13 @@ export class GtComponent implements OnInit {
 
   resetGt() {
     const year = this.gt.year;
+    const id = this.gt.gtId;
     this.gt = new GT();
     this.gt.year = year;
+    this.gt.gtId = id;
+    console.log(this.gt);
     this.saveGtModify();
+    this.changeGt();
   }
 
   newGt() {
@@ -55,6 +60,11 @@ export class GtComponent implements OnInit {
       const g = new GT();
       g.year = year;
       this.gtservice.newGt(g);
+      this.selectedGt = 0;
+      this.changeGt();
+      window.alert('A gólyatábor sikeresen létrehozva!');
+    } else {
+      window.alert('Idénre már van gólyatábor!');
     }
   }
 
@@ -68,11 +78,15 @@ export class GtComponent implements OnInit {
       this.modifyAlert = 'Nem megfelelő évszám!';
     } else if (this.modifiedGt.days && this.modifiedGt.days <= 0) {
       this.modifyAlert = 'Nem megfelelő nap szám!';
+    } else if (this.gts.find(x => x.year === this.modifiedGt.year)) {
+      this.modifyAlert = 'Már létezik ez az év!';
     } else {
       this.modifyAlert = '';
       this.gt = this.modifiedGt;
       this.saveGtModify();
       this.gtIsOnModify = false;
+      this.modifyIsSuccess = true;
+      setTimeout(() => (this.modifyIsSuccess = false), 3000);
     }
   }
 
@@ -84,12 +98,6 @@ export class GtComponent implements OnInit {
     } else {
       const w = new GTWork();
       w.name = work;
-      w.bosses = [];
-      w.day = 0;
-      w.startHour = 0;
-      w.endHour = 0;
-      w.workerCount = 0;
-      w.workers = [];
       for (const i of this.gt.workers) {
         const active = new ActiveWork();
         active.active = true;
@@ -132,9 +140,6 @@ export class GtComponent implements OnInit {
     } else {
       const w = new GTWorker();
       w.name = worker;
-      w.isWorker = true;
-      w.works = [];
-      w.activeWorks = [];
       for (const i of this.gt.works) {
         const active = new ActiveWork();
         active.active = true;

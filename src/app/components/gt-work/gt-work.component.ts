@@ -11,6 +11,7 @@ import { isNumber } from 'util';
 export class GtWorkComponent implements OnInit {
   @Input() work: GTWork;
   @Input() workers: GTWorker[];
+  @Input() days: number;
   @Output() save = new EventEmitter();
   @Output() delete = new EventEmitter();
   modifiedWork: GTWork = null;
@@ -44,15 +45,19 @@ export class GtWorkComponent implements OnInit {
   saveModify() {
     if (this.modifiedWork.bosses.length === 0) {
       this.setAlert('A főnökök száma nem megfelelő!');
-    } else if (!this.modifiedWork.day || !isNumber(this.modifiedWork.day)) {
+    } else if (!isNumber(this.modifiedWork.day)) {
       this.setAlert('A nap mező kitöltése kötelező!');
-    } else if (!this.modifiedWork.startHour || !isNumber(this.modifiedWork.startHour)) {
+    } else if (this.modifiedWork.day > this.days) {
+      this.setAlert('A nap számnak a tábor határain belül kell szerepelnie!');
+    } else if (this.modifiedWork.day > 0) {
+      this.setAlert('A nap számnak nagyobbnak kell lennie mint 0!');
+    } else if (!isNumber(this.modifiedWork.startHour)) {
       this.setAlert('A kezdeti óra kitöltése kötelező!');
-    } else if (!this.modifiedWork.endHour || !isNumber(this.modifiedWork.endHour)) {
+    } else if (!isNumber(this.modifiedWork.endHour)) {
       this.setAlert('A vége óra kitöltése kötelező!');
     } else if (this.modifiedWork.startHour >= this.modifiedWork.endHour) {
       this.setAlert('A kezdeti óra nem lehet egyben vagy utána a vége órának!');
-    } else if (!this.modifiedWork.workerCount || !isNumber(this.modifiedWork.workerCount)) {
+    } else if (!isNumber(this.modifiedWork.workerCount)) {
       this.setAlert('A humán szám kitöltése kötelező!');
     } else if (this.modifiedWork.workerCount < 0) {
       this.setAlert('A darabszának minimum 0-nak kell lennie.');

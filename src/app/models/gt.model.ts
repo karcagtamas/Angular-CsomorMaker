@@ -9,6 +9,16 @@ export class GT {
   works: GTWork[];
   classes: GTClass[];
   bosses: string[];
-  tShirtColor: string[];
+  tShirtColor: string;
   days: number;
+
+  constructor() {
+    this.year = 2000;
+    this.workers = [];
+    this.works = [];
+    this.classes = [];
+    this.bosses = [];
+    this.tShirtColor = '';
+    this.days = 0;
+  }
 }
