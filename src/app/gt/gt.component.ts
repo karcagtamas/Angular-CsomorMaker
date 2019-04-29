@@ -175,11 +175,12 @@ export class GtComponent implements OnInit {
       for (let i = 0; i < this.gt.works.length; i++) {
         const work = this.gt.works[i];
         let count = 0;
+        let tries = 0;
         do {
           let index;
           do {
             index = Math.floor(Math.random() * this.gt.workers.length);
-          } while (!this.gt.workers[index].isWorker);
+          } while (this.isValidWorkerIndex(index, work));
           const worker = this.gt.workers[index];
           if (
             !worker.works.find(x => x.day === work.day && x.hour === work.startHour) &&
@@ -187,6 +188,11 @@ export class GtComponent implements OnInit {
           ) {
             work.workers.push(worker.name);
             count++;
+            if (work.isBig) {
+              worker.countOfBigWorks--;
+            } else {
+              worker.countOfSmallWorks--;
+            }
             for (let hour = work.startHour; hour <= work.endHour; hour++) {
               const workerTable = new GTWorkerTable();
               workerTable.day = work.day;
@@ -195,15 +201,53 @@ export class GtComponent implements OnInit {
               worker.works.push(workerTable);
             }
           }
-        } while (count < work.workerCount);
+
+          tries++;
+        } while (count < work.workerCount && tries < 1000);
+        console.log(tries);
       }
       console.log(this.gt.workers);
       this.saveGtModify();
     }
   }
 
+  isValidWorkerIndex(index: number, work: GTWork) {
+    const worker = this.gt.workers[index];
+    if (!worker.isWorker) {
+      return true;
+    }
+    if (work.workers.includes(worker.name)) {
+      return true;
+    }
+    if (work.isBig) {
+      if (worker.countOfBigWorks === 0) {
+        return true;
+      }
+    } else {
+      if (worker.countOfSmallWorks === 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  canWorkIt(worker: GTWorker, work: GTWork) {
+    if (worker.activeWorks.find(x => x.work === work.name && !x.active)) {
+      return false;
+    }
+    for (let i = work.startHour; i <= work.endHour; i++) {
+      if (worker.works.find(x => x.day === work.day && x.hour === i)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   checkGen(): boolean {
     if (!this.checkWorkNeeded()) {
+      return false;
+    }
+    if (!this.checkOverlaps()) {
       return false;
     }
     return true;
@@ -214,6 +258,26 @@ export class GtComponent implements OnInit {
       const workers = this.workersCount(i.name);
       if (i.workerCount > workers) {
         return false;
+      }
+    }
+    return true;
+  }
+
+  checkOverlaps() {
+    for (let i = 0; i < this.gt.works.length; i++) {
+      for (let j = i + 1; j < this.gt.works.length; j++) {
+        const work1 = this.gt.works[i];
+        const work2 = this.gt.works[j];
+        if (this.isOverlap(work1, work2)) {
+          console.log('OVERLAP');
+          const work1Avaiable = this.workersCount(work1.name);
+          const work2Avaiable = this.workersCount(work2.name);
+          const avaiable = work1Avaiable > work2Avaiable ? work1Avaiable : work2Avaiable;
+          if (avaiable < work1.workerCount + work2.workerCount) {
+            console.log('OVERLAP WRONG');
+            return false;
+          }
+        }
       }
     }
     return true;
@@ -284,5 +348,19 @@ export class GtComponent implements OnInit {
       }
     }
     return count;
+  }
+
+  isOverlap(work1: GTWork, work2: GTWork) {
+    if (work1.day !== work2.day) {
+      return false;
+    } else {
+      if (work1.startHour <= work2.startHour && work2.startHour <= work1.endHour) {
+        return true;
+      }
+      if (work1.startHour <= work2.endHour && work2.endHour <= work1.endHour) {
+        return true;
+      }
+      return false;
+    }
   }
 }
