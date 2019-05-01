@@ -269,12 +269,10 @@ export class GtComponent implements OnInit {
         const work1 = this.gt.works[i];
         const work2 = this.gt.works[j];
         if (this.isOverlap(work1, work2)) {
-          console.log('OVERLAP');
           const work1Avaiable = this.workersCount(work1.name);
           const work2Avaiable = this.workersCount(work2.name);
           const avaiable = work1Avaiable > work2Avaiable ? work1Avaiable : work2Avaiable;
           if (avaiable < work1.workerCount + work2.workerCount) {
-            console.log('OVERLAP WRONG');
             return false;
           }
         }
