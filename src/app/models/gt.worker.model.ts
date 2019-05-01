@@ -13,5 +13,7 @@ export class GTWorker {
     this.works = [];
     this.activeWorks = [];
     this.isWorker = true;
+    this.countOfBigWorks = 1;
+    this.countOfSmallWorks = 1;
   }
 }

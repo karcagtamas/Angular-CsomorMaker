@@ -285,8 +285,8 @@ export class GtComponent implements OnInit {
 
   setWorks() {
     for (const i of this.gt.workers) {
-      i.countOfBigWorks = 0;
-      i.countOfSmallWorks = 0;
+      i.countOfBigWorks = 1;
+      i.countOfSmallWorks = 1;
       i.works = [];
     }
     for (const i of this.gt.works) {
