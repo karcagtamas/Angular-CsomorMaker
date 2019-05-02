@@ -172,6 +172,7 @@ export class GtComponent implements OnInit {
   gen() {
     if (this.checkGen()) {
       this.setWorks();
+      this.setWorkers();
       for (let i = 0; i < this.gt.works.length; i++) {
         const work = this.gt.works[i];
         let count = 0;
@@ -310,6 +311,21 @@ export class GtComponent implements OnInit {
       index--;
       if (index === -1) {
         index = this.gt.workers.length - 1;
+      }
+    }
+  }
+
+  setWorkers() {
+    for (const i of this.gt.works) {
+      for (const j of i.bosses) {
+        const worker = this.gt.workers.find(x => x.name === j);
+        for (let hour = i.startHour; hour < i.endHour; hour++) {
+          const workerTable = new GTWorkerTable();
+          workerTable.day = i.day;
+          workerTable.hour = hour;
+          workerTable.work = i.name;
+          worker.works.push(workerTable);
+        }
       }
     }
   }
