@@ -172,6 +172,8 @@ export class GtComponent implements OnInit {
   gen() {
     if (this.checkGen()) {
       this.setWorks();
+      this.setWorkers();
+      // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < this.gt.works.length; i++) {
         const work = this.gt.works[i];
         let count = 0;
@@ -269,12 +271,10 @@ export class GtComponent implements OnInit {
         const work1 = this.gt.works[i];
         const work2 = this.gt.works[j];
         if (this.isOverlap(work1, work2)) {
-          console.log('OVERLAP');
           const work1Avaiable = this.workersCount(work1.name);
           const work2Avaiable = this.workersCount(work2.name);
           const avaiable = work1Avaiable > work2Avaiable ? work1Avaiable : work2Avaiable;
           if (avaiable < work1.workerCount + work2.workerCount) {
-            console.log('OVERLAP WRONG');
             return false;
           }
         }
@@ -312,6 +312,21 @@ export class GtComponent implements OnInit {
       index--;
       if (index === -1) {
         index = this.gt.workers.length - 1;
+      }
+    }
+  }
+
+  setWorkers() {
+    for (const i of this.gt.works) {
+      for (const j of i.bosses) {
+        const worker = this.gt.workers.find(x => x.name === j);
+        for (let hour = i.startHour; hour < i.endHour; hour++) {
+          const workerTable = new GTWorkerTable();
+          workerTable.day = i.day;
+          workerTable.hour = hour;
+          workerTable.work = i.name;
+          worker.works.push(workerTable);
+        }
       }
     }
   }

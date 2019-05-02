@@ -66,6 +66,14 @@ export class GtWorkComponent implements OnInit {
       setTimeout(() => {
         this.modifySuccess = false;
       }, 3000);
+
+      for (const i of this.work.bosses) {
+        this.workers.find(x => x.name === i).activeWorks.find(y => y.work === this.work.name).active = true;
+      }
+      for (const i of this.modifiedWork.bosses) {
+        this.workers.find(x => x.name === i).activeWorks.find(y => y.work === this.work.name).active = false;
+      }
+
       this.work.bosses = [...this.modifiedWork.bosses];
       this.work.day = this.modifiedWork.day;
       this.work.startHour = this.modifiedWork.startHour;
