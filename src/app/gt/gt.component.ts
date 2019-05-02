@@ -173,6 +173,7 @@ export class GtComponent implements OnInit {
     if (this.checkGen()) {
       this.setWorks();
       this.setWorkers();
+      // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < this.gt.works.length; i++) {
         const work = this.gt.works[i];
         let count = 0;
