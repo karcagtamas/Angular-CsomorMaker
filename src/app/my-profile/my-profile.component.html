@@ -1,6 +1,7 @@
 <div class="border rounded m-2 p-2">
   <button class="btn btn-outline-success float-right m-2" (click)="sendResetCode()">Új jelszó kérése</button>
   <h1 class="text-center">Saját profil</h1>
+  <h3>Név:</h3>
   <div>E-mail cím: {{ email }}</div>
   <div class="alert alert-danger" *ngIf="alert"><strong>HIBA!</strong> {{ alert }}</div>
   <div class="alert alert-success" *ngIf="success">{{ success }}</div>
