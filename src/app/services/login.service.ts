@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Md5 } from 'ts-md5/dist/md5';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { first } from 'rxjs/operators';
+import { resolve } from 'path';
 
 const PASSWORD = 'Abc123456';
 
@@ -32,7 +33,7 @@ export class LoginService {
   }
 
   saveUser(email: string) {
-    const user = { email, isAdmin: false };
+    const user = { email, isAdmin: false, name: email.split('@')[0] };
     this.usersCollection.add(user);
   }
 
@@ -57,6 +58,21 @@ export class LoginService {
 
   getUsers() {
     return this.usersCollection.snapshotChanges();
+  }
+
+  async getName(): Promise<string> {
+    const currentEmail = localStorage.getItem('user');
+    return new Promise(resolve => {
+      this.getUsers().subscribe(data => {
+        this.Users = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data()
+          } as User;
+        });
+        resolve(this.Users.find(x => x.email === currentEmail).name);
+      });
+    });
   }
 
   async isAdmin() {
