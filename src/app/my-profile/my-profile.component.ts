@@ -22,8 +22,6 @@ export class MyProfileComponent implements OnInit {
   ngOnInit() {
     this.loginserivce.getUser().then(res => {
       this.user = res;
-      console.log(this.user.name);
-
       this.getImage();
     });
   }
@@ -35,7 +33,6 @@ export class MyProfileComponent implements OnInit {
         this.setAlert('Az kód sikeresen elküldve! Ellenőrizze e-mail fiókját!', true);
       })
       .catch(err => {
-        console.log(err);
         this.setAlert('A kód elküldés sikertelen!', false);
       });
   }
@@ -51,7 +48,6 @@ export class MyProfileComponent implements OnInit {
   }
 
   upload(file: File) {
-    console.log(file);
     return new Promise(resolve => {
       if (file) {
         this.loginserivce
@@ -75,19 +71,16 @@ export class MyProfileComponent implements OnInit {
   getImage() {
     this.loginserivce.getImage(this.user.imageName).then(res => {
       this.imageUrl = res;
-      console.log(res);
     });
   }
 
   onFileChanged(event) {
     const file = event.target.files[0];
-    console.log(file);
     this.uploadedFile = file;
   }
 
   saveModify() {
     if (this.nameOnModify) {
-      console.log(this.nameModify);
       if (this.nameModify) {
         this.loginserivce.updateName(this.nameModify, this.user.id).then(() => {
           this.user.name = this.nameModify;
@@ -99,8 +92,8 @@ export class MyProfileComponent implements OnInit {
       this.upload(this.uploadedFile).then(res => {
         if (res) {
           this.imageOnModify = false;
-          this.uploadedFile = null;
           this.user.imageName = this.uploadedFile.name;
+          this.uploadedFile = null;
           this.getImage();
         }
       });
