@@ -1,10 +1,8 @@
 import { User } from './../models/users.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Md5 } from 'ts-md5/dist/md5';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { first } from 'rxjs/operators';
-import { resolve } from 'path';
 
 const PASSWORD = 'Abc123456';
 
