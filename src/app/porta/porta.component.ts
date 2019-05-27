@@ -113,4 +113,8 @@ export class PortaComponent implements OnInit {
   clearAds(event: string) {
     this.portaservice.clearAds(event);
   }
+
+  lock(event: string, value: boolean) {
+    this.portaservice.lockEvent(event, value);
+  }
 }

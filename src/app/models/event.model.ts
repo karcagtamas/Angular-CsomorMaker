@@ -11,4 +11,5 @@ export class Event {
   playerLimit: number;
   currentPlayers: number;
   generator?: Generator;
+  isLocked: boolean;
 }

@@ -344,6 +344,10 @@ export class GeneratorComponent implements OnInit {
   }
 
   checkInput(event: Event): boolean {
+    if (event.isLocked) {
+      this.setAlert('Az esemény zárolva van!', false);
+      return false;
+    }
     if (this.checkEmptyPersons(event.generator.workers)) {
       this.setAlert('Nem maradhat üres ember! Akkor inkább töröld ki!', false);
       return false;
