@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { User } from '../models/users.model';
 
+const TYPES = ['image/jpeg', 'image/png', 'image/gif'];
+
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
@@ -49,7 +51,7 @@ export class MyProfileComponent implements OnInit {
 
   upload(file: File) {
     return new Promise(resolve => {
-      if (file) {
+      if (file && TYPES.includes(file.type)) {
         this.loginserivce
           .uploadImage(file, this.user.id)
           .then(res => {
