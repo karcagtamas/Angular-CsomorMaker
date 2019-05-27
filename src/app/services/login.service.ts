@@ -38,17 +38,22 @@ export class LoginService {
 
   uploadImage(file: File, userId: string) {
     const storageRef = firebase.storage().ref();
-
-    storageRef
-      .child(`images/${file.name}`)
-      .put(file)
-      .then(() => {
-        this.usersCollection.doc(userId).update({ imageName: file.name });
-      });
+    return new Promise(resolve => {
+      storageRef
+        .child(`images/${file.name}`)
+        .put(file)
+        .then(() => {
+          this.usersCollection.doc(userId).update({ imageName: file.name });
+          resolve(true);
+        })
+        .catch(() => {
+          resolve(false);
+        });
+    });
   }
 
   updateName(name: string, userId: string) {
-    this.usersCollection.doc(userId).update({ name });
+    return this.usersCollection.doc(userId).update({ name });
   }
 
   getImage(imageName: string) {

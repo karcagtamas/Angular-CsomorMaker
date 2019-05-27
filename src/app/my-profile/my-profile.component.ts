@@ -52,9 +52,24 @@ export class MyProfileComponent implements OnInit {
 
   upload(file: File) {
     console.log(file);
-    if (file) {
-      this.loginserivce.uploadImage(file, this.user.id);
-    }
+    return new Promise(resolve => {
+      if (file) {
+        this.loginserivce
+          .uploadImage(file, this.user.id)
+          .then(res => {
+            if (res) {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          })
+          .catch(() => {
+            resolve(false);
+          });
+      } else {
+        resolve(false);
+      }
+    });
   }
 
   getImage() {
@@ -74,15 +89,21 @@ export class MyProfileComponent implements OnInit {
     if (this.nameOnModify) {
       console.log(this.nameModify);
       if (this.nameModify) {
-        this.loginserivce.updateName(this.nameModify, this.user.id);
-        this.user.name = this.nameModify;
-        this.nameModify = '';
-        this.nameOnModify = false;
+        this.loginserivce.updateName(this.nameModify, this.user.id).then(() => {
+          this.user.name = this.nameModify;
+          this.nameModify = '';
+          this.nameOnModify = false;
+        });
       }
     } else if (this.imageOnModify) {
-      this.upload(this.uploadedFile);
-      this.imageOnModify = false;
-      this.uploadedFile = null;
+      this.upload(this.uploadedFile).then(res => {
+        if (res) {
+          this.imageOnModify = false;
+          this.uploadedFile = null;
+          this.user.imageName = this.uploadedFile.name;
+          this.getImage();
+        }
+      });
     }
   }
 }

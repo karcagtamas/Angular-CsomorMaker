@@ -6,6 +6,7 @@
     Új név: <input type="text" name="name" class="form-control" [(ngModel)]="nameModify" placeholder="Új név" />
   </h3>
   <div>E-mail cím: {{ user.email }}</div>
+  <div>Admin: {{ user.isAdmin | isAdmin }}</div>
   <div class="alert alert-danger" *ngIf="alert"><strong>HIBA!</strong> {{ alert }}</div>
   <div class="alert alert-success" *ngIf="success">{{ success }}</div>
   <div class="image-container">
