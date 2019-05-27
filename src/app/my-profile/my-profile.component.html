@@ -1,11 +1,35 @@
 <div class="border rounded m-2 p-2">
   <button class="btn btn-outline-success float-right m-2" (click)="sendResetCode()">Új jelszó kérése</button>
   <h1 class="text-center">Saját profil</h1>
-  <h3>Név:</h3>
-  <div>E-mail cím: {{ email }}</div>
+  <h3 *ngIf="!nameOnModify">Név: {{ user.name }}</h3>
+  <h3 *ngIf="nameOnModify">
+    Új név: <input type="text" name="name" class="form-control" [(ngModel)]="nameModify" placeholder="Új név" />
+  </h3>
+  <div>E-mail cím: {{ user.email }}</div>
   <div class="alert alert-danger" *ngIf="alert"><strong>HIBA!</strong> {{ alert }}</div>
   <div class="alert alert-success" *ngIf="success">{{ success }}</div>
   <div class="image-container">
-    <img src="../../assets/images/profile.png" alt="Profil kép" class="profile-image" />
+    <img [src]="imageUrl" alt="Profil kép" class="profile-image" />
+  </div>
+  <div class="form-group" *ngIf="imageOnModify">
+    <input type="file" name="profile-image" (change)="onFileChanged($event)" class="form-control" />
+  </div>
+  <div>
+    <button class="btn btn-outline-warning m-1" *ngIf="!nameOnModify && !imageOnModify" (click)="nameOnModify = true">
+      Név módosítása
+    </button>
+    <button class="btn btn-outline-warning m-1" *ngIf="!nameOnModify && !imageOnModify" (click)="imageOnModify = true">
+      Kép módosítása
+    </button>
+    <button
+      class="btn btn-outline-info m-1"
+      *ngIf="imageOnModify || nameOnModify"
+      (click)="imageOnModify = false; nameOnModify = false"
+    >
+      Visszavonás
+    </button>
+    <button class="btn btn-outline-success m-1" *ngIf="imageOnModify || nameOnModify" (click)="saveModify()">
+      Mentés
+    </button>
   </div>
 </div>

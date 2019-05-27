@@ -3,4 +3,5 @@ export class User {
   email: string;
   isAdmin: boolean;
   name: string;
+  imageName: string;
 }
