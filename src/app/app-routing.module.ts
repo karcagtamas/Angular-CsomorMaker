@@ -10,12 +10,14 @@ import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { GtComponent } from './gt/gt.component';
+import { GeneratorResultsComponent } from './components/generator-results/generator-results.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'generator', component: GeneratorComponent },
+  { path: 'generator-results', component: GeneratorResultsComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'porta', component: PortaComponent },
   { path: 'myprofile', component: MyProfileComponent, canActivate: [AuthGuard] },

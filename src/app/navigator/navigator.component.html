@@ -17,8 +17,11 @@
         <div class="border rounded element" [routerLink]="['/login']" routerLinkActive="active" *ngIf="!isLoggedIn">
           Bejelentkezés
         </div>
-        <div class="border rounded element" [routerLink]="['/generator']" routerLinkActive="active">
+        <div class="border rounded element" [routerLink]="['/generator']" routerLinkActive="active" *ngIf="isLoggedIn">
           Generátor
+        </div>
+        <div class="border rounded element" [routerLink]="['/generator-results']" routerLinkActive="active">
+          Csömörök
         </div>
         <div class="border rounded element" [routerLink]="['/porta']" routerLinkActive="active">
           Porta

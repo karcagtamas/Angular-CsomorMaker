@@ -1,9 +1,9 @@
 import { User } from './../models/users.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Md5 } from 'ts-md5/dist/md5';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { first } from 'rxjs/operators';
+import * as firebase from 'firebase';
 
 const PASSWORD = 'Abc123456';
 
@@ -32,8 +32,33 @@ export class LoginService {
   }
 
   saveUser(email: string) {
-    const user = { email, isAdmin: false };
+    const user = { email, isAdmin: false, name: email.split('@')[0], imageName: 'profile.png' };
     this.usersCollection.add(user);
+  }
+
+  uploadImage(file: File, userId: string) {
+    const storageRef = firebase.storage().ref();
+    return new Promise(resolve => {
+      storageRef
+        .child(`images/${file.name}`)
+        .put(file)
+        .then(() => {
+          this.usersCollection.doc(userId).update({ imageName: file.name });
+          resolve(true);
+        })
+        .catch(() => {
+          resolve(false);
+        });
+    });
+  }
+
+  updateName(name: string, userId: string) {
+    return this.usersCollection.doc(userId).update({ name });
+  }
+
+  getImage(imageName: string) {
+    const storageRef = firebase.storage().ref(`images/${imageName}`);
+    return storageRef.getDownloadURL();
   }
 
   async isLoggedIn(): Promise<boolean> {
@@ -57,6 +82,36 @@ export class LoginService {
 
   getUsers() {
     return this.usersCollection.snapshotChanges();
+  }
+
+  async getName(): Promise<string> {
+    const currentEmail = localStorage.getItem('user');
+    return new Promise(resolve => {
+      this.getUsers().subscribe(data => {
+        this.Users = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data()
+          } as User;
+        });
+        resolve(this.Users.find(x => x.email === currentEmail).name);
+      });
+    });
+  }
+
+  async getUser(): Promise<User> {
+    const currentEmail = localStorage.getItem('user');
+    return new Promise(resolve => {
+      this.getUsers().subscribe(data => {
+        this.Users = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data()
+          } as User;
+        });
+        resolve(this.Users.find(x => x.email === currentEmail));
+      });
+    });
   }
 
   async isAdmin() {

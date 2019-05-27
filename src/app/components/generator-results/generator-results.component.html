@@ -1,0 +1,14 @@
+<div *ngIf="eventWithGenerator.length > 0">
+  <h1 class="text-center">Csömörök</h1>
+  <div class="form-group p-1">
+    <select name="event" class="form-control" [(ngModel)]="selectedIndex">
+      <option value="{{ i }}" *ngFor="let event of eventWithGenerator; let i = index">{{ event.name }}</option>
+    </select>
+  </div>
+  <div>
+    <app-export-csomor
+      [Workers]="eventWithGenerator[selectedIndex].generator.workers"
+      [Works]="eventWithGenerator[selectedIndex].generator.works"
+    ></app-export-csomor>
+  </div>
+</div>
