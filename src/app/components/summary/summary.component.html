@@ -1,10 +1,45 @@
 <div>
   <div class="form-group p-2">
-    <select name="events" [(ngModel)]="selectedIndex" class="form-control">
+    <select name="events" [(ngModel)]="selectedIndex" class="form-control" (change)="change()">
       <option value="{{ i }}" *ngFor="let event of events; let i = index">{{ event.name }}</option>
     </select>
   </div>
-  <div>
-    {{ events[selectedIndex].name }}
+  <div *ngIf="selectedIndex != -1" class="border rounded m-1 p-1">
+    <div class="row col-12 mb-3 input">
+      <div class="col-2">Játékosok száma:</div>
+      <div class="col-2 text-center">{{ events[selectedIndex].currentPlayers | personCount }}</div>
+      <div class="col-2">
+        <div>Játékos díj:</div>
+        <div>Előleg díj:</div>
+      </div>
+      <div class="col-2">
+        <div class="text-center">{{ events[selectedIndex].playerCost | forint }}</div>
+        <div class="text-center">{{ events[selectedIndex].playerDeposit | forint }}</div>
+      </div>
+      <div class="col-2">
+        <div>Összeg:</div>
+        <div>Előleg összeg:</div>
+      </div>
+      <div class="col-2">
+        <div class="text-center">{{ summaryOfPlayers | forint }}</div>
+        <div class="text-center">{{ summaryOfDeposits | forint }}</div>
+      </div>
+    </div>
+    <div class="row col-12 mb-3 input">
+      <div class="col-2">Nézők száma:</div>
+      <div class="col-2 text-center">{{ events[selectedIndex].visitors | personCount }}</div>
+      <div class="col-2">Nézői díj:</div>
+      <div class="col-2 text-center">{{ events[selectedIndex].visitorCost | forint }}</div>
+      <div class="col-2">Összeg:</div>
+      <div class="col-2 text-center">{{ summaryOfVisitors | forint }}</div>
+    </div>
+    <div class="row col-12 mb-3 output" *ngFor="let payout of events[selectedIndex].payOuts">
+      <div class="col-2">{{ payout.name }}</div>
+      <div class="col-2 offset-8 text-center">{{ payout.cost | forint }}</div>
+    </div>
+    <div class="row col-12 summary">
+      <div class="col-2">Végösszeg:</div>
+      <div class="col-2 offset-8 text-center">{{ summary | forint }}</div>
+    </div>
   </div>
 </div>

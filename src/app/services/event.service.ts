@@ -35,6 +35,9 @@ export class EventService {
     event.currentPlayers = 0;
     event.visitorLimit = 0;
     event.isLocked = false;
+    event.playerCost = 0;
+    event.visitorCost = 0;
+    event.playerDeposit = 0;
     return this.eventCollection.add(JSON.parse(JSON.stringify(event)));
   }
 

@@ -65,6 +65,9 @@ import { GtWorkerExportComponent } from './components/gt-worker-export/gt-worker
 import { GtWorkExportComponent } from './components/gt-work-export/gt-work-export.component';
 import { GeneratorResultsComponent } from './components/generator-results/generator-results.component';
 import { SummaryComponent } from './components/summary/summary.component';
+import { ForintPipe } from './pipes/forint.pipe';
+import { PersonCountPipe } from './pipes/person-count.pipe';
+import { PayOutsComponent } from './components/pay-outs/pay-outs.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +105,10 @@ import { SummaryComponent } from './components/summary/summary.component';
     GtWorkerExportComponent,
     GtWorkExportComponent,
     GeneratorResultsComponent,
-    SummaryComponent
+    SummaryComponent,
+    ForintPipe,
+    PersonCountPipe,
+    PayOutsComponent
   ],
   imports: [
     BrowserModule,

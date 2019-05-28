@@ -31,6 +31,14 @@
         >
           Áttekintő
         </div>
+        <div
+          class="border rounded element"
+          [routerLink]="['/payouts']"
+          routerLinkActive="active"
+          *ngIf="isLoggedIn && isAdmin"
+        >
+          Kifizetések
+        </div>
         <div class="border rounded element" [routerLink]="['/porta']" routerLinkActive="active">
           Porta
         </div>

@@ -1,3 +1,4 @@
+import { PayOutsComponent } from './components/pay-outs/pay-outs.component';
 import { GeneratorComponent } from './generator/generator.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'myprofile', component: MyProfileComponent, canActivate: [AuthGuard] },
   { path: 'gt', component: GtComponent, canActivate: [AuthGuard] },
   { path: 'summary', component: SummaryComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'payouts', component: PayOutsComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 

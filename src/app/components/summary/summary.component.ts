@@ -10,6 +10,10 @@ import { EventService } from 'src/app/services/event.service';
 export class SummaryComponent implements OnInit {
   events: Event[] = [];
   selectedIndex = -1;
+  summaryOfPlayers = 0;
+  summaryOfDeposits = 0;
+  summaryOfVisitors = 0;
+  summary = 0;
 
   constructor(private eventservice: EventService) {}
 
@@ -23,7 +27,38 @@ export class SummaryComponent implements OnInit {
       });
       if (this.events.length > 0) {
         this.selectedIndex = 0;
+        this.change();
       }
     });
+  }
+
+  change() {
+    if (this.selectedIndex !== -1) {
+      this.summaryOfPlayers = this.getSummaryOfPlayers();
+      this.summaryOfDeposits = this.getSummaryOfDeposits();
+      this.summaryOfVisitors = this.getSummaryOfVisitors();
+      this.summary = this.getSummary();
+    }
+  }
+
+  getSummaryOfPlayers() {
+    return this.events[this.selectedIndex].currentPlayers * this.events[this.selectedIndex].playerCost;
+  }
+
+  getSummaryOfVisitors() {
+    return this.events[this.selectedIndex].visitors * this.events[this.selectedIndex].visitorCost;
+  }
+
+  getSummaryOfDeposits() {
+    return this.events[this.selectedIndex].currentPlayers * this.events[this.selectedIndex].playerDeposit;
+  }
+
+  getSummary() {
+    const inputs = this.getSummaryOfPlayers() + this.getSummaryOfVisitors();
+    let outputs = 0;
+    for (const i of this.events[this.selectedIndex].payOuts) {
+      outputs += i.cost;
+    }
+    return inputs - outputs;
   }
 }

@@ -1,3 +1,4 @@
+import { PayOut } from './payouts.model';
 import { Generator } from './generator.model';
 export class Event {
   eventId: string;
@@ -15,6 +16,11 @@ export class Event {
   playerDeposit: number;
   generator?: Generator;
   isLocked: boolean;
+  payOuts: PayOut[];
 
-  constructor() {}
+  constructor() {
+    this.advertisments = [];
+    this.bosses = [];
+    this.payOuts = [];
+  }
 }
