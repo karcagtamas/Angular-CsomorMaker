@@ -3,8 +3,10 @@
 </button>
 <mat-tab-group>
   <mat-tab label="{{ event.name }}" *ngFor="let event of Events">
-    <button class="btn btn-primary" *ngIf="!event.isLocked" (click)="lock(event.eventId, true)">Zárolás</button>
-    <button class="btn btn-primary" *ngIf="event.isLocked" (click)="lock(event.eventId, false)">Zárolás bontása</button>
+    <button class="btn btn-primary m-2" *ngIf="!event.isLocked" (click)="lock(event.eventId, true)">Zárolás</button>
+    <button class="btn btn-primary m-2" *ngIf="event.isLocked" (click)="lock(event.eventId, false)">
+      Zárolás bontása
+    </button>
     <div class="border rounded m-2 p-2">
       <button class="btn btn-danger float-right m-1" (click)="deleteEvent(event.eventId)" *ngIf="isAdmin">
         Esemény törlése
