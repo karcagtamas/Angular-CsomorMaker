@@ -11,9 +11,6 @@ export class GeneratorService {
   constructor(private firestore: AngularFirestore) {
     this.eventCollection = this.firestore.collection<Event>('events');
   }
-  getEvents() {
-    return this.eventCollection.snapshotChanges();
-  }
 
   newGenerator(event: string, generator: Generator) {
     this.eventCollection.doc(event).update({ generator: JSON.parse(JSON.stringify(generator)) });

@@ -8,8 +8,13 @@ export class Event {
   visitors: number;
   advertisments: string[];
   visitorLimit: number;
+  visitorCost: number;
   playerLimit: number;
   currentPlayers: number;
+  playerCost: number;
+  playerDeposit: number;
   generator?: Generator;
   isLocked: boolean;
+
+  constructor() {}
 }

@@ -1,6 +1,6 @@
-import { GeneratorService } from './../../services/generator.service';
 import { Component, OnInit } from '@angular/core';
 import { Event } from 'src/app/models/event.model';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-summary',
@@ -11,10 +11,10 @@ export class SummaryComponent implements OnInit {
   events: Event[] = [];
   selectedIndex = -1;
 
-  constructor(private generatorservice: GeneratorService) {}
+  constructor(private eventservice: EventService) {}
 
   ngOnInit() {
-    this.generatorservice.getEvents().subscribe(data => {
+    this.eventservice.getEvents().subscribe(data => {
       this.events = data.map(e => {
         return {
           eventId: e.payload.doc.id,

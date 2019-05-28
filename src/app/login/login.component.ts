@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 import { User } from '../models/users.model';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   success = false;
   users: User[] = null;
 
-  constructor(private loginservice: LoginService, private router: Router) {}
+  constructor(private loginservice: LoginService, private router: Router, private userservice: UserService) {}
 
   ngOnInit() {}
 
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
         .then(() => {
           console.log('Belépés sikeres');
           localStorage.setItem('user', email.value);
-          this.loginservice.isAdmin();
+          this.userservice.isAdmin();
           this.error = false;
           this.router.navigateByUrl('/home');
         })

@@ -1,12 +1,12 @@
+import { UserService } from './../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Event } from '../models/event.model';
-import { PortaService } from '../services/porta.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { NewEventModalComponent } from '../components/new-event-modal/new-event-modal.component';
 import { ModifyEventComponent } from '../components/modify-event/modify-event.component';
 import { isUndefined } from 'util';
 import { AddAdModalComponent } from '../components/add-ad-modal/add-ad-modal.component';
-import { LoginService } from '../services/login.service';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-porta',
@@ -18,10 +18,10 @@ export class PortaComponent implements OnInit {
   nameOnModify = false;
   isAdmin = false;
 
-  constructor(private portaservice: PortaService, public dialog: MatDialog, private loginservice: LoginService) {}
+  constructor(private eventservice: EventService, public dialog: MatDialog, private userservice: UserService) {}
 
   ngOnInit() {
-    this.portaservice.getEvents().subscribe(data => {
+    this.eventservice.getEvents().subscribe(data => {
       this.Events = data.map(e => {
         return {
           eventId: e.payload.doc.id,
@@ -33,7 +33,7 @@ export class PortaComponent implements OnInit {
   }
 
   getIsAdmin() {
-    this.loginservice
+    this.userservice
       .isAdmin()
       .then(res => {
         if (res) {
@@ -47,28 +47,28 @@ export class PortaComponent implements OnInit {
 
   incrementVisitors(event: string, value: number, max: number) {
     if (max !== value) {
-      this.portaservice.setVisitor(event, +value + 1);
+      this.eventservice.setVisitor(event, +value + 1);
     }
   }
 
   decrementVisitors(event: string, value: number) {
     if (value !== 0) {
-      this.portaservice.setVisitor(event, +value - 1);
+      this.eventservice.setVisitor(event, +value - 1);
     }
   }
 
   incrementInjured(event: string, value: number) {
-    this.portaservice.setInjured(event, +value + 1);
+    this.eventservice.setInjured(event, +value + 1);
   }
 
   decrementInjured(event: string, value: number) {
     if (value !== 0) {
-      this.portaservice.setInjured(event, +value - 1);
+      this.eventservice.setInjured(event, +value - 1);
     }
   }
 
   deleteEvent(event: string) {
-    this.portaservice.deleteEvent(event);
+    this.eventservice.deleteEvent(event);
   }
 
   openDialog() {
@@ -78,7 +78,7 @@ export class PortaComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (!isUndefined(result)) {
-        this.portaservice.addEvent(result);
+        this.eventservice.addEvent(result);
       }
     });
   }
@@ -91,7 +91,7 @@ export class PortaComponent implements OnInit {
         result.visitorLimit = +result.visitorLimit;
         result.visitors = +result.visitors;
         result.injured = +result.injured;
-        this.portaservice.updateEvent(result);
+        this.eventservice.updateEvent(result);
       }
     });
   }
@@ -105,16 +105,16 @@ export class PortaComponent implements OnInit {
           value = [];
         }
         value.push(str.replace(/\n/g, '<br>'));
-        this.portaservice.setNewAd(event, value);
+        this.eventservice.setNewAd(event, value);
       }
     });
   }
 
   clearAds(event: string) {
-    this.portaservice.clearAds(event);
+    this.eventservice.clearAds(event);
   }
 
   lock(event: string, value: boolean) {
-    this.portaservice.lockEvent(event, value);
+    this.eventservice.lockEvent(event, value);
   }
 }

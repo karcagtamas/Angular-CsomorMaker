@@ -1,13 +1,13 @@
+import { UserService } from './../services/user.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { LoginService } from '../services/login.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
-  constructor(private loginservice: LoginService, private router: Router) {}
+  constructor(private userservice: UserService, private router: Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -21,7 +21,7 @@ export class AdminGuard implements CanActivate {
     } */
 
     return new Promise(resolve => {
-      this.loginservice
+      this.userservice
         .isAdmin()
         .then(res => {
           if (res) {

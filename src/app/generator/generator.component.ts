@@ -12,7 +12,8 @@ import { WorkTable } from '../models/work.table.model';
 import { Worker } from '../models/worker.model';
 import { WorkerTable } from '../models/worker.table.model';
 import { NewWorkModalComponent } from '../components/new-work-modal/new-work-modal.component';
-import { LoginService } from '../services/login.service';
+import { EventService } from '../services/event.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-generator',
@@ -29,12 +30,13 @@ export class GeneratorComponent implements OnInit {
 
   constructor(
     private generatorservice: GeneratorService,
+    private eventservice: EventService,
     public dialog: MatDialog,
-    private loginservice: LoginService
+    private userservice: UserService
   ) {}
 
   ngOnInit() {
-    this.generatorservice.getEvents().subscribe(data => {
+    this.eventservice.getEvents().subscribe(data => {
       this.Events = data.map(e => {
         return {
           eventId: e.payload.doc.id,
@@ -47,7 +49,7 @@ export class GeneratorComponent implements OnInit {
   }
 
   getIsAdmin() {
-    this.loginservice
+    this.userservice
       .isAdmin()
       .then(res => {
         if (res) {

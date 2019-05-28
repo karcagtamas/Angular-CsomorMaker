@@ -1,8 +1,8 @@
+import { LoginService } from 'src/app/services/login.service';
+import { UserService } from './../services/user.service';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
-import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
 
 @Component({
   selector: 'app-navigator',
@@ -22,6 +22,7 @@ export class NavigatorComponent implements OnDestroy {
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
+    private userservice: UserService,
     private loginservice: LoginService,
     private router: Router
   ) {
@@ -68,7 +69,7 @@ export class NavigatorComponent implements OnDestroy {
   }
 
   getIsAdmin() {
-    this.loginservice
+    this.userservice
       .isAdmin()
       .then(res => {
         if (res) {

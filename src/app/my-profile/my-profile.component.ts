@@ -1,3 +1,4 @@
+import { UserService } from './../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { User } from '../models/users.model';
@@ -13,23 +14,23 @@ export class MyProfileComponent implements OnInit {
   success = '';
   alert = '';
   uploadedFile: File = null;
-  user = new User();
+  user = new User('');
   imageUrl = '../../assets/images/profile.png';
   nameOnModify = false;
   nameModify = '';
   imageOnModify = false;
 
-  constructor(private loginserivce: LoginService) {}
+  constructor(private userservice: UserService, private loginservice: LoginService) {}
 
   ngOnInit() {
-    this.loginserivce.getUser().then(res => {
+    this.userservice.getUser().then(res => {
       this.user = res;
       this.getImage();
     });
   }
 
   sendResetCode() {
-    this.loginserivce
+    this.loginservice
       .sendResetEmail()
       .then(() => {
         this.setAlert('Az kód sikeresen elküldve! Ellenőrizze e-mail fiókját!', true);
@@ -52,7 +53,7 @@ export class MyProfileComponent implements OnInit {
   upload(file: File) {
     return new Promise(resolve => {
       if (file && TYPES.includes(file.type)) {
-        this.loginserivce
+        this.userservice
           .uploadImage(file, this.user.id)
           .then(res => {
             if (res) {
@@ -71,7 +72,7 @@ export class MyProfileComponent implements OnInit {
   }
 
   getImage() {
-    this.loginserivce.getImage(this.user.imageName).then(res => {
+    this.userservice.getImage(this.user.imageName).then(res => {
       this.imageUrl = res;
     });
   }
@@ -84,7 +85,7 @@ export class MyProfileComponent implements OnInit {
   saveModify() {
     if (this.nameOnModify) {
       if (this.nameModify) {
-        this.loginserivce.updateName(this.nameModify, this.user.id).then(() => {
+        this.userservice.updateName(this.nameModify, this.user.id).then(() => {
           this.user.name = this.nameModify;
           this.nameModify = '';
           this.nameOnModify = false;
