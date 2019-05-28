@@ -64,6 +64,7 @@ import { GtWorkerComponent } from './components/gt-worker/gt-worker.component';
 import { GtWorkerExportComponent } from './components/gt-worker-export/gt-worker-export.component';
 import { GtWorkExportComponent } from './components/gt-work-export/gt-work-export.component';
 import { GeneratorResultsComponent } from './components/generator-results/generator-results.component';
+import { SummaryComponent } from './components/summary/summary.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { GeneratorResultsComponent } from './components/generator-results/genera
     GtWorkerComponent,
     GtWorkerExportComponent,
     GtWorkExportComponent,
-    GeneratorResultsComponent
+    GeneratorResultsComponent,
+    SummaryComponent
   ],
   imports: [
     BrowserModule,
