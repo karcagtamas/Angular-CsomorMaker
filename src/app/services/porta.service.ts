@@ -33,6 +33,7 @@ export class PortaService {
     event.playerLimit = 0;
     event.currentPlayers = 0;
     event.visitorLimit = 0;
+    event.isLocked = false;
     this.eventCollection.add(JSON.parse(JSON.stringify(event)));
   }
 
@@ -50,5 +51,9 @@ export class PortaService {
 
   clearAds(event: string) {
     this.eventCollection.doc(event).update({ advertisments: [] });
+  }
+
+  lockEvent(event: string, value: boolean) {
+    this.eventCollection.doc(event).update({ isLocked: value });
   }
 }
