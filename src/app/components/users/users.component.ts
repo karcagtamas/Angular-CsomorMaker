@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/users.model';
 import { LoginService } from 'src/app/services/login.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-users',
@@ -13,10 +14,10 @@ export class UsersComponent implements OnInit {
   success = '';
   alert = '';
 
-  constructor(private loginservice: LoginService) {}
+  constructor(private userservice: UserService) {}
 
   ngOnInit() {
-    this.loginservice.getUsers().subscribe(data => {
+    this.userservice.getUsers().subscribe(data => {
       this.Users = data.map(d => {
         return {
           id: d.payload.doc.id,
@@ -41,7 +42,7 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(id: string) {
-    this.loginservice
+    this.userservice
       .deleteUser(id)
       .then(() => {
         this.setSuccess('A felhasználó törlése sikeres!');
@@ -53,7 +54,7 @@ export class UsersComponent implements OnInit {
 
   setAdmin(id: string, state: boolean) {
     const newstate = state ? false : true;
-    this.loginservice
+    this.userservice
       .setAdmin(id, newstate)
       .then(() => {
         this.setSuccess('A felhasználó admin rangja sikeresen megváltozott!');

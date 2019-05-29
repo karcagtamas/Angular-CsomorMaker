@@ -85,6 +85,42 @@
     <mat-error *ngIf="bosses.invalid">Kötelező a mező kitöltése</mat-error>
   </mat-form-field>
 </div>
+<mat-form-field class="w-100">
+  <input
+    matInput
+    [(ngModel)]="event.visitorCost"
+    name="visitorCost"
+    placeholder="Nézői díj"
+    [type]="'number'"
+    [formControl]="visitorCost"
+    required
+  />
+  <mat-error *ngIf="visitorCost.invalid">Kötelező a mező kitöltése</mat-error>
+</mat-form-field>
+<mat-form-field class="w-100">
+  <input
+    matInput
+    [(ngModel)]="event.playerCost"
+    name="visitorCost"
+    placeholder="Játékos díj"
+    [type]="'number'"
+    [formControl]="playerCost"
+    required
+  />
+  <mat-error *ngIf="playerCost.invalid">Kötelező a mező kitöltése</mat-error>
+</mat-form-field>
+<mat-form-field class="w-100">
+  <input
+    matInput
+    [(ngModel)]="event.playerDeposit"
+    name="visitorCost"
+    placeholder="Játékos előleg"
+    [type]="'number'"
+    [formControl]="playerDeposit"
+    required
+  />
+  <mat-error *ngIf="playerDeposit.invalid">Kötelező a mező kitöltése</mat-error>
+</mat-form-field>
 <div mat-dialog-actions>
   <div class="col-6">
     <button class="btn btn-secondary col-12" (click)="onNoClick()">Mégsem</button>

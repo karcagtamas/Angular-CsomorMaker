@@ -1,3 +1,4 @@
+import { PayOutsComponent } from './components/pay-outs/pay-outs.component';
 import { GeneratorComponent } from './generator/generator.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -11,6 +12,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { GtComponent } from './gt/gt.component';
 import { GeneratorResultsComponent } from './components/generator-results/generator-results.component';
+import { SummaryComponent } from './components/summary/summary.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,6 +24,8 @@ const routes: Routes = [
   { path: 'porta', component: PortaComponent },
   { path: 'myprofile', component: MyProfileComponent, canActivate: [AuthGuard] },
   { path: 'gt', component: GtComponent, canActivate: [AuthGuard] },
+  { path: 'summary', component: SummaryComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'payouts', component: PayOutsComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 

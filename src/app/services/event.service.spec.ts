@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PortaService } from './porta.service';
+import { EventService } from './event.service';
 
-describe('PortaService', () => {
+describe('EventService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: PortaService = TestBed.get(PortaService);
+    const service: EventService = TestBed.get(EventService);
     expect(service).toBeTruthy();
   });
 });

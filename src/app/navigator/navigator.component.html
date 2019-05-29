@@ -23,6 +23,22 @@
         <div class="border rounded element" [routerLink]="['/generator-results']" routerLinkActive="active">
           Csömörök
         </div>
+        <div
+          class="border rounded element"
+          [routerLink]="['/summary']"
+          routerLinkActive="active"
+          *ngIf="isLoggedIn && isAdmin"
+        >
+          Áttekintő
+        </div>
+        <div
+          class="border rounded element"
+          [routerLink]="['/payouts']"
+          routerLinkActive="active"
+          *ngIf="isLoggedIn && isAdmin"
+        >
+          Ki/Befizetések
+        </div>
         <div class="border rounded element" [routerLink]="['/porta']" routerLinkActive="active">
           Porta
         </div>

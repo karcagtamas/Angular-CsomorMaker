@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
@@ -12,7 +13,7 @@ export class NewUserComponent implements OnInit {
   success = false;
   error = false;
 
-  constructor(private loginservice: LoginService) {}
+  constructor(private loginservice: LoginService, private userservice: UserService) {}
 
   ngOnInit() {}
 
@@ -31,7 +32,7 @@ export class NewUserComponent implements OnInit {
       this.loginservice
         .registration(email.value)
         .then(() => {
-          this.loginservice.saveUser(email.value);
+          this.userservice.saveUser(email.value);
           this.success = true;
           input.value = '';
           setTimeout(() => (this.success = false), 3000);

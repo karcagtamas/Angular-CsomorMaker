@@ -9,4 +9,10 @@ export class Generator {
   length: number;
   eventId?: string;
   ready: boolean;
+
+  constructor() {}
+
+  setLength() {
+    this.days = this.end - this.start + this.days * 24;
+  }
 }

@@ -3,4 +3,6 @@ export class GTClass {
   classMaster: string;
   tShirtColor: string;
   students: number;
+
+  constructor() {}
 }
