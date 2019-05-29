@@ -11,6 +11,7 @@ export class PayOutsComponent implements OnInit {
   events: Event[] = [];
   selectedIndex = -1;
   addNew = false;
+  alert = '';
 
   constructor(private eventservice: EventService) {}
 
@@ -31,13 +32,24 @@ export class PayOutsComponent implements OnInit {
   savePayOut(event) {
     const payOuts = [...this.events[this.selectedIndex].payOuts];
     payOuts.push(event.payOut);
-    this.eventservice.savePayout(this.events[this.selectedIndex].eventId, payOuts).then();
+    this.eventservice.savePayout(this.events[this.selectedIndex].eventId, payOuts).then(() => {
+      this.setAlert('A pénz mozgás sikeresen hozzáadva!');
+    });
   }
 
   deletePayOut(index: number) {
     const payOut = this.events[this.selectedIndex].payOuts[index];
     let payOuts = this.events[this.selectedIndex].payOuts;
     payOuts = payOuts.filter(x => x !== payOut);
-    this.eventservice.savePayout(this.events[this.selectedIndex].eventId, payOuts).then();
+    this.eventservice.savePayout(this.events[this.selectedIndex].eventId, payOuts).then(() => {
+      this.setAlert('A pénz mozgás sikeresen törölve!');
+    });
+  }
+
+  setAlert(value: string) {
+    this.alert = value;
+    setTimeout(() => {
+      this.alert = '';
+    }, 1500);
   }
 }

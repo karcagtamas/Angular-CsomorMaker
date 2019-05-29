@@ -1,9 +1,12 @@
 <div class="p-1">
-  <select name="works" [(ngModel)]="selectedWork" class="form-control">
-    <option value="{{ i }}" *ngFor="let work of works; let i = index">{{ work.name }}</option>
-  </select>
+  <div class="form-group col-md-6 offset-md-3">
+    <h6>Poszt:</h6>
+    <select name="works" [(ngModel)]="selectedWork" class="form-control">
+      <option value="{{ i }}" *ngFor="let work of works; let i = index">{{ work.name }}</option>
+    </select>
+  </div>
   <div class="row p-1 col-12">
-    <div class=" col-3 p-2" *ngFor="let worker of works[selectedWork].workers">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" *ngFor="let worker of works[selectedWork].workers">
       <div class=" p-3 border rounded text-center">
         {{ worker }}
       </div>

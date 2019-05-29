@@ -14,6 +14,9 @@ export class GtWorkerExportComponent implements OnInit {
   export = [];
   selectedWorker = -1;
   selectedValue = '';
+  selectedDay = 0;
+  daysNumber = [];
+  showFull = window.innerWidth > 600;
 
   constructor() {}
 
@@ -22,6 +25,9 @@ export class GtWorkerExportComponent implements OnInit {
       this.selectedWorker = 0;
       this.createTable();
     }
+    this.daysNumber = Array(this.days)
+      .fill(this.days)
+      .map((x, i) => i + 1);
   }
 
   createTable() {
