@@ -13,6 +13,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { GtComponent } from './gt/gt.component';
 import { GeneratorResultsComponent } from './components/generator-results/generator-results.component';
 import { SummaryComponent } from './components/summary/summary.component';
+import { ChatComponent } from './components/chat/chat/chat.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'gt', component: GtComponent, canActivate: [AuthGuard] },
   { path: 'summary', component: SummaryComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'payouts', component: PayOutsComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 

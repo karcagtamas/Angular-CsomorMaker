@@ -56,6 +56,9 @@
         <div class="border rounded element" [routerLink]="['/gt']" routerLinkActive="active" *ngIf="isLoggedIn">
           Gólyatábor
         </div>
+        <div class="border rounded element" [routerLink]="['/chat']" routerLinkActive="active" *ngIf="isLoggedIn">
+          Chat
+        </div>
         <div class="border rounded element" (click)="logout()" *ngIf="isLoggedIn">Kijelentkezés</div>
       </mat-nav-list>
     </mat-sidenav>
