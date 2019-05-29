@@ -89,6 +89,7 @@ export class MyProfileComponent implements OnInit {
           this.user.name = this.nameModify;
           this.nameModify = '';
           this.nameOnModify = false;
+          this.setAlert('A név sikeresen frissítve!', true);
         });
       }
     } else if (this.imageOnModify) {
@@ -98,6 +99,7 @@ export class MyProfileComponent implements OnInit {
           this.user.imageName = this.uploadedFile.name;
           this.uploadedFile = null;
           this.getImage();
+          this.setAlert('A profil kép sikeresen frissítve!', true);
         }
       });
     }
