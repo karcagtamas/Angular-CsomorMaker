@@ -57,7 +57,12 @@ export class SummaryComponent implements OnInit {
     const inputs = this.getSummaryOfPlayers() + this.getSummaryOfVisitors();
     let outputs = 0;
     for (const i of this.events[this.selectedIndex].payOuts) {
-      outputs += i.cost;
+      console.log(i);
+      if (i.type === 'output') {
+        outputs += i.cost;
+      } else if (i.type === 'input') {
+        outputs -= i.cost;
+      }
     }
     return inputs - outputs;
   }

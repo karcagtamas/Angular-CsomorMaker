@@ -4,22 +4,25 @@
       <option value="{{ i }}" *ngFor="let event of events; let i = index">{{ event.name }}</option>
     </select>
   </div>
-  <button class="btn btn-success m-2">Új kiadás felvétele</button>
+  <button class="btn btn-success m-2" (click)="addNew = true">Új kiadás/bevétel felvétele</button>
+  <app-add-new-pays *ngIf="addNew" (saveNewPayOut)="savePayOut($event)"></app-add-new-pays>
   <div *ngIf="selectedIndex != -1" class="border rounded m-1 p-1 text-center">
     <div class="row col-12">
-      <div class="col-3">Név</div>
+      <div class="col-2">Név</div>
       <div class="col-2">Kitől</div>
       <div class="col-2">Kinek</div>
       <div class="col-2">Összeg</div>
-      <div class="col-3">Törlés</div>
+      <div class="col-2">Típus</div>
+      <div class="col-2">Törlés</div>
     </div>
     <hr />
-    <div *ngFor="let payout of events[selectedIndex].payOuts" class="row col-12">
-      <div class="col-3">{{ payout.name }}</div>
+    <div *ngFor="let payout of events[selectedIndex].payOuts; let i = index" class="row col-12">
+      <div class="col-2">{{ payout.name }}</div>
       <div class="col-2">{{ payout.from }}</div>
       <div class="col-2">{{ payout.to }}</div>
       <div class="col-2">{{ payout.cost }}</div>
-      <div class="col-3"><button class="btn btn-danger">X</button></div>
+      <div class="col-2">{{ payout.type }}</div>
+      <div class="col-2"><button class="btn btn-danger" (click)="deletePayOut(i)">X</button></div>
     </div>
   </div>
 </div>

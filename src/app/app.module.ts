@@ -68,6 +68,7 @@ import { SummaryComponent } from './components/summary/summary.component';
 import { ForintPipe } from './pipes/forint.pipe';
 import { PersonCountPipe } from './pipes/person-count.pipe';
 import { PayOutsComponent } from './components/pay-outs/pay-outs.component';
+import { AddNewPaysComponent } from './components/add-new-pays/add-new-pays.component';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import { PayOutsComponent } from './components/pay-outs/pay-outs.component';
     SummaryComponent,
     ForintPipe,
     PersonCountPipe,
-    PayOutsComponent
+    PayOutsComponent,
+    AddNewPaysComponent
   ],
   imports: [
     BrowserModule,

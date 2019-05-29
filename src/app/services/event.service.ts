@@ -1,3 +1,4 @@
+import { PayOut } from './../models/payouts.model';
 import { AngularFirestoreCollection, AngularFirestore, DocumentChangeAction } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
 import { Event } from '../models/event.model';
@@ -59,5 +60,9 @@ export class EventService {
 
   lockEvent(event: string, value: boolean): Promise<void> {
     return this.eventCollection.doc(event).update({ isLocked: value });
+  }
+
+  savePayout(event: string, payOuts: PayOut[]): Promise<void> {
+    return this.eventCollection.doc(event).update({ payOuts: JSON.parse(JSON.stringify(payOuts)) });
   }
 }

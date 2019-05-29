@@ -33,7 +33,11 @@
       <div class="col-2">Összeg:</div>
       <div class="col-2 text-center">{{ summaryOfVisitors | forint }}</div>
     </div>
-    <div class="row col-12 mb-3 output" *ngFor="let payout of events[selectedIndex].payOuts">
+    <div
+      class="row col-12 mb-3"
+      *ngFor="let payout of events[selectedIndex].payOuts"
+      [ngClass]="{ input: payout.type === 'input', output: payout.type === 'output' }"
+    >
       <div class="col-2">{{ payout.name }}</div>
       <div class="col-2 offset-8 text-center">{{ payout.cost | forint }}</div>
     </div>
