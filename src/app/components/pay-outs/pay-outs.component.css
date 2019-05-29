@@ -1,0 +1,9 @@
+.table-element {
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.table-element:hover {
+  background-color: lightcoral;
+}

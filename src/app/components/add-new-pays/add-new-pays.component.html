@@ -1,18 +1,23 @@
-<div class="p-1">
+<div class="p-1 offset-md-3 col-md-6">
   <div class="alert alert-danger" *ngIf="alert"><strong>HIBA!</strong> {{ alert }}</div>
   <div class="form-group">
+    <h6>Fizetés neve:</h6>
     <input type="text" name="payName" class="form-control" placeholder="Fizetés neve" [(ngModel)]="payOut.name" />
   </div>
   <div class="form-group">
+    <h6>Kifizető neve:</h6>
     <input type="text" name="payFrom" class="form-control" placeholder="Kifizető" [(ngModel)]="payOut.from" />
   </div>
   <div class="form-group">
+    <h6>Kifizetett neve:</h6>
     <input type="text" name="payTo" class="form-control" placeholder="Kifizetett" [(ngModel)]="payOut.to" />
   </div>
   <div class="form-group">
+    <h6>Összeg:</h6>
     <input type="number" name="cost" class="form-control" placeholder="Összeg" [(ngModel)]="payOut.cost" />
   </div>
   <div class="form-group">
+    <h6>Fizetés típusa:</h6>
     <select name="payType" class="form-control" [(ngModel)]="payOut.type">
       <option value="input">Befizetés</option>
       <option value="output">Kifizetés</option>

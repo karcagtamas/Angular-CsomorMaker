@@ -1,5 +1,4 @@
 <div class="border rounded m-2 p-2">
-  <button class="btn btn-outline-success float-right m-2" (click)="sendResetCode()">Új jelszó kérése</button>
   <h1 class="text-center">Saját profil</h1>
   <h3 *ngIf="!nameOnModify">Név: {{ user.name }}</h3>
   <h3 *ngIf="nameOnModify">
@@ -9,13 +8,14 @@
   <div>Admin: {{ user.isAdmin | isAdmin }}</div>
   <div class="alert alert-danger" *ngIf="alert"><strong>HIBA!</strong> {{ alert }}</div>
   <div class="alert alert-success" *ngIf="success">{{ success }}</div>
-  <div class="image-container">
+  <div class="image-container col-sm-6 offset-sm-3 col-md-4 offset-md-4">
     <img [src]="imageUrl" alt="Profil kép" class="profile-image" />
   </div>
-  <div class="form-group" *ngIf="imageOnModify">
+  <div class="form-group mt-1" *ngIf="imageOnModify">
     <input type="file" name="profile-image" (change)="onFileChanged($event)" class="form-control" />
   </div>
   <div>
+    <button class="btn btn-outline-success float-right m-2" (click)="sendResetCode()">Új jelszó kérése</button>
     <button class="btn btn-outline-warning m-1" *ngIf="!nameOnModify && !imageOnModify" (click)="nameOnModify = true">
       Név módosítása
     </button>

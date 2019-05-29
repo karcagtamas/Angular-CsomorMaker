@@ -69,6 +69,7 @@ import { ForintPipe } from './pipes/forint.pipe';
 import { PersonCountPipe } from './pipes/person-count.pipe';
 import { PayOutsComponent } from './components/pay-outs/pay-outs.component';
 import { AddNewPaysComponent } from './components/add-new-pays/add-new-pays.component';
+import { ChatComponent } from './components/chat/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { AddNewPaysComponent } from './components/add-new-pays/add-new-pays.comp
     ForintPipe,
     PersonCountPipe,
     PayOutsComponent,
-    AddNewPaysComponent
+    AddNewPaysComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
