@@ -70,6 +70,7 @@ import { PersonCountPipe } from './pipes/person-count.pipe';
 import { PayOutsComponent } from './components/pay-outs/pay-outs.component';
 import { AddNewPaysComponent } from './components/add-new-pays/add-new-pays.component';
 import { ChatComponent } from './components/chat/chat/chat.component';
+import { ChatMessageComponent } from './components/chat/chat-message/chat-message.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { ChatComponent } from './components/chat/chat/chat.component';
     PersonCountPipe,
     PayOutsComponent,
     AddNewPaysComponent,
-    ChatComponent
+    ChatComponent,
+    ChatMessageComponent
   ],
   imports: [
     BrowserModule,

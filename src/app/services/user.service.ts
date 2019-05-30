@@ -21,8 +21,8 @@ export class UserService {
     return this.usersCollection.snapshotChanges();
   }
 
-  async getUser(): Promise<User> {
-    const currentEmail = localStorage.getItem('user');
+  async getUser(email?): Promise<User> {
+    const currentEmail = email ? email : localStorage.getItem('user');
     return new Promise(resolve => {
       this.getUsers().subscribe(data => {
         this.Users = data.map(e => {
