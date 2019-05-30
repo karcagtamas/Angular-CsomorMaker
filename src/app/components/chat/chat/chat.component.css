@@ -1,0 +1,12 @@
+.header {
+  height: 10vh;
+}
+
+.body {
+  height: 70vh;
+  overflow: auto;
+}
+
+.footer {
+  height: 10vh;
+}
