@@ -9,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatComponent implements OnInit {
   chatMessages: ChatMessage[] = [];
+  thisEmail = localStorage.getItem('user');
+  text = '';
 
   constructor(private chatservice: ChatService) {}
 
@@ -21,5 +23,17 @@ export class ChatComponent implements OnInit {
         } as ChatMessage;
       });
     });
+  }
+
+  sendMessage() {
+    if (this.text) {
+      const message = new ChatMessage();
+      message.message = this.text;
+      message.sender = this.thisEmail;
+      message.date = new Date();
+      this.chatservice.sendMessage(message).then(() => {
+        this.text = '';
+      });
+    }
   }
 }

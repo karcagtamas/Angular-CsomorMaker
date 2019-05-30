@@ -1,5 +1,4 @@
 import { AngularFirestore } from '@angular/fire/firestore';
-import { firestore } from 'firebase';
 import { ChatMessage } from './../models/chat.model';
 import { AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
@@ -19,5 +18,7 @@ export class ChatService {
     return this.chatCollection.snapshotChanges();
   }
 
-  sendMessage() {}
+  sendMessage(message: ChatMessage) {
+    return this.chatCollection.add(JSON.parse(JSON.stringify(message)));
+  }
 }

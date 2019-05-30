@@ -1,0 +1,10 @@
+.profile-image {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+}
+
+.title {
+  font-size: 0.75rem;
+  color: lightgray;
+}

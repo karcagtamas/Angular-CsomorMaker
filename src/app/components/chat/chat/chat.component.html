@@ -7,9 +7,11 @@
   </div>
   <div class="rounded border m-1 p-1 footer">
     <div class="row col-12">
-      <div class="col-9 p-1"><input type="text" name="" id="" class="form-control" /></div>
+      <div class="col-9 p-1">
+        <textarea type="text" name="text" placeholder="Üzenet..." class="form-control" [(ngModel)]="text"></textarea>
+      </div>
       <div class="col-3 p-1">
-        <button class="btn btn-primary btn-block">Küldés</button>
+        <button class="btn btn-primary btn-block" (click)="sendMessage()">Küldés</button>
       </div>
     </div>
   </div>
