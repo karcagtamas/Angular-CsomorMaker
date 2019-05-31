@@ -71,6 +71,7 @@ import { PayOutsComponent } from './components/pay-outs/pay-outs.component';
 import { AddNewPaysComponent } from './components/add-new-pays/add-new-pays.component';
 import { ChatComponent } from './components/chat/chat/chat.component';
 import { ChatMessageComponent } from './components/chat/chat-message/chat-message.component';
+import { ChatDatePipe } from './pipes/chat-date.pipe';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import { ChatMessageComponent } from './components/chat/chat-message/chat-messag
     PayOutsComponent,
     AddNewPaysComponent,
     ChatComponent,
-    ChatMessageComponent
+    ChatMessageComponent,
+    ChatDatePipe
   ],
   imports: [
     BrowserModule,

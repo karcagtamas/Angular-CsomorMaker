@@ -1,4 +1,7 @@
 <div>
-  <div class="title">{{ user.name }} - {{ chatMessage.date | date: 'HH:mm:ss' }}</div>
-  <div><img [src]="imageUrl" alt="profile image" class="profile-image" /> {{ chatMessage.message }}</div>
+  <div class="title">{{ user.name }} - {{ chatMessage.date | chatDate }}</div>
+  <div>
+    <img [src]="imageUrl" alt="profile image" class="profile-image" /> {{ chatMessage.message }}
+    <button (click)="deleteMessage()" class="float-right btn btn-danger" *ngIf="isAdmin">X</button>
+  </div>
 </div>

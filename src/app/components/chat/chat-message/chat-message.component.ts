@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { ChatMessage } from 'src/app/models/chat.model';
 import { User } from 'src/app/models/users.model';
 import { UserService } from 'src/app/services/user.service';
@@ -10,6 +10,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ChatMessageComponent implements OnInit {
   @Input() chatMessage: ChatMessage;
+  @Input() isAdmin: boolean;
+  @Output() delete = new EventEmitter();
   user: User = new User('');
   imageUrl = '../../assets/images/profile.png';
 
@@ -22,5 +24,9 @@ export class ChatMessageComponent implements OnInit {
         this.imageUrl = res2;
       });
     });
+  }
+
+  deleteMessage() {
+    this.delete.emit({ id: this.chatMessage.id });
   }
 }

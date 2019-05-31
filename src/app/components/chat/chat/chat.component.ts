@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/services/user.service';
 import { ChatMessage } from './../../../models/chat.model';
 import { ChatService } from './../../../services/chat.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,9 +11,10 @@ import { Component, OnInit } from '@angular/core';
 export class ChatComponent implements OnInit {
   chatMessages: ChatMessage[] = [];
   thisEmail = localStorage.getItem('user');
+  isAdmin = false;
   text = '';
 
-  constructor(private chatservice: ChatService) {}
+  constructor(private chatservice: ChatService, private userservice: UserService) {}
 
   ngOnInit() {
     this.chatservice.getMessages().subscribe(data => {
@@ -36,10 +38,12 @@ export class ChatComponent implements OnInit {
 
       setTimeout(() => {
         const element = document.getElementById(this.chatMessages[this.chatMessages.length - 1].id.toString());
-        console.log(this.chatMessages[this.chatMessages.length - 1].id);
-        console.log(element);
         element.scrollIntoView();
       }, 500);
+
+      this.userservice.isAdmin().then(res => {
+        this.isAdmin = res;
+      });
     });
   }
 
@@ -53,5 +57,9 @@ export class ChatComponent implements OnInit {
         this.text = '';
       });
     }
+  }
+
+  deleteMessage(event) {
+    this.chatservice.deleteMessage(event.id);
   }
 }
