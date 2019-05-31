@@ -68,7 +68,9 @@ export class PortaComponent implements OnInit {
   }
 
   deleteEvent(event: string) {
-    this.eventservice.deleteEvent(event);
+    if (!this.Events.find(x => x.eventId === event).isLocked) {
+      this.eventservice.deleteEvent(event);
+    }
   }
 
   openDialog() {
