@@ -39,11 +39,12 @@ export class EventService {
     event.playerCost = 0;
     event.visitorCost = 0;
     event.playerDeposit = 0;
+    event.disabled = false;
     return this.eventCollection.add(JSON.parse(JSON.stringify(event)));
   }
 
   deleteEvent(event: string): Promise<void> {
-    return this.eventCollection.doc(event).delete();
+    return this.eventCollection.doc(event).update({ disabled: true });
   }
 
   updateEvent(event: Event): Promise<void> {

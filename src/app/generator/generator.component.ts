@@ -43,6 +43,7 @@ export class GeneratorComponent implements OnInit {
           ...e.payload.doc.data()
         } as Event;
       });
+      this.Events = this.Events.filter(x => !x.disabled);
       this.EventsWithGenerator = this.Events.filter(x => x.generator);
     });
     this.getIsAdmin();

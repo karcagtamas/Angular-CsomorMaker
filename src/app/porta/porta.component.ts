@@ -28,6 +28,7 @@ export class PortaComponent implements OnInit {
           ...e.payload.doc.data()
         } as Event;
       });
+      this.Events = this.Events.filter(x => !x.disabled);
     });
     this.getIsAdmin();
   }

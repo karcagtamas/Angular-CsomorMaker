@@ -17,6 +17,7 @@ export class Event {
   generator?: Generator;
   isLocked: boolean;
   payOuts: PayOut[];
+  disabled: boolean;
 
   constructor() {
     this.advertisments = [];
