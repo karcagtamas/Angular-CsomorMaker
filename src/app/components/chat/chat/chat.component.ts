@@ -22,6 +22,24 @@ export class ChatComponent implements OnInit {
           ...x.payload.doc.data()
         } as ChatMessage;
       });
+      this.chatMessages.sort();
+
+      this.chatMessages.sort((obj1, obj2) => {
+        if (obj1.date > obj2.date) {
+          return 1;
+        }
+        if (obj1.date < obj2.date) {
+          return -1;
+        }
+        return 0;
+      });
+
+      setTimeout(() => {
+        const element = document.getElementById(this.chatMessages[this.chatMessages.length - 1].id.toString());
+        console.log(this.chatMessages[this.chatMessages.length - 1].id);
+        console.log(element);
+        element.scrollIntoView();
+      }, 500);
     });
   }
 
