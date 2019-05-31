@@ -21,4 +21,8 @@ export class ChatService {
   sendMessage(message: ChatMessage) {
     return this.chatCollection.add(JSON.parse(JSON.stringify(message)));
   }
+
+  deleteMessage(messageId: string) {
+    return this.chatCollection.doc(messageId).delete();
+  }
 }

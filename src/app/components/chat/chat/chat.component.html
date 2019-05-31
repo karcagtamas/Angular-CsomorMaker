@@ -7,6 +7,8 @@
       id="{{ message.id }}"
       *ngFor="let message of chatMessages"
       [chatMessage]="message"
+      [isAdmin]="isAdmin"
+      (delete)="deleteMessage($event)"
     ></app-chat-message>
   </div>
   <div class="rounded border m-1 p-1 footer">
