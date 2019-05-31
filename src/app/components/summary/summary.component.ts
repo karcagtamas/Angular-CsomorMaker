@@ -25,6 +25,7 @@ export class SummaryComponent implements OnInit {
           ...e.payload.doc.data()
         } as Event;
       });
+      this.events = this.events.filter(x => !x.disabled);
       if (this.events.length > 0) {
         this.selectedIndex = 0;
         this.change();
