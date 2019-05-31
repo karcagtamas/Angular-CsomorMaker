@@ -36,8 +36,6 @@ export class ChatComponent implements OnInit {
 
       setTimeout(() => {
         const element = document.getElementById(this.chatMessages[this.chatMessages.length - 1].id.toString());
-        console.log(this.chatMessages[this.chatMessages.length - 1].id);
-        console.log(element);
         element.scrollIntoView();
       }, 500);
     });
